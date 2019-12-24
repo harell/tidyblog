@@ -1,5 +1,5 @@
 .First <- function(){
-    try(blogdown::serve_site())
+    message("Live preview a site using 'blogdown::stop_server()'")
 }
 
 .Last <- function(){
