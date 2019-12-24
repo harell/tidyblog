@@ -37,3 +37,9 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Blogdown
+public
+static
+content/*.html
+content/post/*.html
