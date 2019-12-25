@@ -41,5 +41,3 @@ vignettes/*.pdf
 # Blogdown
 public
 static
-content/*.html
-content/post/*.html
