@@ -13,6 +13,16 @@ tags:
   - small design up front
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center",
+  out.width = "100%"
+)
+```
+
 ## Abstract
 
 Data science projects in commercial companies often experience a challenge
@@ -37,3 +47,7 @@ sources</mark>.
 
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
+
+```{r} 
+knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
+```
