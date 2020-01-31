@@ -1,0 +1,14 @@
+---
+title: 'Data Tests: Separating between Data Sources and the Rest'
+author: Harel Lustiger
+date: '2020-02-22'
+slug: data-tests-separating-between-data-sources-and-the-rest
+draft: true
+categories:
+  - R
+  - Software Architecture
+tags:
+  - plugin architecture
+  - data sources
+  - small design up front
+---
