@@ -14,5 +14,30 @@ tags:
 ---
 
 
+<div id="TOC">
+<ul>
+<li><a href="#abstract">Abstract</a></li>
+</ul>
+</div>
 
-
+<div id="abstract" class="section level2">
+<h2>Abstract</h2>
+<p>Data science projects in commercial companies often experience a challenge
+arising from evolving data sources. As the project progresses, new signals and
+information sources are added incrementally. In practice, when the data source
+changes, it creates a need to change the application source code.</p>
+<p>With <em>no design up front</em>, some application modules, such as a dashboard or a
+machine learning model, unwittingly become dependent on the data source. In this
+case, accommodating the evolving data source is not simply a matter of changing
+the code related to the data source. Rather, preserving the rest of the existing
+application in a working condition involves further code changes in distant
+elements of the application.</p>
+<p>An alternative way of dealing with evolving data sources is to introduce a
+<em>small design up front</em>. Such design lets programmers manage the source code
+dependencies throughout the project life-cycle.</p>
+<p>This post suggests a design that (1) separates data sources from analytic
+applications and (2) restricts analytic applications from knowing about the data
+sources.</p>
+<p>While the evolving data sources challenge is programming language agnostic, this
+post demonstrates an implementation of the suggested design in R.</p>
+</div>
