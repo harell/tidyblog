@@ -51,3 +51,22 @@ post demonstrates an implementation of the suggested design in R.
 ```{r} 
 knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
 ```
+
+## Setup
+
+```{r}
+mtcars %>% dplyr::glimpse(width = getOption("tibble.width") - 3)
+```
+
+## A system with no design up front
+
+Direct connection between the data source and the analytic application
+
+```{r, echo = TRUE, eval = FALSE}
+# Data Source: Local File
+data(mtcars, package = "datasets")
+cars <- mtcars
+
+# Analytic Application: Dashboard
+
+```
