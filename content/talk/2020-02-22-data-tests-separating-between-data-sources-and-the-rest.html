@@ -20,11 +20,11 @@ tags:
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#setup">Setup</a><ul>
 <li><a href="#meet-euel-cheatam-the-car-salesman-at-merceduce-dealership">Meet Euel Cheatam the car salesman at Merceduce dealership</a></li>
-<li><a href="#the-data">The data</a></li>
 </ul></li>
 <li><a href="#developing-a-data-driven-app-without-available-data">Developing a data-driven app without available data</a><ul>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
+<li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
 </ul></li>
 <li><a href="#a-system-with-no-design-up-front">A system with no design up front</a></li>
 <li><a href="#references">References</a></li>
@@ -58,17 +58,46 @@ post demonstrates an implementation of the suggested design in R.</p>
 <h3>Meet Euel Cheatam the car salesman at Merceduce dealership</h3>
 <p><img src="https://i.imgflip.com/2qlpbb.jpg" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="the-data" class="section level3">
-<h3>The data</h3>
-<p>The first 6 car models from <code>datasets::mtcars</code> data source</p>
+</div>
+<div id="developing-a-data-driven-app-without-available-data" class="section level2">
+<h2>Developing a data-driven app without available data</h2>
+<p>The report includes a tidy data table, where each variable is a column and
+each observation is a row.</p>
+<div id="generate-dataset-assumption-triplet" class="section level3">
+<h3>Generate dataset assumption triplet</h3>
+<p>Start by making <strong>assumption triplets</strong> about what information the user needs to
+see:</p>
+<ul>
+<li><strong>Records</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> are car models; and</li>
+<li><strong>Target variable</strong> is the price; and</li>
+<li><strong>Salient features</strong> include gear, and mpg.</li>
+</ul>
+</div>
+<div id="convert-assumptions-to-assertions-with-data-tests" class="section level3">
+<h3>Convert assumptions to assertions with data-tests</h3>
+<pre class="r"><code># data-tests.R
+## 1. Check if the dataset exists
+stopifnot(exist(&quot;cars_data&quot;), is.data.frame(cars_data))
+  
+## 2. Check if the necessary columns exist
+expected_cols &lt;- c(&quot;car_model&quot;, &quot;price&quot;, &quot;gear&quot;, &quot;mpg&quot;)
+stopifnot(all(expected_cols %in% colnames(cars_data)))
+  
+## 3. Check if the records are unique
+is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
+stopifnot(is.distinct(mtcars$car_model))</code></pre>
+</div>
+<div id="implement-data-source-plugins" class="section level3">
+<h3>Implement data source plugins</h3>
+<div id="quick-glimpse-over-the-mtcars-dataset" class="section level4">
+<h4>Quick glimpse over the <code>mtcars</code> dataset</h4>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
 <caption>
-<span id="tab:unnamed-chunk-2">Table 1: </span>available data during project inception
+<span id="tab:unnamed-chunk-2">Table 1: </span>The first 6 car models from <code>datasets::mtcars</code>
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;">
-car_model
 </th>
 <th style="text-align:right;">
 mpg
@@ -337,32 +366,22 @@ Valiant
 </tbody>
 </table>
 </div>
-</div>
-<div id="developing-a-data-driven-app-without-available-data" class="section level2">
-<h2>Developing a data-driven app without available data</h2>
-<p>The report includes a tidy data table, where each variable is a column and
-each observation is a row.</p>
-<div id="generate-dataset-assumption-triplet" class="section level3">
-<h3>Generate dataset assumption triplet</h3>
-<p>Start by making <strong>assumption triplets</strong> about what information the user needs to
-see:</p>
-<ul>
-<li><strong>Records</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> are car models; and</li>
-<li><strong>Target variable</strong> is the price; and</li>
-<li><strong>Salient features</strong> include gear, and mpg.</li>
-</ul>
-</div>
-<div id="convert-assumptions-to-assertions-with-data-tests" class="section level3">
-<h3>Convert assumptions to assertions with data-tests</h3>
-<pre class="r"><code># 1. Check if the dataset exists
-stopifnot(exist(&quot;cars_data&quot;), is.data.frame(cars_data))
-# 2. Check if the necessary columns exist
-expected_cols &lt;- c(&quot;car_model&quot;, &quot;price&quot;, &quot;gear&quot;, &quot;mpg&quot;)
-stopifnot(all(expected_cols %in% colnames(cars_data)))
-# 3. Check if the records are unique
-is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
-stopifnot(is.distinct(mtcars$car_model))</code></pre>
+<div id="generate-synthetic-datasynthetic-data-plugin" class="section level4">
+<h4>Generate synthetic data<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> plugin</h4>
+<pre class="r"><code># synthetic-data.R
+## 1. Generate records 
+data(mtcars, package = &quot;datasets&quot;)
+cars_data &lt;- mtcars %&gt;% tibble::rownames_to_column(&quot;car_model&quot;)
+  
+## 2. Generate price
+set.seed(2020)
+price &lt;- runif(n = nrow(cars_data), min = 41, max = 75)
+cars_data &lt;- cars_data %&gt;% tibble::add_column(price = price)
+  
+## Run data-tests
+source(&quot;data-tests.R&quot;)</code></pre>
 <hr />
+</div>
 </div>
 </div>
 <div id="a-system-with-no-design-up-front" class="section level2">
@@ -374,8 +393,7 @@ stopifnot(is.distinct(mtcars$car_model))</code></pre>
 data(mtcars, package = &quot;datasets&quot;)
 cars &lt;- 
   mtcars %&gt;% 
-  tibble::rownames_to_column(&quot;car_model&quot;) %&gt;% 
-  tibbl
+  tibble::rownames_to_column(&quot;car_model&quot;) 
   
 ## Analytic Application: Booklet (report)
 render_booklet &lt;- function(data){
@@ -391,5 +409,7 @@ render_cars_report(mtcars)</code></pre>
 <hr />
 <ol>
 <li id="fn1"><p>A record is what constitutes a row in a tidy data table.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>A synthetic datasetis contains data that is artificially
+created rather than being generated by actual events.<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
