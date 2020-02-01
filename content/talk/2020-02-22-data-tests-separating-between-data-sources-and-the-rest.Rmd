@@ -65,21 +65,63 @@ The first 6 car models from `datasets::mtcars` data source
 
 ```{r}
 mtcars %>% 
+    tibble::rownames_to_column("car_model") %>% 
     head() %>% 
     knitr::kable(caption = "available data during project inception", 
-                 row.names = TRUE, digits = 1) %>% 
+                 row.names = FALSE, digits = 0) %>% 
     kableExtra::kable_styling(bootstrap_options = "striped", full_width = TRUE)
 ```
+
+## Developing a data-driven app without available data
+
+The report includes a tidy data table, where each variable is a column and
+each observation is a row.
+
+### Make assumption triplets
+
+Start by making **assumption triplets** about what information the user needs to
+see:
+
+* **Records**[^table-record] are car models; and
+* **Target variable** is the price; and
+* **Salient features** include gear, and mpg.
+
+### Convert assumptions to assertions with data tests
+
+```{r data-tests, echo = TRUE, eval = FALSE}
+# 1. Check if the dataset exists
+stopifnot(exist("cars_data"), is.data.frame(cars_data))
+# 2. Check if the necessary columns exist
+stopifnot(all(c("car_model", "price", "gear", "mpg") %in% colnames(cars_data)))
+# 3. Check if the records are unique
+is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
+stopifnot(is.distinct(mtcars$car_model))
+```
+
+---
 
 ## A system with no design up front
 
 Direct connection between the data source and the analytic application
 
 ```{r, echo = TRUE, eval = FALSE}
-# Data Source: Local File
+# main.R
+  
+## Data Source: Local File
 data(mtcars, package = "datasets")
-cars <- mtcars
-
-# Analytic Application: Dashboard
-
+cars <- 
+  mtcars %>% 
+  tibble::rownames_to_column("car_model") %>% 
+  tibbl
+  
+## Analytic Application: Booklet (report)
+render_booklet <- function(data){
+ boxplot(mpg ~ cyl, data) 
+ data %>% dplyr::select(car_model, mpg, gear) %>%  knitr::kable()
+}
+render_cars_report(mtcars)
 ```
+
+## References
+
+[^table-record]: A record is what constitutes a row in a tidy data table.

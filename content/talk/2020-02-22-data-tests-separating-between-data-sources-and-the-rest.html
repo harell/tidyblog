@@ -22,7 +22,12 @@ tags:
 <li><a href="#meet-euel-cheatam-the-car-salesman-at-merceduce-dealership">Meet Euel Cheatam the car salesman at Merceduce dealership</a></li>
 <li><a href="#the-data">The data</a></li>
 </ul></li>
+<li><a href="#developing-a-data-driven-app-without-available-data">Developing a data-driven app without available data</a><ul>
+<li><a href="#make-assumption-triplets">Make assumption triplets</a></li>
+<li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data tests</a></li>
+</ul></li>
 <li><a href="#a-system-with-no-design-up-front">A system with no design up front</a></li>
+<li><a href="#references">References</a></li>
 </ul>
 </div>
 
@@ -63,6 +68,7 @@ post demonstrates an implementation of the suggested design in R.</p>
 <thead>
 <tr>
 <th style="text-align:left;">
+car_model
 </th>
 <th style="text-align:right;">
 mpg
@@ -105,7 +111,7 @@ carb
 Mazda RX4
 </td>
 <td style="text-align:right;">
-21.0
+21
 </td>
 <td style="text-align:right;">
 6
@@ -117,13 +123,13 @@ Mazda RX4
 110
 </td>
 <td style="text-align:right;">
-3.9
+4
 </td>
 <td style="text-align:right;">
-2.6
+3
 </td>
 <td style="text-align:right;">
-16.5
+16
 </td>
 <td style="text-align:right;">
 0
@@ -143,7 +149,7 @@ Mazda RX4
 Mazda RX4 Wag
 </td>
 <td style="text-align:right;">
-21.0
+21
 </td>
 <td style="text-align:right;">
 6
@@ -155,13 +161,13 @@ Mazda RX4 Wag
 110
 </td>
 <td style="text-align:right;">
-3.9
+4
 </td>
 <td style="text-align:right;">
-2.9
+3
 </td>
 <td style="text-align:right;">
-17.0
+17
 </td>
 <td style="text-align:right;">
 0
@@ -181,7 +187,7 @@ Mazda RX4 Wag
 Datsun 710
 </td>
 <td style="text-align:right;">
-22.8
+23
 </td>
 <td style="text-align:right;">
 4
@@ -193,13 +199,13 @@ Datsun 710
 93
 </td>
 <td style="text-align:right;">
-3.8
+4
 </td>
 <td style="text-align:right;">
-2.3
+2
 </td>
 <td style="text-align:right;">
-18.6
+19
 </td>
 <td style="text-align:right;">
 1
@@ -219,7 +225,7 @@ Datsun 710
 Hornet 4 Drive
 </td>
 <td style="text-align:right;">
-21.4
+21
 </td>
 <td style="text-align:right;">
 6
@@ -231,13 +237,13 @@ Hornet 4 Drive
 110
 </td>
 <td style="text-align:right;">
-3.1
+3
 </td>
 <td style="text-align:right;">
-3.2
+3
 </td>
 <td style="text-align:right;">
-19.4
+19
 </td>
 <td style="text-align:right;">
 1
@@ -257,7 +263,7 @@ Hornet 4 Drive
 Hornet Sportabout
 </td>
 <td style="text-align:right;">
-18.7
+19
 </td>
 <td style="text-align:right;">
 8
@@ -269,13 +275,13 @@ Hornet Sportabout
 175
 </td>
 <td style="text-align:right;">
-3.1
+3
 </td>
 <td style="text-align:right;">
-3.4
+3
 </td>
 <td style="text-align:right;">
-17.0
+17
 </td>
 <td style="text-align:right;">
 0
@@ -295,7 +301,7 @@ Hornet Sportabout
 Valiant
 </td>
 <td style="text-align:right;">
-18.1
+18
 </td>
 <td style="text-align:right;">
 6
@@ -307,13 +313,13 @@ Valiant
 105
 </td>
 <td style="text-align:right;">
-2.8
+3
 </td>
 <td style="text-align:right;">
-3.5
+3
 </td>
 <td style="text-align:right;">
-20.2
+20
 </td>
 <td style="text-align:right;">
 1
@@ -332,12 +338,57 @@ Valiant
 </table>
 </div>
 </div>
+<div id="developing-a-data-driven-app-without-available-data" class="section level2">
+<h2>Developing a data-driven app without available data</h2>
+<p>The report includes a tidy data table, where each variable is a column and
+each observation is a row.</p>
+<div id="make-assumption-triplets" class="section level3">
+<h3>Make assumption triplets</h3>
+<p>Start by making <strong>assumption triplets</strong> about what information the user needs to
+see:</p>
+<ul>
+<li><strong>Records</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> are car models; and</li>
+<li><strong>Target variable</strong> is the price; and</li>
+<li><strong>Salient features</strong> include gear, and mpg.</li>
+</ul>
+</div>
+<div id="convert-assumptions-to-assertions-with-data-tests" class="section level3">
+<h3>Convert assumptions to assertions with data tests</h3>
+<pre class="r"><code># 1. Check if the dataset exists
+stopifnot(exist(&quot;cars_data&quot;), is.data.frame(cars_data))
+# 2. Check if the necessary columns exist
+stopifnot(all(c(&quot;car_model&quot;, &quot;price&quot;, &quot;gear&quot;, &quot;mpg&quot;) %in% colnames(cars_data)))
+# 3. Check if the records are unique
+is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
+stopifnot(is.distinct(mtcars$car_model))</code></pre>
+<hr />
+</div>
+</div>
 <div id="a-system-with-no-design-up-front" class="section level2">
 <h2>A system with no design up front</h2>
 <p>Direct connection between the data source and the analytic application</p>
-<pre class="r"><code># Data Source: Local File
+<pre class="r"><code># main.R
+  
+## Data Source: Local File
 data(mtcars, package = &quot;datasets&quot;)
-cars &lt;- mtcars
-
-# Analytic Application: Dashboard</code></pre>
+cars &lt;- 
+  mtcars %&gt;% 
+  tibble::rownames_to_column(&quot;car_model&quot;) %&gt;% 
+  tibbl
+  
+## Analytic Application: Booklet (report)
+render_booklet &lt;- function(data){
+ boxplot(mpg ~ cyl, data) 
+ data %&gt;% dplyr::select(car_model, mpg, gear) %&gt;%  knitr::kable()
+}
+render_cars_report(mtcars)</code></pre>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>A record is what constitutes a row in a tidy data table.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
