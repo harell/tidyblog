@@ -9,7 +9,8 @@
         blogdown.warn.future = FALSE
     )
     message("Live preview a site using 'blogdown::serve_site()'")
-    pkgs <- c("tidyverse")
+    pkgs <- c("tidyverse", "kableExtra")
+    # remotes::install_cran(pkgs, quiet = TRUE)
     invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
 }
 

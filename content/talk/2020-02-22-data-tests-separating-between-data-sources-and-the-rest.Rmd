@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
   fig.align = "center",
   out.width = "100%"
 )
+
 ```
 
 ## Abstract
@@ -48,14 +49,26 @@ sources</mark>.
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
 
+## Setup
+
+### Meet Euel Cheatam the car salesman at Merceduce dealership
+
 ```{r} 
+# merceduce dealership
+# cheeky Euel Cheatam in action
 knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
 ```
 
-## Setup
+### The data
+
+The first 6 car models from `datasets::mtcars` data source 
 
 ```{r}
-mtcars %>% dplyr::glimpse(width = getOption("tibble.width") - 3)
+mtcars %>% 
+    head() %>% 
+    knitr::kable(caption = "available data during project inception", 
+                 row.names = TRUE, digits = 1) %>% 
+    kableExtra::kable_styling(bootstrap_options = "striped", full_width = TRUE)
 ```
 
 ## A system with no design up front
