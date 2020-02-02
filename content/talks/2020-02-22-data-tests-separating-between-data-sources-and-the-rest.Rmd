@@ -54,13 +54,26 @@ post demonstrates an implementation of the suggested design in R.
 
 ## Setup
 
-### Meet Euel Cheatam the car salesman at Merceduce dealership
+### Meet Euel Cheatam the Merceduce dealership manager
 
 ```{r} 
 # merceduce dealership
 # cheeky Euel Cheatam in action
 knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
 ```
+
+Eual has been working in Mercedes dealership as a car salesman for the last 7
+years. Today, Eual serves as a dealership manager. His main duty is to ensure a
+profitable, complaint, and effective dealership.
+
+- Eual **thinks** that a professional car salesperson needs to answers prospects
+queries quickly and accurately.
+- Eual **sees** that it takes new hires several months to master the
+dealership’s car specifications.
+- Eual **feels** obligated to provide resources that will enable everyone to
+succeed as a salesperson, regardless of their work tenure.
+- Eual **does** not have enough free time slots in his calendar to accommodate
+daily mentoring for all his staff.
 
 ## Developing a data-driven app without available data
 
