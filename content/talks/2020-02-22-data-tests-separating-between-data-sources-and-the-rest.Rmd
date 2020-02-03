@@ -82,14 +82,13 @@ daily mentoring for all the dealership salespeople.
 knitr::include_graphics('https://i.imgur.com/CMbZ8h7.png')
 ```
 
-For [target customer] who [statement of the need or opportunity], the [product
-name] is a [product category] that [statement of key benefit – that is,
-compelling reason to buy]. Unlike [primary competitive alternative], our product
-[statement of primary differentiation].
+<!-- Position Statement -->
 
-* remembarable, comerisons
-
-<!-- ### The suggested project -->
+For the car salespeople who work at Mercedes dealership, the *Factcedes™* is a
+weekly email service that provides a succinct and readable fact sheet with
+popular Q&A about the dealership vehicles. Unlike water cooler talks, our
+product has been carefully formulated and evaluated against veterans and is
+distributed regularly.
 
 ### The developers encounter real-world impediments 
 
