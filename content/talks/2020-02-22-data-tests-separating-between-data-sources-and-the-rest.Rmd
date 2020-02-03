@@ -24,7 +24,6 @@ knitr::opts_chunk$set(
   fig.align = "center",
   out.width = "100%"
 )
-
 ```
 
 ## Abstract
@@ -63,17 +62,32 @@ knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
 ```
 
 Eual has been working in Mercedes dealership as a car salesman for the last 7
-years. Today, Eual serves as a dealership manager. His main duty is to ensure a
-profitable, complaint, and effective dealership.
+years. Today, Eual serves as the dealership manager. His main duty is to ensure
+a profitable, complaint, and effective dealership.
 
-- Eual **thinks** that a professional car salesperson needs to answers prospects
+- Eual **thinks** that a professional car salesperson needs to answer prospects
 queries quickly and accurately.
 - Eual **sees** that it takes new hires several months to master the
-dealership’s car specifications.
+dealership’s car specifications. During these months new-hires convert fewer
+prospects into clients; this causes new hires to get demotivated; which leads to
+fewer sales -- it's a vicious cycle.
 - Eual **feels** obligated to provide resources that will enable everyone to
 succeed as a salesperson, regardless of their work tenure.
 - Eual **does** not have enough free time slots in his calendar to accommodate
-daily mentoring for all his staff.
+daily mentoring for all the dealership salespeople.
+
+### The proposed solution is a weekly fact sheet email with popular Q&A  
+
+```{r car-stat-sheet} 
+knitr::include_graphics('https://i.imgur.com/CMbZ8h7.png')
+```
+
+For [target customer] who [statement of the need or opportunity], the [product
+name] is a [product category] that [statement of key benefit – that is,
+compelling reason to buy]. Unlike [primary competitive alternative], our product
+[statement of primary differentiation].
+
+<!-- ### The suggested project -->
 
 ## Developing a data-driven app without available data
 
