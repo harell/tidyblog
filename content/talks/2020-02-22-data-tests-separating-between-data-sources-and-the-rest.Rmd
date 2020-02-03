@@ -76,7 +76,7 @@ succeed as a salesperson, regardless of their work tenure.
 - Eual **does** not have enough free time slots in his calendar to accommodate
 daily mentoring for all the dealership salespeople.
 
-### The proposed solution is a weekly fact sheet email with popular Q&A  
+### The proposed solution is a weekly fact sheet with popular Q&A  
 
 ```{r car-stat-sheet} 
 knitr::include_graphics('https://i.imgur.com/CMbZ8h7.png')
@@ -87,9 +87,17 @@ name] is a [product category] that [statement of key benefit – that is,
 compelling reason to buy]. Unlike [primary competitive alternative], our product
 [statement of primary differentiation].
 
+* remembarable, comerisons
+
 <!-- ### The suggested project -->
 
-## Developing a data-driven app without available data
+### The developers encounter real-world impediments 
+
+```{r 2st-world-problems} 
+knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
+```
+
+## 1^st^ iteration: developing a data-driven app without real data
 
 The report includes a tidy data table, where each variable is a column and
 each observation is a row.
@@ -111,7 +119,6 @@ the data existance and structure.
 * Data tests are like clauses in a contract. 
 * The analytic application dictates the clauses.
 * The analytic application is dependent only on the clauses.
-
 
 ```{r data-tests, echo = TRUE, eval = FALSE}
 # data-tests.R
@@ -168,6 +175,12 @@ knitr::kable(cars_data)
 boxplot(price ~ gear, cars_data)  
 ```
 
+## 2^nd^ iteration: implementing customer feedback
+
+
+## 3^rd^ iteration: deploying the application with real data
+
+<!-- ## 3^rd^ iteration: plug in the real data source to the application -->
 <!-- Footnotes -->
 
 [^synthetic-data]: A synthetic datasetis contains data that is artificially

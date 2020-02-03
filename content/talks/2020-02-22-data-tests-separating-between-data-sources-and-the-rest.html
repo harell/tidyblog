@@ -23,14 +23,17 @@ link-citations: yes
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#setup">Setup</a><ul>
 <li><a href="#meet-euel-cheatam-the-merceduce-dealership-manager">Meet Euel Cheatam the Merceduce dealership manager</a></li>
-<li><a href="#the-proposed-solution-is-a-weekly-fact-sheet-email-with-popular-qa">The proposed solution is a weekly fact sheet email with popular Q&amp;A</a></li>
+<li><a href="#the-proposed-solution-is-a-weekly-fact-sheet-with-popular-qa">The proposed solution is a weekly fact sheet with popular Q&amp;A</a></li>
+<li><a href="#the-developers-encounter-real-world-impediments">The developers encounter real-world impediments</a></li>
 </ul></li>
-<li><a href="#developing-a-data-driven-app-without-available-data">Developing a data-driven app without available data</a><ul>
+<li><a href="#st-iteration-developing-a-data-driven-app-without-real-data">1<sup>st</sup> iteration: developing a data-driven app without real data</a><ul>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
 <li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
 <li><a href="#implement-analytic-applications">Implement analytic applications</a></li>
 </ul></li>
+<li><a href="#nd-iteration-implementing-customer-feedback">2<sup>nd</sup> iteration: implementing customer feedback</a></li>
+<li><a href="#rd-iteration-deploying-the-application-with-real-data">3<sup>rd</sup> iteration: deploying the application with real data</a></li>
 </ul>
 </div>
 
@@ -76,18 +79,25 @@ succeed as a salesperson, regardless of their work tenure.</li>
 daily mentoring for all the dealership salespeople.</li>
 </ul>
 </div>
-<div id="the-proposed-solution-is-a-weekly-fact-sheet-email-with-popular-qa" class="section level3">
-<h3>The proposed solution is a weekly fact sheet email with popular Q&amp;A</h3>
+<div id="the-proposed-solution-is-a-weekly-fact-sheet-with-popular-qa" class="section level3">
+<h3>The proposed solution is a weekly fact sheet with popular Q&amp;A</h3>
 <p><img src="https://i.imgur.com/CMbZ8h7.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>For [target customer] who [statement of the need or opportunity], the [product
 name] is a [product category] that [statement of key benefit – that is,
 compelling reason to buy]. Unlike [primary competitive alternative], our product
 [statement of primary differentiation].</p>
+<ul>
+<li>remembarable, comerisons</li>
+</ul>
 <!-- ### The suggested project -->
 </div>
+<div id="the-developers-encounter-real-world-impediments" class="section level3">
+<h3>The developers encounter real-world impediments</h3>
+<p><img src="https://i.imgur.com/TAcOHZO.png" width="100%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="developing-a-data-driven-app-without-available-data" class="section level2">
-<h2>Developing a data-driven app without available data</h2>
+</div>
+<div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
+<h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
 <p>The report includes a tidy data table, where each variable is a column and
 each observation is a row.</p>
 <div id="generate-dataset-assumption-triplet" class="section level3">
@@ -426,8 +436,15 @@ source(&quot;data-tests.R&quot;)
 ## 2. Render booklet
 knitr::kable(cars_data)
 boxplot(price ~ gear, cars_data)  </code></pre>
-<!-- Footnotes -->
 </div>
+</div>
+<div id="nd-iteration-implementing-customer-feedback" class="section level2">
+<h2>2<sup>nd</sup> iteration: implementing customer feedback</h2>
+</div>
+<div id="rd-iteration-deploying-the-application-with-real-data" class="section level2">
+<h2>3<sup>rd</sup> iteration: deploying the application with real data</h2>
+<!-- ## 3^rd^ iteration: plug in the real data source to the application -->
+<!-- Footnotes -->
 </div>
 <div class="footnotes">
 <hr />
