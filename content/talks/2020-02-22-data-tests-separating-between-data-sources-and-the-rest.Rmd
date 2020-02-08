@@ -92,9 +92,12 @@ distributed regularly.
 
 ### The developers encounter real-world impediments 
 
-```{r 2st-world-problems} 
+```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
 ```
+
+Programmers encounter many 1^st^ world problems during the development process;
+Unavailable database is one of them. A slow database is another.
 
 ## 1^st^ iteration: developing a data-driven app without real data
 
@@ -149,6 +152,8 @@ mtcars %>%
 
 ```{r data-source, echo = TRUE, eval = FALSE}
 # data-source.R
+rm(cars_data)
+
 ## 1. Generate records 
 data(mtcars, package = "datasets")
 cars_data <- mtcars %>% tibble::rownames_to_column("car_model")

@@ -92,6 +92,8 @@ distributed regularly.</p>
 <div id="the-developers-encounter-real-world-impediments" class="section level3">
 <h3>The developers encounter real-world impediments</h3>
 <p><img src="https://i.imgur.com/TAcOHZO.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Programmers encounter many 1<sup>st</sup> world problems during the development process;
+Unavailable database is one of them. A slow database is another.</p>
 </div>
 </div>
 <div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
@@ -412,6 +414,8 @@ Valiant
 <div id="generate-synthetic-datasynthetic-data-plugin" class="section level4">
 <h4>Generate synthetic data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> plugin</h4>
 <pre class="r"><code># data-source.R
+rm(cars_data)
+
 ## 1. Generate records 
 data(mtcars, package = &quot;datasets&quot;)
 cars_data &lt;- mtcars %&gt;% tibble::rownames_to_column(&quot;car_model&quot;)
