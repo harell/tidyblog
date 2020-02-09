@@ -186,7 +186,7 @@ source("data-tests.R")
 source("data-source.R")
   
 ## 2. Render booklet
-knitr::kable(cars_data)
+print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
 boxplot(price ~ mpg + gear, cars_data)  
 ```
 
