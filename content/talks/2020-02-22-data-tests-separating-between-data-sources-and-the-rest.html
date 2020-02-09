@@ -30,7 +30,7 @@ link-citations: yes
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
 <li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
-<li><a href="#implement-analytic-applications">Implement analytic applications</a></li>
+<li><a href="#develop-analytic-applications">Develop analytic applications</a></li>
 </ul></li>
 <li><a href="#nd-iteration-implementing-customer-feedback">2<sup>nd</sup> iteration: implementing customer feedback</a></li>
 <li><a href="#rd-iteration-deploying-the-application-with-real-data">3<sup>rd</sup> iteration: deploying the application with real data</a></li>
@@ -105,7 +105,7 @@ each observation is a row.</p>
 <p>Start by making <strong>assumption triplets</strong> about what information the user needs to
 see:</p>
 <ul>
-<li><strong>Primary Key</strong> represents car models; and</li>
+<li><strong>Primary Key</strong> represents car models;</li>
 <li><strong>Target variable</strong> is the price; and</li>
 <li><strong>Salient features</strong> include gear, and mpg.</li>
 </ul>
@@ -130,7 +130,7 @@ stopifnot(all(expected_cols %in% colnames(cars_data)))
   
 ## 3. Check if the records are unique
 is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
-stopifnot(is.distinct(mtcars$car_model))</code></pre>
+stopifnot(is.distinct(cars_data$car_model))</code></pre>
 </div>
 <div id="implement-data-source-plugins" class="section level3">
 <h3>Implement data source plugins</h3>
@@ -429,15 +429,15 @@ cars_data &lt;- cars_data %&gt;% tibble::add_column(price = price)
 source(&quot;data-tests.R&quot;)</code></pre>
 </div>
 </div>
-<div id="implement-analytic-applications" class="section level3">
-<h3>Implement analytic applications</h3>
-<pre class="r"><code># booklet.R
+<div id="develop-analytic-applications" class="section level3">
+<h3>Develop analytic applications</h3>
+<pre class="r"><code># app.R
 ## 1. Get the data
-source(&quot;data-tests.R&quot;)
+source(&quot;data-source.R&quot;)
   
 ## 2. Render booklet
 knitr::kable(cars_data)
-boxplot(price ~ gear, cars_data)  </code></pre>
+boxplot(price ~ mpg + gear, cars_data)  </code></pre>
 </div>
 </div>
 <div id="nd-iteration-implementing-customer-feedback" class="section level2">

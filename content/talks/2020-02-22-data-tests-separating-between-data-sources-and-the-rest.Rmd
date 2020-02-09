@@ -109,9 +109,20 @@ each observation is a row.
 Start by making **assumption triplets** about what information the user needs to
 see:
 
-* **Primary Key** represents car models; and
+* **Primary Key** represents car models;
 * **Target variable** is the price; and
 * **Salient features** include gear, and mpg.
+
+```{r tidy-table, eval = FALSE}
+set.seed(1238)
+n <- 6
+tibble::tibble(
+    uid = head(1:26, n),
+    x1 = head(letters, n),
+    x2 = head(LETTERS, n),
+    y = rpois(n, lambda = 5)
+)
+```
 
 ### Convert assumptions to assertions with data-tests
 
@@ -133,7 +144,7 @@ stopifnot(all(expected_cols %in% colnames(cars_data)))
   
 ## 3. Check if the records are unique
 is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
-stopifnot(is.distinct(mtcars$car_model))
+stopifnot(is.distinct(cars_data$car_model))
 ```
 
 ### Implement data source plugins
@@ -167,16 +178,16 @@ cars_data <- cars_data %>% tibble::add_column(price = price)
 source("data-tests.R")
 ```
 
-### Implement analytic applications
+### Develop analytic applications
 
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
-# booklet.R
+# app.R
 ## 1. Get the data
-source("data-tests.R")
+source("data-source.R")
   
 ## 2. Render booklet
 knitr::kable(cars_data)
-boxplot(price ~ gear, cars_data)  
+boxplot(price ~ mpg + gear, cars_data)  
 ```
 
 ## 2^nd^ iteration: implementing customer feedback
