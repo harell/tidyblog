@@ -51,14 +51,14 @@ sources</mark>.
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
 
-## Setup
+## We are helping our clients by fitting a solution to their needs
 
-### Meet Euel Cheatam the Merceduce dealership manager
+### Getting to know our client 
 
-```{r} 
-# merceduce dealership
-# cheeky Euel Cheatam in action
-knitr::include_graphics('https://i.imgflip.com/2qlpbb.jpg')
+Our client is Euel Cheatam the Merceduce dealership manager.
+
+```{r Eual-during-mentorship-session} 
+knitr::include_graphics('https://i.imgur.com/IcwSkWa.png')
 ```
 
 Eual has been working in Mercedes dealership as a car salesman for the last 7
