@@ -191,6 +191,12 @@ get_cars_data <- function(){
 }
 ```
 
+Notice that without conforming to data-tests, the data source does not come into
+existence. That means the data source is dependent on data-tests. Recall that
+the assertions in data-tests are dictated by the intent of the analytic app. It
+is these assertions that make the data source module knows about the analytic
+app.
+
 ### Develop analytic applications
 
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
@@ -209,9 +215,15 @@ boxplot(price ~ mpg + gear, cars_data)
 ### Recall why we have separated the data source from the rest
 
 Any data-driven application has two essential parts: *data source* and *analytic
-app*. The suggested system design:
+app*. Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app.
 
-(1) Divides those parts into modules; 
+With no design up front, 
+
+Without care the dependency structure is...
+
+The suggested system design:
+
+(1) Divides and encapsulates those parts into modules; 
 (2) Separates both parts by introducing an intermediate module dubbed
 *data-tests*; and
 (3) Dictates that both parts must depend on the data-tests module.  
