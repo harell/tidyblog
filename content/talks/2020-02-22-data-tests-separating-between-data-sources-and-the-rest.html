@@ -21,12 +21,12 @@ link-citations: yes
 <div id="TOC">
 <ul>
 <li><a href="#abstract">Abstract</a></li>
-<li><a href="#we-are-helping-our-clients-by-fitting-a-solution-to-their-needs">We are helping our clients by fitting a solution to their needs</a><ul>
+<li><a href="#helping-our-clients-by-fitting-a-solution-to-their-needs">Helping our clients by fitting a solution to their needs</a><ul>
 <li><a href="#getting-to-know-our-client">Getting to know our client</a></li>
 <li><a href="#the-proposed-solution-is-a-weekly-fact-sheet-with-popular-qa">The proposed solution is a weekly fact sheet with popular Q&amp;A</a></li>
-<li><a href="#the-developers-encounter-real-world-impediments">The developers encounter real-world impediments</a></li>
 </ul></li>
 <li><a href="#st-iteration-developing-a-data-driven-app-without-real-data">1<sup>st</sup> iteration: developing a data-driven app without real data</a><ul>
+<li><a href="#moving-from-ideation-to-implementation-programmers-encounter-real-world-impediments">Moving from ideation to implementation, programmers encounter real-world impediments</a></li>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
 <li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
@@ -37,6 +37,7 @@ link-citations: yes
 <li><a href="#recall-how-we-have-separated-the-data-source-from-the-rest">Recall how we have separated the data source from the rest</a></li>
 <li><a href="#recall-what-have-separated-the-data-source-from-the-rest">Recall what have separated the data source from the rest</a></li>
 </ul></li>
+<li><a href="#references">References</a></li>
 </ul>
 </div>
 
@@ -61,8 +62,8 @@ sources</mark>.</p>
 <p>While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.</p>
 </div>
-<div id="we-are-helping-our-clients-by-fitting-a-solution-to-their-needs" class="section level2">
-<h2>We are helping our clients by fitting a solution to their needs</h2>
+<div id="helping-our-clients-by-fitting-a-solution-to-their-needs" class="section level2">
+<h2>Helping our clients by fitting a solution to their needs</h2>
 <div id="getting-to-know-our-client" class="section level3">
 <h3>Getting to know our client</h3>
 <p>Our client is Euel Cheatam the Merceduce dealership manager.</p>
@@ -74,7 +75,7 @@ a profitable, complaint, and effective dealership.</p>
 <li>Eual <strong>thinks</strong> that a professional car salesperson needs to answer prospects
 queries quickly and accurately.</li>
 <li>Eual <strong>sees</strong> that it takes new hires several months to master the
-dealership’s car specifications. During these months new-hires convert fewer
+dealership’s cars specifications. During these months new-hires convert fewer
 prospects into clients; this causes new hires to get demotivated; which leads to
 fewer sales – it’s a vicious cycle.</li>
 <li>Eual <strong>feels</strong> obligated to provide resources that will enable everyone to
@@ -93,19 +94,28 @@ popular Q&amp;A about the dealership vehicles. Unlike water cooler talks, our
 product has been carefully formulated and evaluated against veterans and is
 distributed regularly.</p>
 </div>
-<div id="the-developers-encounter-real-world-impediments" class="section level3">
-<h3>The developers encounter real-world impediments</h3>
+</div>
+<div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
+<h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
+<div id="moving-from-ideation-to-implementation-programmers-encounter-real-world-impediments" class="section level3">
+<h3>Moving from ideation to implementation, programmers encounter real-world impediments</h3>
 <p><img src="https://i.imgur.com/TAcOHZO.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Programmers encounter many 1<sup>st</sup> world problems during the development process;
 Unavailable database is one of them. A slow database is another.</p>
 </div>
-</div>
-<div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
-<h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
-<p>The report includes a tidy data table, where each variable is a column and
-each observation is a row.</p>
 <div id="generate-dataset-assumption-triplet" class="section level3">
 <h3>Generate dataset assumption triplet</h3>
+<!-- The data source of the data-driven app must support the intent of the analytic app. -->
+<p>In many cases, including the case in hand, the analytic app can be satesfied
+with a tidy data table in its input.</p>
+<p>A tidy data <span class="citation">(Wickham and Grolemund <a href="#ref-wickham2016r" role="doc-biblioref">2016</a>, ch. 12)</span> table follows a consistent tabular format
+where each variable is a column and each observation is a row.</p>
+<p>The data scientist wants the tidy data table to support all of necessary
+variables required by the analytic app, but does not know what all those
+variables are. However, the data scientist does know the basic intent of the
+analytic app.</p>
+<!-- tidy data table leaves heavy data wrangling tasks outside the
+responsibility of the analytic app. -->
 <p>Start by making <strong>assumption triplets</strong> about what information the user needs to
 see:</p>
 <ul>
@@ -417,20 +427,20 @@ Valiant
 </div>
 <div id="generate-synthetic-datasynthetic-data-plugin" class="section level4">
 <h4>Generate synthetic data<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> plugin</h4>
-<pre class="r"><code># data-source.R
-rm(cars_data)
-
-## 1. Generate records 
-data(mtcars, package = &quot;datasets&quot;)
-cars_data &lt;- mtcars %&gt;% tibble::rownames_to_column(&quot;car_model&quot;)
+<pre class="r"><code>get_cars_data &lt;- function(){
+  ## 1. Generate records 
+  data(mtcars, package = &quot;datasets&quot;)
+  cars_data &lt;- mtcars %&gt;% tibble::rownames_to_column(&quot;car_model&quot;)
   
-## 2. Generate price
-set.seed(2020)
-price &lt;- runif(n = nrow(cars_data), min = 41, max = 75)
-cars_data &lt;- cars_data %&gt;% tibble::add_column(price = price)
+  ## 2. Generate price
+  set.seed(2020)
+  price &lt;- runif(n = nrow(cars_data), min = 41, max = 75)
+  cars_data &lt;- cars_data %&gt;% tibble::add_column(price = price)
   
-## Run data-tests
-source(&quot;data-tests.R&quot;)</code></pre>
+  ## Run data-tests
+  source(&quot;data-tests.R&quot;)
+  return(cars_data)
+}</code></pre>
 </div>
 </div>
 <div id="develop-analytic-applications" class="section level3">
@@ -451,7 +461,7 @@ boxplot(price ~ mpg + gear, cars_data)  </code></pre>
 <p>Any data-driven application has two essential parts: <em>data source</em> and <em>analytic
 app</em>. The suggested system design:</p>
 <ol style="list-style-type: decimal">
-<li>Modularizes each of those parts;</li>
+<li>Divides those parts into modules;</li>
 <li>Separates both parts by introducing an intermediate module dubbed
 <em>data-tests</em>; and</li>
 <li>Dictates that both parts must depend on the data-tests module.</li>
@@ -472,7 +482,15 @@ policy named data-tests.</p>
 <h3>Recall what have separated the data source from the rest</h3>
 <!-- ## 2^nd^ iteration: implementing customer feedback -->
 <!-- ## 3^rd^ iteration: deploying the application with real data -->
+</div>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
 <!-- Footnotes -->
+<div id="refs" class="references">
+<div id="ref-wickham2016r">
+<p>Wickham, Hadley, and Garrett Grolemund. 2016. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. " O’Reilly Media, Inc.". <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>.</p>
+</div>
 </div>
 </div>
 <div class="footnotes">

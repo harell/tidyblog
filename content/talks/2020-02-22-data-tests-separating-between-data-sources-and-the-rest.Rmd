@@ -51,7 +51,7 @@ sources</mark>.
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
 
-## We are helping our clients by fitting a solution to their needs
+## Helping our clients by fitting a solution to their needs
 
 ### Getting to know our client 
 
@@ -68,7 +68,7 @@ a profitable, complaint, and effective dealership.
 - Eual **thinks** that a professional car salesperson needs to answer prospects
 queries quickly and accurately.
 - Eual **sees** that it takes new hires several months to master the
-dealership’s car specifications. During these months new-hires convert fewer
+dealership’s cars specifications. During these months new-hires convert fewer
 prospects into clients; this causes new hires to get demotivated; which leads to
 fewer sales -- it's a vicious cycle.
 - Eual **feels** obligated to provide resources that will enable everyone to
@@ -90,7 +90,9 @@ popular Q&A about the dealership vehicles. Unlike water cooler talks, our
 product has been carefully formulated and evaluated against veterans and is
 distributed regularly.
 
-### The developers encounter real-world impediments 
+## 1^st^ iteration: developing a data-driven app without real data
+
+### Moving from ideation to implementation, programmers encounter real-world impediments 
 
 ```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
@@ -99,12 +101,23 @@ knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
 Programmers encounter many 1^st^ world problems during the development process;
 Unavailable database is one of them. A slow database is another.
 
-## 1^st^ iteration: developing a data-driven app without real data
-
-The report includes a tidy data table, where each variable is a column and
-each observation is a row.
-
 ### Generate dataset assumption triplet
+
+<!-- The data source of the data-driven app must support the intent of the analytic app. -->
+
+In many cases, including the case in hand, the analytic app can be satesfied
+with a tidy data table in its input.
+
+A tidy data [@wickham2016r, ch. 12] table follows a consistent tabular format
+where each variable is a column and each observation is a row.
+
+The data scientist wants the tidy data table to support all of necessary
+variables required by the analytic app, but does not know what all those
+variables are. However, the data scientist does know the basic intent of the
+analytic app.
+
+<!-- tidy data table leaves heavy data wrangling tasks outside the
+responsibility of the analytic app. -->
 
 Start by making **assumption triplets** about what information the user needs to
 see:
@@ -162,20 +175,20 @@ mtcars %>%
 #### Generate synthetic data[^synthetic-data] plugin
 
 ```{r data-source, echo = TRUE, eval = FALSE}
-# data-source.R
-rm(cars_data)
-
-## 1. Generate records 
-data(mtcars, package = "datasets")
-cars_data <- mtcars %>% tibble::rownames_to_column("car_model")
+get_cars_data <- function(){
+  ## 1. Generate records 
+  data(mtcars, package = "datasets")
+  cars_data <- mtcars %>% tibble::rownames_to_column("car_model")
   
-## 2. Generate price
-set.seed(2020)
-price <- runif(n = nrow(cars_data), min = 41, max = 75)
-cars_data <- cars_data %>% tibble::add_column(price = price)
+  ## 2. Generate price
+  set.seed(2020)
+  price <- runif(n = nrow(cars_data), min = 41, max = 75)
+  cars_data <- cars_data %>% tibble::add_column(price = price)
   
-## Run data-tests
-source("data-tests.R")
+  ## Run data-tests
+  source("data-tests.R")
+  return(cars_data)
+}
 ```
 
 ### Develop analytic applications
@@ -197,7 +210,7 @@ boxplot(price ~ mpg + gear, cars_data)
 Any data-driven application has two essential parts: *data source* and *analytic
 app*. The suggested system design:
 
-(1) Modularizes each of those parts; 
+(1) Divides those parts into modules; 
 (2) Separates both parts by introducing an intermediate module dubbed
 *data-tests*; and
 (3) Dictates that both parts must depend on the data-tests module.  
@@ -219,10 +232,11 @@ Third, we implemented a data source that conforms to data-tests.
 
 ### Recall what have separated the data source from the rest
 
-
 <!-- ## 2^nd^ iteration: implementing customer feedback -->
 
 <!-- ## 3^rd^ iteration: deploying the application with real data -->
+
+## References
 
 <!-- Footnotes -->
 
