@@ -108,7 +108,7 @@ process; Unavailable database is one of them. A slow database is another.</p>
 <!-- The data source of the data-driven app must support the intent of the analytic app. -->
 <p>In many cases, including the case in hand, the analytic app can be satesfied
 with a tidy data table in its input.</p>
-<p>A tidy data <span class="citation">(Wickham and Grolemund <a href="#ref-wickham2016r" role="doc-biblioref">2016</a>, ch. 12)</span> table follows a consistent tabular format
+<p>A tidy data table <span class="citation">(Wickham and Grolemund <a href="#ref-wickham2016r" role="doc-biblioref">2016</a>, ch. 12)</span> follows a consistent tabular format
 where each variable is a column and each observation is a row.</p>
 <p>The data scientist wants the tidy data table to support all of necessary
 variables required by the analytic app, but does not know what all those
@@ -448,6 +448,7 @@ Valiant
 <pre class="r"><code># app.R
 ## 1. Get the data
 source(&quot;data-source.R&quot;)
+cars_data &lt;- get_cars_data()
   
 ## 2. Render booklet
 print(cars_data %&gt;% dplyr::select(car_model, mpg, gear, price))

@@ -108,7 +108,7 @@ process; Unavailable database is one of them. A slow database is another.
 In many cases, including the case in hand, the analytic app can be satesfied
 with a tidy data table in its input.
 
-A tidy data [@wickham2016r, ch. 12] table follows a consistent tabular format
+A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
 where each variable is a column and each observation is a row.
 
 The data scientist wants the tidy data table to support all of necessary
@@ -197,6 +197,7 @@ get_cars_data <- function(){
 # app.R
 ## 1. Get the data
 source("data-source.R")
+cars_data <- get_cars_data()
   
 ## 2. Render booklet
 print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
