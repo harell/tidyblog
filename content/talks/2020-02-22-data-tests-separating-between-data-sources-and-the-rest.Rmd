@@ -190,12 +190,40 @@ print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
 boxplot(price ~ mpg + gear, cars_data)  
 ```
 
-## 2^nd^ iteration: implementing customer feedback
+## Why, how and what have we done
+
+### Recall why we have separated the data source from the rest
+
+Any data-driven application has two essential parts: *data source* and *analytic
+app*. The suggested system design:
+
+(1) Modularizes each of those parts; 
+(2) Separates both parts by introducing an intermediate module dubbed
+*data-tests*; and
+(3) Dictates that both parts must depend on the data-tests module.  
+
+The primary advantage of using data-tests is that <mark>the data source module
+and the analytic app module do not know anything of each other</mark>. This
+allows those modules to evolve frequently and independently.
 
 
-## 3^rd^ iteration: deploying the application with real data
+### Recall how we have separated the data source from the rest
 
-<!-- ## 3^rd^ iteration: plug in the real data source to the application -->
+Firstly, we took the analytic app point of view. The app expects a tidy data
+table with a specific structure. 
+
+Second, we asserted the app expectations regarding the data in the form of a
+policy named data-tests.
+
+Third, we implemented a data source that conforms to data-tests.
+
+### Recall what have separated the data source from the rest
+
+
+<!-- ## 2^nd^ iteration: implementing customer feedback -->
+
+<!-- ## 3^rd^ iteration: deploying the application with real data -->
+
 <!-- Footnotes -->
 
 [^synthetic-data]: A synthetic datasetis contains data that is artificially

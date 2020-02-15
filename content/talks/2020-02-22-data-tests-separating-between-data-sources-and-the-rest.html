@@ -32,8 +32,11 @@ link-citations: yes
 <li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
 <li><a href="#develop-analytic-applications">Develop analytic applications</a></li>
 </ul></li>
-<li><a href="#nd-iteration-implementing-customer-feedback">2<sup>nd</sup> iteration: implementing customer feedback</a></li>
-<li><a href="#rd-iteration-deploying-the-application-with-real-data">3<sup>rd</sup> iteration: deploying the application with real data</a></li>
+<li><a href="#why-how-and-what-have-we-done">Why, how and what have we done</a><ul>
+<li><a href="#recall-why-we-have-separated-the-data-source-from-the-rest">Recall why we have separated the data source from the rest</a></li>
+<li><a href="#recall-how-we-have-separated-the-data-source-from-the-rest">Recall how we have separated the data source from the rest</a></li>
+<li><a href="#recall-what-have-separated-the-data-source-from-the-rest">Recall what have separated the data source from the rest</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -441,13 +444,36 @@ print(cars_data %&gt;% dplyr::select(car_model, mpg, gear, price))
 boxplot(price ~ mpg + gear, cars_data)  </code></pre>
 </div>
 </div>
-<div id="nd-iteration-implementing-customer-feedback" class="section level2">
-<h2>2<sup>nd</sup> iteration: implementing customer feedback</h2>
+<div id="why-how-and-what-have-we-done" class="section level2">
+<h2>Why, how and what have we done</h2>
+<div id="recall-why-we-have-separated-the-data-source-from-the-rest" class="section level3">
+<h3>Recall why we have separated the data source from the rest</h3>
+<p>Any data-driven application has two essential parts: <em>data source</em> and <em>analytic
+app</em>. The suggested system design:</p>
+<ol style="list-style-type: decimal">
+<li>Modularizes each of those parts;</li>
+<li>Separates both parts by introducing an intermediate module dubbed
+<em>data-tests</em>; and</li>
+<li>Dictates that both parts must depend on the data-tests module.</li>
+</ol>
+<p>The primary advantage of using data-tests is that <mark>the data source module
+and the analytic app module do not know anything of each other</mark>. This
+allows those modules to evolve frequently and independently.</p>
 </div>
-<div id="rd-iteration-deploying-the-application-with-real-data" class="section level2">
-<h2>3<sup>rd</sup> iteration: deploying the application with real data</h2>
-<!-- ## 3^rd^ iteration: plug in the real data source to the application -->
+<div id="recall-how-we-have-separated-the-data-source-from-the-rest" class="section level3">
+<h3>Recall how we have separated the data source from the rest</h3>
+<p>Firstly, we took the analytic app point of view. The app expects a tidy data
+table with a specific structure.</p>
+<p>Second, we asserted the app expectations regarding the data in the form of a
+policy named data-tests.</p>
+<p>Third, we implemented a data source that conforms to data-tests.</p>
+</div>
+<div id="recall-what-have-separated-the-data-source-from-the-rest" class="section level3">
+<h3>Recall what have separated the data source from the rest</h3>
+<!-- ## 2^nd^ iteration: implementing customer feedback -->
+<!-- ## 3^rd^ iteration: deploying the application with real data -->
 <!-- Footnotes -->
+</div>
 </div>
 <div class="footnotes">
 <hr />
