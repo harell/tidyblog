@@ -26,7 +26,7 @@ link-citations: yes
 <li><a href="#the-proposed-solution-is-a-weekly-fact-sheet-with-popular-qa">The proposed solution is a weekly fact sheet with popular Q&amp;A</a></li>
 </ul></li>
 <li><a href="#st-iteration-developing-a-data-driven-app-without-real-data">1<sup>st</sup> iteration: developing a data-driven app without real data</a><ul>
-<li><a href="#moving-from-ideation-to-implementation-programmers-encounter-real-world-impediments">Moving from ideation to implementation, programmers encounter real-world impediments</a></li>
+<li><a href="#moving-from-ideation-to-implementation-data-scientists-encounter-real-world-impediments">Moving from ideation to implementation, data scientists encounter real-world impediments</a></li>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
 <li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
@@ -54,8 +54,8 @@ the code related to the data source. Rather, preserving the rest of the existing
 application in a working condition involves further code changes in distant
 elements of the application.</p>
 <p>An alternative way of dealing with evolving data sources is to introduce a
-<strong>small design up front</strong>. Such design lets programmers manage the source code
-dependencies throughout the project life-cycle.</p>
+<strong>small design up front</strong>. Such design lets data scientists manage the source
+code dependencies throughout the project life-cycle.</p>
 <p>This post suggests a design that <mark>(1) separates data sources from analytic
 applications and (2) restricts analytic applications from knowing about the data
 sources</mark>.</p>
@@ -97,11 +97,11 @@ distributed regularly.</p>
 </div>
 <div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
 <h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
-<div id="moving-from-ideation-to-implementation-programmers-encounter-real-world-impediments" class="section level3">
-<h3>Moving from ideation to implementation, programmers encounter real-world impediments</h3>
+<div id="moving-from-ideation-to-implementation-data-scientists-encounter-real-world-impediments" class="section level3">
+<h3>Moving from ideation to implementation, data scientists encounter real-world impediments</h3>
 <p><img src="https://i.imgur.com/TAcOHZO.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>Programmers encounter many 1<sup>st</sup> world problems during the development process;
-Unavailable database is one of them. A slow database is another.</p>
+<p>Data scientists encounter many 1<sup>st</sup> world problems during the development
+process; Unavailable database is one of them. A slow database is another.</p>
 </div>
 <div id="generate-dataset-assumption-triplet" class="section level3">
 <h3>Generate dataset assumption triplet</h3>

@@ -41,8 +41,8 @@ application in a working condition involves further code changes in distant
 elements of the application.
 
 An alternative way of dealing with evolving data sources is to introduce a
-**small design up front**. Such design lets programmers manage the source code
-dependencies throughout the project life-cycle.
+**small design up front**. Such design lets data scientists manage the source
+code dependencies throughout the project life-cycle.
 
 This post suggests a design that <mark>(1) separates data sources from analytic
 applications and (2) restricts analytic applications from knowing about the data
@@ -92,14 +92,14 @@ distributed regularly.
 
 ## 1^st^ iteration: developing a data-driven app without real data
 
-### Moving from ideation to implementation, programmers encounter real-world impediments 
+### Moving from ideation to implementation, data scientists encounter real-world impediments 
 
 ```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
 ```
 
-Programmers encounter many 1^st^ world problems during the development process;
-Unavailable database is one of them. A slow database is another.
+Data scientists encounter many 1^st^ world problems during the development
+process; Unavailable database is one of them. A slow database is another.
 
 ### Generate dataset assumption triplet
 
