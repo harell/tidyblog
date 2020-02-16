@@ -29,7 +29,7 @@ link-citations: yes
 <li><a href="#st-iteration-developing-a-data-driven-app-without-real-data">1<sup>st</sup> iteration: developing a data-driven app without real data</a><ul>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
-<li><a href="#implement-a-data-source-plugin">Implement a data source plugin</a></li>
+<li><a href="#implement-a-data-access-plugin">Implement a data access plugin</a></li>
 <li><a href="#develop-an-analytic-application">Develop an analytic application</a></li>
 </ul></li>
 <li><a href="#why-how-and-what-have-we-done">Why, how and what have we done</a><ul>
@@ -150,8 +150,8 @@ stopifnot(all(expected_cols %in% colnames(cars_data)))
 is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))</code></pre>
 </div>
-<div id="implement-a-data-source-plugin" class="section level3">
-<h3>Implement a data source plugin</h3>
+<div id="implement-a-data-access-plugin" class="section level3">
+<h3>Implement a data access plugin</h3>
 <div id="quick-glimpse-over-the-mtcars-dataset" class="section level4">
 <h4>Quick glimpse over the <code>mtcars</code> dataset</h4>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
@@ -455,7 +455,7 @@ analytic app. It is these assertions that know about the analytic app.</p>
 <h3>Develop an analytic application</h3>
 <pre class="r"><code># app.R
 ## 1. Get the data
-source(&quot;data-source.R&quot;)
+source(&quot;database-access.R&quot;)
 cars_data &lt;- get_cars_data()
   
 ## 2. Render booklet

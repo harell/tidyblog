@@ -165,7 +165,7 @@ is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))
 ```
 
-### Implement a data source plugin
+### Implement a data access plugin
 
 #### Quick glimpse over the `mtcars` dataset
 
@@ -179,7 +179,7 @@ mtcars %>%
 
 #### Generate synthetic data[^synthetic-data] plugin
 
-```{r data-source, echo = TRUE, eval = FALSE}
+```{r database-access, echo = TRUE, eval = FALSE}
 get_cars_data <- function(){
   ## 1. Generate records 
   data(mtcars, package = "datasets")
@@ -206,7 +206,7 @@ analytic app. It is these assertions that know about the analytic app.
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
 # app.R
 ## 1. Get the data
-source("data-source.R")
+source("database-access.R")
 cars_data <- get_cars_data()
   
 ## 2. Render booklet
