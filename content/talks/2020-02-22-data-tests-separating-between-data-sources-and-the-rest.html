@@ -24,13 +24,13 @@ link-citations: yes
 <li><a href="#helping-our-clients-by-fitting-a-solution-to-their-needs">Helping our clients by fitting a solution to their needs</a><ul>
 <li><a href="#getting-to-know-our-client">Getting to know our client</a></li>
 <li><a href="#the-proposed-solution-is-a-weekly-fact-sheet-with-popular-qa">The proposed solution is a weekly fact sheet with popular Q&amp;A</a></li>
+<li><a href="#moving-from-ideation-to-implementation-data-scientists-encounter-real-world">Moving from ideation to implementation, data scientists encounter real-world</a></li>
 </ul></li>
 <li><a href="#st-iteration-developing-a-data-driven-app-without-real-data">1<sup>st</sup> iteration: developing a data-driven app without real data</a><ul>
-<li><a href="#moving-from-ideation-to-implementation-data-scientists-encounter-real-world-impediments">Moving from ideation to implementation, data scientists encounter real-world impediments</a></li>
 <li><a href="#generate-dataset-assumption-triplet">Generate dataset assumption triplet</a></li>
 <li><a href="#convert-assumptions-to-assertions-with-data-tests">Convert assumptions to assertions with data-tests</a></li>
-<li><a href="#implement-data-source-plugins">Implement data source plugins</a></li>
-<li><a href="#develop-analytic-applications">Develop analytic applications</a></li>
+<li><a href="#implement-a-data-source-plugin">Implement a data source plugin</a></li>
+<li><a href="#develop-an-analytic-application">Develop an analytic application</a></li>
 </ul></li>
 <li><a href="#why-how-and-what-have-we-done">Why, how and what have we done</a><ul>
 <li><a href="#recall-why-we-have-separated-the-data-source-from-the-rest">Recall why we have separated the data source from the rest</a></li>
@@ -94,35 +94,39 @@ popular Q&amp;A about the dealership vehicles. Unlike water cooler talks, our
 product has been carefully formulated and evaluated against veterans and is
 distributed regularly.</p>
 </div>
-</div>
-<div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
-<h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
-<div id="moving-from-ideation-to-implementation-data-scientists-encounter-real-world-impediments" class="section level3">
-<h3>Moving from ideation to implementation, data scientists encounter real-world impediments</h3>
+<div id="moving-from-ideation-to-implementation-data-scientists-encounter-real-world" class="section level3">
+<h3>Moving from ideation to implementation, data scientists encounter real-world</h3>
+<p>impediments</p>
 <p><img src="https://i.imgur.com/TAcOHZO.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Data scientists encounter many 1<sup>st</sup> world problems during the development
 process; Unavailable database is one of them. A slow database is another.</p>
 </div>
+</div>
+<div id="st-iteration-developing-a-data-driven-app-without-real-data" class="section level2">
+<h2>1<sup>st</sup> iteration: developing a data-driven app without real data</h2>
 <div id="generate-dataset-assumption-triplet" class="section level3">
 <h3>Generate dataset assumption triplet</h3>
-<!-- The data source of the data-driven app must support the intent of the analytic app. -->
-<p>In many cases, including the case in hand, the analytic app can be satesfied
+<p>In many cases, including the case in hand, the analytic app can be satisfied
 with a tidy data table in its input.</p>
 <p>A tidy data table <span class="citation">(Wickham and Grolemund <a href="#ref-wickham2016r" role="doc-biblioref">2016</a>, ch. 12)</span> follows a consistent tabular format
 where each variable is a column and each observation is a row.</p>
-<p>The data scientist wants the tidy data table to support all of necessary
+<p>The data scientist wants the tidy data table to support all of the necessary
 variables required by the analytic app, but does not know what all those
 variables are. However, the data scientist does know the basic intent of the
 analytic app.</p>
-<!-- tidy data table leaves heavy data wrangling tasks outside the
-responsibility of the analytic app. -->
-<p>Start by making <strong>assumption triplets</strong> about what information the user needs to
-see:</p>
+<p>Start by making an <strong>assumption triplet</strong> about what information the user needs
+to see.</p>
+<p>An assumption triplet comprises hypotheses about three variable types that
+should be in the tidy data table: <strong>Observation Unique Identifier (UID)</strong>,
+<strong>Target variable</strong> and <strong>Salient features</strong>.</p>
+<p>In our example,</p>
 <ul>
-<li><strong>Primary Key</strong> represents car models;</li>
+<li><strong>Observation Unique Identifier (UID)</strong> corresponds to car models;</li>
 <li><strong>Target variable</strong> is the price; and</li>
 <li><strong>Salient features</strong> include gear, and mpg.</li>
 </ul>
+<!-- tidy data table leaves heavy data wrangling tasks outside the
+responsibility of the analytic app. -->
 </div>
 <div id="convert-assumptions-to-assertions-with-data-tests" class="section level3">
 <h3>Convert assumptions to assertions with data-tests</h3>
@@ -146,8 +150,8 @@ stopifnot(all(expected_cols %in% colnames(cars_data)))
 is.distinct &lt;- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))</code></pre>
 </div>
-<div id="implement-data-source-plugins" class="section level3">
-<h3>Implement data source plugins</h3>
+<div id="implement-a-data-source-plugin" class="section level3">
+<h3>Implement a data source plugin</h3>
 <div id="quick-glimpse-over-the-mtcars-dataset" class="section level4">
 <h4>Quick glimpse over the <code>mtcars</code> dataset</h4>
 <table class="table table-striped" style="margin-left: auto; margin-right: auto;">
@@ -441,15 +445,14 @@ Valiant
   source(&quot;data-tests.R&quot;)
   return(cars_data)
 }</code></pre>
-<p>Notice that without conforming to data-tests, the data source does not come into
-existence. That means the data source is dependent on data-tests. Recall that
-the assertions in data-tests are dictated by the intent of the analytic app. It
-is these assertions that make the data source module knows about the analytic
-app.</p>
+<p>Notice that without conforming to data-tests assertions, the data source does
+not come into existence. That means the data source is dependent on data-tests.
+Recall that the assertions in data-tests are dictated by the intent of the
+analytic app. It is these assertions that know about the analytic app.</p>
 </div>
 </div>
-<div id="develop-analytic-applications" class="section level3">
-<h3>Develop analytic applications</h3>
+<div id="develop-an-analytic-application" class="section level3">
+<h3>Develop an analytic application</h3>
 <pre class="r"><code># app.R
 ## 1. Get the data
 source(&quot;data-source.R&quot;)
@@ -465,9 +468,17 @@ boxplot(price ~ mpg + gear, cars_data)  </code></pre>
 <div id="recall-why-we-have-separated-the-data-source-from-the-rest" class="section level3">
 <h3>Recall why we have separated the data source from the rest</h3>
 <p>Any data-driven application has two essential parts: <em>data source</em> and <em>analytic
-app</em>. Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app.</p>
-<p>With no design up front,</p>
-<p>Without care the dependency structure is…</p>
+app</em>. Importantly, in many applications the data source is indepenet from the
+analytic app, but the analytic app is dependent on the data source.</p>
+<p>This type of relationship puts the data source at the center of the system. The
+analytic applications revolve around the data source. They are plugins of the
+data source.</p>
+<!-- This requires us to make premature descions about  -->
+<!-- hinders the development of data scince projects as   -->
+<!-- With such relationships between the *data source* and *analytic app*,  -->
+<!-- Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app. -->
+<!-- With no design up front,  -->
+<!-- Without care the dependency structure is... -->
 <p>The suggested system design:</p>
 <ol style="list-style-type: decimal">
 <li>Divides and encapsulates those parts into modules;</li>

@@ -90,9 +90,8 @@ popular Q&A about the dealership vehicles. Unlike water cooler talks, our
 product has been carefully formulated and evaluated against veterans and is
 distributed regularly.
 
-## 1^st^ iteration: developing a data-driven app without real data
-
-### Moving from ideation to implementation, data scientists encounter real-world impediments 
+### Moving from ideation to implementation, data scientists encounter real-world
+impediments
 
 ```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
@@ -101,30 +100,9 @@ knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
 Data scientists encounter many 1^st^ world problems during the development
 process; Unavailable database is one of them. A slow database is another.
 
+## 1^st^ iteration: developing a data-driven app without real data
+
 ### Generate dataset assumption triplet
-
-<!-- The data source of the data-driven app must support the intent of the analytic app. -->
-
-In many cases, including the case in hand, the analytic app can be satesfied
-with a tidy data table in its input.
-
-A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
-where each variable is a column and each observation is a row.
-
-The data scientist wants the tidy data table to support all of necessary
-variables required by the analytic app, but does not know what all those
-variables are. However, the data scientist does know the basic intent of the
-analytic app.
-
-<!-- tidy data table leaves heavy data wrangling tasks outside the
-responsibility of the analytic app. -->
-
-Start by making **assumption triplets** about what information the user needs to
-see:
-
-* **Primary Key** represents car models;
-* **Target variable** is the price; and
-* **Salient features** include gear, and mpg.
 
 ```{r tidy-table, eval = FALSE}
 set.seed(1238)
@@ -136,6 +114,33 @@ tibble::tibble(
     y = rpois(n, lambda = 5)
 )
 ```
+
+In many cases, including the case in hand, the analytic app can be satisfied
+with a tidy data table in its input.
+
+A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
+where each variable is a column and each observation is a row.
+
+The data scientist wants the tidy data table to support all of the necessary
+variables required by the analytic app, but does not know what all those
+variables are. However, the data scientist does know the basic intent of the
+analytic app.
+
+Start by making an **assumption triplet** about what information the user needs
+to see. 
+
+An assumption triplet comprises hypotheses about three variable types that
+should be in the tidy data table: **Observation Unique Identifier (UID)**,
+**Target variable** and **Salient features**.
+
+In our example, 
+
+* **Observation Unique Identifier (UID)** corresponds to car models;
+* **Target variable** is the price; and
+* **Salient features** include gear, and mpg.
+
+<!-- tidy data table leaves heavy data wrangling tasks outside the
+responsibility of the analytic app. -->
 
 ### Convert assumptions to assertions with data-tests
 
@@ -160,7 +165,7 @@ is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))
 ```
 
-### Implement data source plugins
+### Implement a data source plugin
 
 #### Quick glimpse over the `mtcars` dataset
 
@@ -191,13 +196,12 @@ get_cars_data <- function(){
 }
 ```
 
-Notice that without conforming to data-tests, the data source does not come into
-existence. That means the data source is dependent on data-tests. Recall that
-the assertions in data-tests are dictated by the intent of the analytic app. It
-is these assertions that make the data source module knows about the analytic
-app.
+Notice that without conforming to data-tests assertions, the data source does
+not come into existence. That means the data source is dependent on data-tests.
+Recall that the assertions in data-tests are dictated by the intent of the
+analytic app. It is these assertions that know about the analytic app.
 
-### Develop analytic applications
+### Develop an analytic application
 
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
 # app.R
@@ -215,11 +219,24 @@ boxplot(price ~ mpg + gear, cars_data)
 ### Recall why we have separated the data source from the rest
 
 Any data-driven application has two essential parts: *data source* and *analytic
-app*. Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app.
+app*. Importantly, in many applications the data source is indepenet from the
+analytic app, but the analytic app is dependent on the data source.
 
-With no design up front, 
+This type of relationship puts the data source at the center of the system. The
+analytic applications revolve around the data source. They are plugins of the
+data source.
 
-Without care the dependency structure is...
+<!-- This requires us to make premature descions about  -->
+
+<!-- hinders the development of data scince projects as   -->
+
+<!-- With such relationships between the *data source* and *analytic app*,  -->
+
+<!-- Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app. -->
+
+<!-- With no design up front,  -->
+
+<!-- Without care the dependency structure is... -->
 
 The suggested system design:
 
