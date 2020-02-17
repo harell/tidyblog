@@ -214,7 +214,7 @@ print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
 boxplot(price ~ mpg + gear, cars_data)  
 ```
 
-## Why, how and what have we done
+## Why and how we seperated the data source from the rest
 
 ### Recall why we have separated the data source from the rest
 
@@ -226,17 +226,60 @@ This type of relationship puts the data source at the center of the system. The
 analytic applications revolve around the data source. They are plugins of the
 data source.
 
-<!-- This requires us to make premature descions about  -->
+There are two symptoms of such a data-centeric design: change amplification and
+cognitive load.
 
-<!-- hinders the development of data scince projects as   -->
+There are two main problems with that.
 
-<!-- With such relationships between the *data source* and *analytic app*,  -->
+1. Dependecy
+2. Obscurity. It is not obvoius what data in the database is important for the app to run.
 
-<!-- Moreover, in any system design the data source does not know about the analytic app. That means that the data source is indepedent of the analytic app. -->
 
-<!-- With no design up front,  -->
+if one is asked to replace a data source with another implementation, it is not obvious what )
 
-<!-- Without care the dependency structure is... -->
+system easy to understand, easy to develop, easy
+to maintain, and easy to deploy. The ultimate goal is to minimize the lifetime
+cost of the system and to maximize programmer productivity.
+
+The problem is that most of the time the data scientist doesn't know what all 
+the variables are
+
+Dependecy and obsquirty
+
+as the system moves through its life cycle.
+
+
+The database, its query language, and even its schema are technical details
+that have nothing to do with the analytic app. They will change at
+rates, and for reasons, that are independent of other aspects of the system.
+Consequently, the data-tests separate the data source from the rest of the
+system so that they can be independently changed.
+
+
+
+A good architecture makes the system easy to change, in all the ways that it
+must change, by leaving options open.
+
+Introducing the middle layer, data-tests, seperates 
+There are a few advantages of sepreting the data source from the analytic app:
+
+
+Develop-ability
+Deployability
+
+
+restand the analytic app are strongly decoupled, the inter
+then a team that focuses on the UI cannot much
+affect a team that focuses on the business rules
+
+dependencies are clear
+
+Changes in the data source
+
+In practice, the
+•	programmers can either work on the data source or the analytic app without being exposed to the complexity of the other module.
+•	make the dependencies that remain as simple and obvious as possible.
+
 
 The suggested system design:
 
@@ -259,8 +302,6 @@ Second, we asserted the app expectations regarding the data in the form of a
 policy named data-tests.
 
 Third, we implemented a data source that conforms to data-tests.
-
-### Recall what have separated the data source from the rest
 
 <!-- ## 2^nd^ iteration: implementing customer feedback -->
 
