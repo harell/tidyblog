@@ -26,32 +26,50 @@ knitr::opts_chunk$set(
 )
 ```
 
+<!--
+## Glossary
+
+* Data + Data Access Object = Data Source
+* Data Source + Analytic Module = Analytic App
+
+## Examples
+
+* Data Source: A combination of one or more databases, APIs, flat files etc.
+* Analytic App: Dashboard, report, predictive modelling, etc.
+-->
+
 ## Abstract
 
 Data science projects in commercial companies often experience a challenge
-arising from evolving data sources. As the project progresses, new signals and
-information sources are added incrementally. In practice, when the data source
-changes, it creates a need to change the application source code.
+arising from evolving data sources[^glossary-data-source]. As the project
+progresses, new signals and information sources are added incrementally. In
+practice, when the data source changes, it creates a need to change the
+application source code.
 
-With **no design up front**, some application modules, such as a dashboard or a
-machine learning model, unwittingly become dependent on the data source. In this
-case, accommodating the evolving data source is not simply a matter of changing
-the code related to the data source. Rather, preserving the rest of the existing
-application in a working condition involves further code changes in distant
-elements of the application.
+With **no design up front**, some analytic modules[^glossary-analytic-module],
+such as a dashboard or a machine learning model, unwittingly become dependent on
+the data source. In this case, accommodating the evolving data source is not
+simply a matter of changing the code related to the data source. Rather,
+preserving the rest of the existing application in a working condition involves
+further code changes in distant elements of the application.
 
 An alternative way of dealing with evolving data sources is to introduce a
 **small design up front**. Such design lets data scientists manage the source
 code dependencies throughout the project life-cycle.
 
 This post suggests a design that <mark>(1) separates data sources from analytic
-applications and (2) restricts analytic applications from knowing about the data
+applications and (2) restricts analytic modules from knowing about the data
 sources</mark>.
 
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
 
 ## Helping our clients by fitting a solution to their needs
+
+This talk features a confabulated story that covers real challenges. 
+
+We work in an Agile environment and we cover the first iteration, going from
+nothing to something.
 
 ### Getting to know our client 
 
@@ -90,19 +108,52 @@ popular Q&A about the dealership vehicles. Unlike water cooler talks, our
 product has been carefully formulated and evaluated against veterans and is
 distributed regularly.
 
-### Moving from ideation to implementation, data scientists encounter real-world
-impediments
+With the customer blessing and a firm handshake, we initiate product
+development.
+
+### Moving from ideation to implementation, data scientists encounter real-world impediments
 
 ```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
 ```
 
-Data scientists encounter many 1^st^ world problems during the development
-process; Unavailable database is one of them. A slow database is another.
+At this stage, the data scientists have a data-driven product in mind, but they
+are facing two challenges:
 
-## 1^st^ iteration: developing a data-driven app without real data
+1. Identifying the important information for the application; and
+2. Getting access to the data.
+
+The first challenge occurs because the data scientists don’t know what
+information they need. Instead, they have assumptions about what information
+could be relevant. As the project progress, exploration will lead them to new
+findings and new data sources.
+
+The second challenge occurs because of external factors such as personal or
+policy regarding the data. The people responsible for the database could be
+unavailable. Another impediment involves data security policy or something of
+that sort. 
+
+In any case, datasets are hard to obtain.
+
+To mitigate what the real world imposes on us, we need a system design that can
+handle changes.
+
+## Iteration 0: developing a data-driven app without real data
+
+In iteration zero we are going to move from no product to a product. Once we
+have something, we can show it to the client and receive feedback at an early
+stage of development.
 
 ### Generate dataset assumption triplet
+
+<!-- Having an analytic application in mind, we can derive assumption about what data -->
+<!-- is required. -->
+
+In many cases, including the case in hand, the analytic module can be satisfied
+with a tidy data table in its input.
+
+A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
+where each variable is a column and each observation is a row.
 
 ```{r tidy-table, eval = FALSE}
 set.seed(1238)
@@ -115,14 +166,8 @@ tibble::tibble(
 )
 ```
 
-In many cases, including the case in hand, the analytic app can be satisfied
-with a tidy data table in its input.
-
-A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
-where each variable is a column and each observation is a row.
-
 The data scientist wants the tidy data table to support all of the necessary
-variables required by the analytic app, but does not know what all those
+variables required by the analytic module, but does not know what all those
 variables are. However, the data scientist does know the basic intent of the
 analytic app.
 
@@ -140,16 +185,18 @@ In our example,
 * **Salient features** include gear, and mpg.
 
 <!-- tidy data table leaves heavy data wrangling tasks outside the
-responsibility of the analytic app. -->
+responsibility of the analytic module. -->
 
 ### Convert assumptions to assertions with data-tests
 
-* Data-tests are assertions that ensure [data
-integrity](https://en.wikipedia.org/wiki/Data_integrity), mainly, they concern
-the data existance and structure.
-* Data tests are like clauses in a contract. 
-* The analytic application dictates the clauses.
-* The analytic application is dependent only on the clauses.
+Having rudimentary assumptions about what the analytic module is likely to use,
+we write down assertions in a new module called data-tests.
+
+* The data tests module is a high-level policy. It contains no data.
+* The data-tests module comprises assertions that ensure [data
+integrity](https://en.wikipedia.org/wiki/Data_integrity). Mainly, its assertions
+concern the existence and structure of the data.
+<!-- * The assertions within the data-tests module are like clauses in a contract. -->
 
 ```{r data-tests, echo = TRUE, eval = FALSE}
 # data-tests.R
@@ -165,7 +212,7 @@ is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))
 ```
 
-### Implement a data access plugin
+### Implement a data source plugin
 
 #### Quick glimpse over the `mtcars` dataset
 
@@ -179,7 +226,8 @@ mtcars %>%
 
 #### Generate synthetic data[^synthetic-data] plugin
 
-```{r database-access, echo = TRUE, eval = FALSE}
+```{r data-access, echo = TRUE, eval = FALSE}
+# data-access.R
 get_cars_data <- function(){
   ## 1. Generate records 
   data(mtcars, package = "datasets")
@@ -199,86 +247,54 @@ get_cars_data <- function(){
 Notice that without conforming to data-tests assertions, the data source does
 not come into existence. That means the data source is dependent on data-tests.
 Recall that the assertions in data-tests are dictated by the intent of the
-analytic app. It is these assertions that know about the analytic app.
+analytic module. It is these assertions that know about the analytic module.
 
-### Develop an analytic application
+### Develop an analytic module
 
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
 # app.R
 ## 1. Get the data
-source("database-access.R")
+source("data-source.R")
 cars_data <- get_cars_data()
   
 ## 2. Render booklet
 print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
-boxplot(price ~ mpg + gear, cars_data)  
+lm(mpg ~ hp, cars_data) %>% summary()
 ```
 
 ## Why and how we seperated the data source from the rest
 
 ### Recall why we have separated the data source from the rest
 
-Any data-driven application has two essential parts: *data source* and *analytic
-app*. Importantly, in many applications the data source is indepenet from the
-analytic app, but the analytic app is dependent on the data source.
+In short, change amplification and cognitive load.
+
+Any analytic app has two essential parts: *data source* and *analytic
+module*. Importantly, in many applications the data source is independent of the
+analytic module, but the analytic module is dependent on the data source.
 
 This type of relationship puts the data source at the center of the system. The
-analytic applications revolve around the data source. They are plugins of the
+analytic modules revolve around the data source. They are plugins of the
 data source.
 
-There are two symptoms of such a data-centeric design: change amplification and
-cognitive load.
+#### Change amplification
 
-There are two main problems with that.
+The problem is that both the data source and the analytic module change throughout
+the project life cycle. 
 
-1. Dependecy
-2. Obscurity. It is not obvoius what data in the database is important for the app to run.
+In data-centric configuration, changes in the data source propagate into the
+analytic module.
 
+#### Cognitive load
 
+It is not obvious what data in the database is important for the app to run.
 if one is asked to replace a data source with another implementation, it is not obvious what )
-
-system easy to understand, easy to develop, easy
-to maintain, and easy to deploy. The ultimate goal is to minimize the lifetime
-cost of the system and to maximize programmer productivity.
-
-The problem is that most of the time the data scientist doesn't know what all 
-the variables are
-
-Dependecy and obsquirty
-
-as the system moves through its life cycle.
 
 
 The database, its query language, and even its schema are technical details
-that have nothing to do with the analytic app. They will change at
+that have nothing to do with the analytic module. They will change at
 rates, and for reasons, that are independent of other aspects of the system.
 Consequently, the data-tests separate the data source from the rest of the
 system so that they can be independently changed.
-
-
-
-A good architecture makes the system easy to change, in all the ways that it
-must change, by leaving options open.
-
-Introducing the middle layer, data-tests, seperates 
-There are a few advantages of sepreting the data source from the analytic app:
-
-
-Develop-ability
-Deployability
-
-
-restand the analytic app are strongly decoupled, the inter
-then a team that focuses on the UI cannot much
-affect a team that focuses on the business rules
-
-dependencies are clear
-
-Changes in the data source
-
-In practice, the
-•	programmers can either work on the data source or the analytic app without being exposed to the complexity of the other module.
-•	make the dependencies that remain as simple and obvious as possible.
 
 
 The suggested system design:
@@ -289,19 +305,19 @@ The suggested system design:
 (3) Dictates that both parts must depend on the data-tests module.  
 
 The primary advantage of using data-tests is that <mark>the data source module
-and the analytic app module do not know anything of each other</mark>. This
+and the analytic module do not know anything of each other</mark>. This
 allows those modules to evolve frequently and independently.
-
 
 ### Recall how we have separated the data source from the rest
 
-Firstly, we took the analytic app point of view. The app expects a tidy data
-table with a specific structure. 
+First, we identified the variables which the analytic module may need.
 
-Second, we asserted the app expectations regarding the data in the form of a
-policy named data-tests.
+Second, we make wrote down our assumptions in data-tests.
 
-Third, we implemented a data source that conforms to data-tests.
+Third, we implemented a data source that conforms to the data-tests.
+
+Finally, we developed our application module using only the available
+information specified in data-tests.
 
 <!-- ## 2^nd^ iteration: implementing customer feedback -->
 
@@ -311,5 +327,11 @@ Third, we implemented a data source that conforms to data-tests.
 
 <!-- Footnotes -->
 
-[^synthetic-data]: A synthetic datasetis contains data that is artificially
+[^glossary-data-source]: Data source includes data and access (or connection) to
+the data. The data itself could be obtained from databases, APIs, flat files,
+etc.
+[^glossary-analytic-module]: Analytic module contains the programming logic that
+process data extracted from a database. Prominent examples are dashboards,
+reports, and predictive modelling.
+[^synthetic-data]: A synthetic dataset contains data that is artificially
 created rather than being generated by actual events.
