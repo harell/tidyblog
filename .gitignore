@@ -39,7 +39,4 @@ vignettes/*.pdf
 .Renviron
 
 # Blogdown
-public
 static
-content/*.html
-content/post/*.html

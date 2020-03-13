@@ -1,0 +1,337 @@
+---
+title: 'Data Tests: Separating between Data Sources and the Rest'
+author: Harel Lustiger
+date: '2020-02-22'
+slug: data-tests-separating-between-data-sources-and-the-rest
+draft: true
+categories:
+  - R
+  - Software Design
+tags:
+  - database abstraction layer
+  - mock data
+  - small design up front
+bibliography: [references-talks.bib]
+biblio-style: apalike
+link-citations: yes  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center",
+  out.width = "100%"
+)
+```
+
+<!--
+## Glossary
+
+* Data + Data Access Object = Data Source
+* Data Source + Analytic Module = Analytic App
+
+## Examples
+
+* Data Source: A combination of one or more databases, APIs, flat files etc.
+* Analytic App: Dashboard, report, predictive modelling, etc.
+-->
+
+## Abstract
+
+Data science projects in commercial companies often experience a challenge
+arising from evolving data sources[^glossary-data-source]. As the project
+progresses, new signals and information sources are added incrementally. In
+practice, when the data source changes, it creates a need to change the
+application source code.
+
+With **no design up front**, some analytic modules[^glossary-analytic-module],
+such as a dashboard or a machine learning model, unwittingly become dependent on
+the data source. In this case, accommodating the evolving data source is not
+simply a matter of changing the code related to the data source. Rather,
+preserving the rest of the existing application in a working condition involves
+further code changes in distant elements of the application.
+
+An alternative way of dealing with evolving data sources is to introduce a
+**small design up front**. Such design lets data scientists manage the source
+code dependencies throughout the project life-cycle.
+
+This post suggests a design that <mark>(1) separates data sources from analytic
+applications and (2) restricts analytic modules from knowing about the data
+sources</mark>.
+
+While the evolving data sources challenge is programming language agnostic, this
+post demonstrates an implementation of the suggested design in R.
+
+## Helping our clients by fitting a solution to their needs
+
+This talk features a confabulated story that covers real challenges. 
+
+We work in an Agile environment and we cover the first iteration, going from
+nothing to something.
+
+### Getting to know our client 
+
+Our client is Euel Cheatam the Merceduce dealership manager.
+
+```{r Eual-during-mentorship-session} 
+knitr::include_graphics('https://i.imgur.com/IcwSkWa.png')
+```
+
+Eual has been working in Mercedes dealership as a car salesman for the last 7
+years. Today, Eual serves as the dealership manager. His main duty is to ensure
+a profitable, complaint, and effective dealership.
+
+- Eual **thinks** that a professional car salesperson needs to answer prospects
+queries quickly and accurately.
+- Eual **sees** that it takes new hires several months to master the
+dealership’s cars specifications. During these months new-hires convert fewer
+prospects into clients; this causes new hires to get demotivated; which leads to
+fewer sales -- it's a vicious cycle.
+- Eual **feels** obligated to provide resources that will enable everyone to
+succeed as a salesperson, regardless of their work tenure.
+- Eual **does** not have enough free time slots in his calendar to accommodate
+daily mentoring for all the dealership salespeople.
+
+### The proposed solution is a weekly fact sheet with popular Q&A  
+
+```{r car-stat-sheet} 
+knitr::include_graphics('https://i.imgur.com/CMbZ8h7.png')
+```
+
+<!-- Position Statement -->
+
+For the car salespeople who work at Mercedes dealership, the *Factcedes™* is a
+weekly email service that provides a succinct and readable fact sheet with
+popular Q&A about the dealership vehicles. Unlike water cooler talks, our
+product has been carefully formulated and evaluated against veterans and is
+distributed regularly.
+
+With the customer blessing and a firm handshake, we initiate product
+development.
+
+### Moving from ideation to implementation, data scientists encounter real-world impediments
+
+```{r 1st-world-problems} 
+knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
+```
+
+At this stage, the data scientists have a data-driven product in mind, but they
+are facing two challenges:
+
+1. Identifying the important information for the application; and
+2. Getting access to the data.
+
+The first challenge occurs because the data scientists don’t know what
+information they need. Instead, they have assumptions about what information
+could be relevant. As the project progress, exploration will lead them to new
+findings and new data sources.
+
+The second challenge occurs because of external factors such as personal or
+policy regarding the data. The people responsible for the database could be
+unavailable. Another impediment involves data security policy or something of
+that sort. 
+
+In any case, datasets are hard to obtain.
+
+To mitigate what the real world imposes on us, we need a system design that can
+handle changes.
+
+## Iteration 0: developing a data-driven app without real data
+
+In iteration zero we are going to move from no product to a product. Once we
+have something, we can show it to the client and receive feedback at an early
+stage of development.
+
+### Generate dataset assumption triplet
+
+<!-- Having an analytic application in mind, we can derive assumption about what data -->
+<!-- is required. -->
+
+In many cases, including the case in hand, the analytic module can be satisfied
+with a tidy data table in its input.
+
+A tidy data table [@wickham2016r, ch. 12] follows a consistent tabular format
+where each variable is a column and each observation is a row.
+
+```{r tidy-table, eval = FALSE}
+set.seed(1238)
+n <- 6
+tibble::tibble(
+    uid = head(1:26, n),
+    x1 = head(letters, n),
+    x2 = head(LETTERS, n),
+    y = rpois(n, lambda = 5)
+)
+```
+
+The data scientist wants the tidy data table to support all of the necessary
+variables required by the analytic module, but does not know what all those
+variables are. However, the data scientist does know the basic intent of the
+analytic app.
+
+Start by making an **assumption triplet** about what information the user needs
+to see. 
+
+An assumption triplet comprises hypotheses about three variable types that
+should be in the tidy data table: **Observation Unique Identifier (UID)**,
+**Target variable** and **Salient features**.
+
+In our example, 
+
+* **Observation Unique Identifier (UID)** corresponds to car models;
+* **Target variable** is the price; and
+* **Salient features** include gear, and mpg.
+
+<!-- tidy data table leaves heavy data wrangling tasks outside the
+responsibility of the analytic module. -->
+
+### Convert assumptions to assertions with data-tests
+
+Having rudimentary assumptions about what the analytic module is likely to use,
+we write down assertions in a new module called data-tests.
+
+* The data tests module is a high-level policy. It contains no data.
+* The data-tests module comprises assertions that ensure [data
+integrity](https://en.wikipedia.org/wiki/Data_integrity). Mainly, its assertions
+concern the existence and structure of the data.
+<!-- * The assertions within the data-tests module are like clauses in a contract. -->
+
+```{r data-tests, echo = TRUE, eval = FALSE}
+# data-tests.R
+## 1. Check if the dataset exists
+stopifnot(exist("cars_data"), is.data.frame(cars_data))
+  
+## 2. Check if the necessary columns exist
+expected_cols <- c("car_model", "price", "gear", "mpg")
+stopifnot(all(expected_cols %in% colnames(cars_data)))
+  
+## 3. Check if the records are unique
+is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
+stopifnot(is.distinct(cars_data$car_model))
+```
+
+### Implement a data source plugin
+
+#### Quick glimpse over the `mtcars` dataset
+
+```{r}
+mtcars %>% 
+    head() %>% 
+    knitr::kable(caption = "The first 6 car models from `datasets::mtcars`", 
+                 row.names = TRUE, digits = 0) %>% 
+    kableExtra::kable_styling(bootstrap_options = "striped", full_width = TRUE)
+```
+
+#### Generate synthetic data[^synthetic-data] plugin
+
+```{r data-access, echo = TRUE, eval = FALSE}
+# data-access.R
+get_cars_data <- function(){
+  ## 1. Generate records 
+  data(mtcars, package = "datasets")
+  cars_data <- mtcars %>% tibble::rownames_to_column("car_model")
+  
+  ## 2. Generate price
+  set.seed(2020)
+  price <- runif(n = nrow(cars_data), min = 41, max = 75)
+  cars_data <- cars_data %>% tibble::add_column(price = price)
+  
+  ## Run data-tests
+  source("data-tests.R")
+  return(cars_data)
+}
+```
+
+Notice that without conforming to data-tests assertions, the data source does
+not come into existence. That means the data source is dependent on data-tests.
+Recall that the assertions in data-tests are dictated by the intent of the
+analytic module. It is these assertions that know about the analytic module.
+
+### Develop an analytic module
+
+```{r synthetic-data, echo = TRUE, eval = FALSE}
+# app.R
+## 1. Get the data
+source("data-source.R")
+cars_data <- get_cars_data()
+  
+## 2. Render booklet
+print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
+lm(mpg ~ hp, cars_data) %>% summary()
+```
+
+## Why and how we seperated the data source from the rest
+
+### Recall why we have separated the data source from the rest
+
+In short, change amplification and cognitive load.
+
+Any analytic app has two essential parts: *data source* and *analytic
+module*. Importantly, in many applications the data source is independent of the
+analytic module, but the analytic module is dependent on the data source.
+
+This type of relationship puts the data source at the center of the system. The
+analytic modules revolve around the data source. They are plugins of the
+data source.
+
+#### Change amplification
+
+The problem is that both the data source and the analytic module change throughout
+the project life cycle. 
+
+In data-centric configuration, changes in the data source propagate into the
+analytic module.
+
+#### Cognitive load
+
+It is not obvious what data in the database is important for the app to run.
+if one is asked to replace a data source with another implementation, it is not obvious what )
+
+
+The database, its query language, and even its schema are technical details
+that have nothing to do with the analytic module. They will change at
+rates, and for reasons, that are independent of other aspects of the system.
+Consequently, the data-tests separate the data source from the rest of the
+system so that they can be independently changed.
+
+
+The suggested system design:
+
+(1) Divides and encapsulates those parts into modules; 
+(2) Separates both parts by introducing an intermediate module dubbed
+*data-tests*; and
+(3) Dictates that both parts must depend on the data-tests module.  
+
+The primary advantage of using data-tests is that <mark>the data source module
+and the analytic module do not know anything of each other</mark>. This
+allows those modules to evolve frequently and independently.
+
+### Recall how we have separated the data source from the rest
+
+First, we identified the variables which the analytic module may need.
+
+Second, we make wrote down our assumptions in data-tests.
+
+Third, we implemented a data source that conforms to the data-tests.
+
+Finally, we developed our application module using only the available
+information specified in data-tests.
+
+<!-- ## 2^nd^ iteration: implementing customer feedback -->
+
+<!-- ## 3^rd^ iteration: deploying the application with real data -->
+
+## References
+
+<!-- Footnotes -->
+
+[^glossary-data-source]: Data source includes data and access (or connection) to
+the data. The data itself could be obtained from databases, APIs, flat files,
+etc.
+[^glossary-analytic-module]: Analytic module contains the programming logic that
+process data extracted from a database. Prominent examples are dashboards,
+reports, and predictive modelling.
+[^synthetic-data]: A synthetic dataset contains data that is artificially
+created rather than being generated by actual events.
