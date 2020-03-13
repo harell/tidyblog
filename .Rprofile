@@ -20,6 +20,5 @@
     message("Shuting down live site preview")
     try(blogdown::stop_server())
     message("Cleaning up site repo")
-    unlink("./public", recursive = TRUE, force = TRUE)
     unlink("./static", recursive = TRUE, force = TRUE)
 }
