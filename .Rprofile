@@ -1,4 +1,6 @@
 .First <- function(){
+    if(is.null(getOption(".First.time"))) options(.First.time = TRUE)
+    
     options(
         tidyverse.quiet = TRUE,
         tibble.width = 66
@@ -10,16 +12,18 @@
         blogdown.subdir = "post", # A subdirectory under content/
         blogdown.warn.future = FALSE
     )
+    
+    if(getOption(".First.time")) unlink("./public", recursive = TRUE, force = TRUE)
     message("Live preview a site using 'blogdown::serve_site()'")
     
     pkgs <- c("tidyverse", "blogdown", "kableExtra")
     invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
+    options(.First.time = FALSE)
 }
 
 .Last <- function(){
     message("Shuting down live site preview")
     try(blogdown::stop_server())
     message("Cleaning up site repo")
-    unlink("./public", recursive = TRUE, force = TRUE)
     unlink("./static", recursive = TRUE, force = TRUE)
 }
