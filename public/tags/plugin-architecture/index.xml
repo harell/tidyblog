@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>plugin architecture on A Hugo website</title>
+    <link>/tags/plugin-architecture/</link>
+    <description>Recent content in plugin architecture on A Hugo website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 22 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/plugin-architecture/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Data Tests: Separating between Data Sources and the Rest</title>
+      <link>/talks/data-tests-separating-between-data-sources-and-the-rest/</link>
+      <pubDate>Sat, 22 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/talks/data-tests-separating-between-data-sources-and-the-rest/</guid>
+      <description>AbstractHelping our clients by fitting a solution to their needsGetting to know our clientThe proposed solution is a weekly fact sheet with popular Q&amp;amp;AMoving from ideation to implementation, data scientists encounter real-world impedimentsIteration 0: developing a data-driven app without real dataGenerate dataset assumption tripletConvert assumptions to assertions with data-testsImplement a data source pluginDevelop an analytic moduleWhy and how we seperated the data source from the restRecall why we have separated the data source from the restRecall how we have separated the data source from the restReferencesAbstractData science projects in commercial companies often experience a challengearising from evolving data sources1.</description>
+    </item>
+    
+  </channel>
+</rss>
