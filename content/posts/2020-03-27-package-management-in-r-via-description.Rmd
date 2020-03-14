@@ -22,3 +22,13 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
+## Synopsis
+
+**In This Post**
+
+* Using a package manager that capitalises existing infrastructure. 
+* Forming a discipline of grooming the DESCRIPTION file
+* Managing R package dependencies in Docker.
+
+---
