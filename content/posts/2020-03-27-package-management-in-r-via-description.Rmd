@@ -1,0 +1,14 @@
+---
+title: Package Management in R via DESCRIPTION
+author: Harel Lustiger
+date: '2020-03-27'
+draft: true
+slug: package-management-in-r-via-description
+categories:
+  - R Projects
+  - Reproducible R
+tags:
+  - dependency management
+  - package reproducibility
+  - package management
+---
