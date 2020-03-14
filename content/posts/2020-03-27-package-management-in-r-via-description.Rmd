@@ -11,6 +11,9 @@ tags:
   - dependency management
   - package reproducibility
   - package management
+bibliography: [references-posts.bib]
+biblio-style: apalike
+link-citations: yes  
 ---
 
 ```{r setup, include=FALSE}
@@ -31,4 +34,11 @@ knitr::opts_chunk$set(
 * Forming a discipline of grooming the DESCRIPTION file
 * Managing R package dependencies in Docker.
 
----
+## The DESCRIPTION File
+
+Whether you are aware of it or not, your R application uses DESCRIPTION files.
+This is because every R package must have one DESCRIPTION file that conforms
+with the "Writing R extensions" protocol dictated by the R Core
+Team[@team1999writing].
+
+## References

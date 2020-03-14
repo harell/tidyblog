@@ -15,13 +15,10 @@
     
     if(getOption(".First.time")){
         options(.First.time = FALSE)
-        unlink("./public", recursive = TRUE, force = TRUE)
-        # local(try(invisible(blogdown::build_site(TRUE))))
+        pkgs <- c("tidyverse", "blogdown", "kableExtra")
+        invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
+        message("Live preview a site using 'blogdown::serve_site()'")
     }
-    message("Live preview a site using 'blogdown::serve_site()'")
-    
-    pkgs <- c("tidyverse", "blogdown", "kableExtra")
-    invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
 }
 
 .Last <- function(){
@@ -29,4 +26,5 @@
     try(blogdown::stop_server())
     message("Cleaning up site repo")
     unlink("./static", recursive = TRUE, force = TRUE)
+    unlink("./public", recursive = TRUE, force = TRUE)
 }

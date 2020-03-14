@@ -11,12 +11,17 @@ tags:
   - dependency management
   - package reproducibility
   - package management
+bibliography: [references-posts.bib]
+biblio-style: apalike
+link-citations: yes  
 ---
 
 
 <div id="TOC">
 <ul>
 <li><a href="#synopsis">Synopsis</a></li>
+<li><a href="#the-description-file">The DESCRIPTION File</a></li>
+<li><a href="#references">References</a></li>
 </ul>
 </div>
 
@@ -28,5 +33,19 @@ tags:
 <li>Forming a discipline of grooming the DESCRIPTION file</li>
 <li>Managing R package dependencies in Docker.</li>
 </ul>
-<hr />
+</div>
+<div id="the-description-file" class="section level2">
+<h2>The DESCRIPTION File</h2>
+<p>Whether you are aware of it or not, your R application uses DESCRIPTION files.
+This is because every R package must have one DESCRIPTION file that conforms
+with the “Writing R extensions” protocol dictated by the R Core
+Team<span class="citation">(Team <a href="#ref-team1999writing" role="doc-biblioref">1999</a>)</span>.</p>
+</div>
+<div id="references" class="section level2 unnumbered">
+<h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-team1999writing">
+<p>Team, R Core. 1999. “Writing R Extensions.” <em>R Foundation for Statistical Computing</em>. <a href="https://cran.r-project.org/doc/manuals/r-release/R-exts.html">https://cran.r-project.org/doc/manuals/r-release/R-exts.html</a>.</p>
+</div>
+</div>
 </div>
