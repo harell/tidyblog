@@ -6,10 +6,37 @@
     <description>Recent content in Tags on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>dependency management</title>
+      <link>/tags/dependency-management/</link>
+      <pubDate>Fri, 27 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/dependency-management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>package management</title>
+      <link>/tags/package-management/</link>
+      <pubDate>Fri, 27 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/package-management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>package reproducibility</title>
+      <link>/tags/package-reproducibility/</link>
+      <pubDate>Fri, 27 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/package-reproducibility/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>database abstraction layer</title>

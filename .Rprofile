@@ -16,7 +16,7 @@
     if(getOption(".First.time")){
         options(.First.time = FALSE)
         unlink("./public", recursive = TRUE, force = TRUE)
-        try(invisible(blogdown::build_site(TRUE)))
+        # local(try(invisible(blogdown::build_site(TRUE))))
     }
     message("Live preview a site using 'blogdown::serve_site()'")
     

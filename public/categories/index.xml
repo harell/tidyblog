@@ -6,10 +6,28 @@
     <description>Recent content in Categories on A Hugo website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 27 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>R Projects</title>
+      <link>/categories/r-projects/</link>
+      <pubDate>Fri, 27 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/r-projects/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reproducible R</title>
+      <link>/categories/reproducible-r/</link>
+      <pubDate>Fri, 27 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/reproducible-r/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>R</title>
