@@ -20,6 +20,7 @@ link-citations: yes
 <div id="TOC">
 <ul>
 <li><a href="#synopsis">Synopsis</a></li>
+<li><a href="#package-manager-elements">Package Manager Elements</a></li>
 <li><a href="#the-description-file">The DESCRIPTION File</a></li>
 <li><a href="#references">References</a></li>
 </ul>
@@ -33,6 +34,40 @@ link-citations: yes
 <li>Forming a discipline of grooming the DESCRIPTION file</li>
 <li>Managing R package dependencies in Docker.</li>
 </ul>
+<p>This post aims to find an efficient solution for managing packages of any
+R-based application in conjunction with Docker. The proposed solution turns out
+to be efficient even without using Docker. Thus, this post offers an efficient
+solution for managing packages of R-based application.</p>
+<p>The suggested solution uses an underpinning mechanism that is being used by all
+R packages. In short, any R package declares its needs in a file called
+DESCRIPTION. DESCRIPTION comprises package metadata organised in fields and
+values pairs. In particular, there is one field named “Imports” which lists
+packages dependencies: names and (optionally) minimum versions.</p>
+<p>The suggested solution adds two optional fields to the DESCRIPTION file: Lib and
+Repos. Lib specifies where to install the packages; Repos specifies URL(s) from
+which the packages are downloaded from. Importantly, the URL can point to a
+snapshot of packages versions which were existed on a specific date.</p>
+</div>
+<div id="package-manager-elements" class="section level2">
+<h2>Package Manager Elements</h2>
+<p>The basic and most common method to install R packages is using
+<code>install.packages()</code>. Looking at the function help documentation, the first
+three input arguments are:</p>
+<ol style="list-style-type: decimal">
+<li><code>pkgs</code></li>
+<li><code>lib</code></li>
+<li><code>repos</code></li>
+</ol>
+<pre><code>install.packages(pkgs, lib, repos = getOption(&quot;repos&quot;),
+                 contriburl = contrib.url(repos, type),
+                 method, available = NULL, destdir = NULL,
+                 dependencies = NA, type = getOption(&quot;pkgType&quot;),
+                 configure.args = getOption(&quot;configure.args&quot;),
+                 configure.vars = getOption(&quot;configure.vars&quot;),
+                 clean = FALSE, Ncpus = getOption(&quot;Ncpus&quot;, 1L),
+                 verbose = getOption(&quot;verbose&quot;),
+                 libs_only = FALSE, INSTALL_opts, quiet = FALSE,
+                 keep_outputs = FALSE, ...)</code></pre>
 </div>
 <div id="the-description-file" class="section level2">
 <h2>The DESCRIPTION File</h2>
