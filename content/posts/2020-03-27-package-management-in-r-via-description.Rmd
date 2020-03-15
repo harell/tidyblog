@@ -39,6 +39,37 @@ knitr::opts_chunk$set(
 Whether you are aware of it or not, your R application uses DESCRIPTION files.
 This is because every R package must have one DESCRIPTION file that conforms
 with the "Writing R extensions" protocol dictated by the R Core
-Team[@team1999writing].
+Team[@team1999writing]. 
+
+The following is a DESCRIPTION file excerpt of the
+[`ggplot2`](https://github.com/tidyverse/ggplot2/blob/v3.3.0/DESCRIPTION)
+package:
+
+```
+Package: ggplot2
+Version: 3.3.0
+Title: Create Elegant Data Visualisations Using the Grammar of Graphics
+Description: A system for 'declaratively' creating graphics,
+    based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
+    how to map variables to aesthetics, what graphical primitives to use,
+    and it takes care of the details.
+Authors@R: person("Hadley","Wickham", ,"hadley@rstudio.com",c("aut", "cre"))
+Imports: 
+    digest,
+    glue,
+    grDevices,
+    grid,
+    gtable (>= 0.1.1),
+    isoband,
+    MASS,
+    mgcv,
+    rlang (>= 0.3.0),
+    scales (>= 0.5.0),
+    stats,
+    tibble,
+    withr (>= 2.0.0)
+```
+
+
 
 ## References

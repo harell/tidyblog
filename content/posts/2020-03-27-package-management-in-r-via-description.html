@@ -40,6 +40,31 @@ link-citations: yes
 This is because every R package must have one DESCRIPTION file that conforms
 with the “Writing R extensions” protocol dictated by the R Core
 Team<span class="citation">(Team <a href="#ref-team1999writing" role="doc-biblioref">1999</a>)</span>.</p>
+<p>The following is a DESCRIPTION file excerpt of the
+<a href="https://github.com/tidyverse/ggplot2/blob/v3.3.0/DESCRIPTION"><code>ggplot2</code></a>
+package:</p>
+<pre><code>Package: ggplot2
+Version: 3.3.0
+Title: Create Elegant Data Visualisations Using the Grammar of Graphics
+Description: A system for &#39;declaratively&#39; creating graphics,
+    based on &quot;The Grammar of Graphics&quot;. You provide the data, tell &#39;ggplot2&#39;
+    how to map variables to aesthetics, what graphical primitives to use,
+    and it takes care of the details.
+Authors@R: person(&quot;Hadley&quot;,&quot;Wickham&quot;, ,&quot;hadley@rstudio.com&quot;,c(&quot;aut&quot;, &quot;cre&quot;))
+Imports: 
+    digest,
+    glue,
+    grDevices,
+    grid,
+    gtable (&gt;= 0.1.1),
+    isoband,
+    MASS,
+    mgcv,
+    rlang (&gt;= 0.3.0),
+    scales (&gt;= 0.5.0),
+    stats,
+    tibble,
+    withr (&gt;= 2.0.0)</code></pre>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2>References</h2>
