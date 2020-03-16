@@ -30,7 +30,7 @@ knitr::opts_chunk$set(
 
 **In This Post**
 
-* Using a package manager that capitalises existing infrastructure. 
+* Using a package manager that capitalises on existing infrastructure. 
 * Forming a discipline of grooming the DESCRIPTION file
 * Managing R package dependencies in Docker.
 
