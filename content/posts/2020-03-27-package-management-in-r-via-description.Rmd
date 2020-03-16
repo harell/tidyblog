@@ -34,59 +34,27 @@ knitr::opts_chunk$set(
 * Forming a discipline of grooming the DESCRIPTION file
 * Managing R package dependencies in Docker.
 
-This post aims to find an efficient solution for managing packages of any
-R-based application in conjunction with Docker. The proposed solution turns out
-to be efficient even without using Docker. Thus, this post offers an efficient
-solution for managing packages of R-based application.
+Who should read this post? Any person who needs a simple way to manager R
+packages dependencies.
 
-The suggested solution uses an underpinning mechanism that is being used by all
-R packages. In short, any R package declares its needs in a file called
-DESCRIPTION. DESCRIPTION comprises package metadata organised in fields and
-values pairs. In particular, there is one field named "Imports" which lists
-packages dependencies: names and (optionally) minimum versions.
+<!-- What makes the approach simple? familiarity and existing toolbox -->
 
-The suggested solution adds two optional fields to the DESCRIPTION file: Lib and
-Repos. Lib specifies where to install the packages; Repos specifies URL(s) from
-which the packages are downloaded from. Importantly, the URL can point to a
-snapshot of packages versions which were existed on a specific date.
+The approach in a nutshell:
 
-## Package Manager Elements
+1. Maintaining package requirements in a `DESCRIPTION` file; and
+2. Using `remotes::install_deps()` to install the required packages.
 
-The basic and most common method to install R packages is using
-`install.packages()`. Looking at the function help documentation, the first
-three input arguments are:
+## What is a DESCRIPTION File?
 
-1. `pkgs`
-2. `lib`
-3. `repos`
-
-```
-install.packages(pkgs, lib, repos = getOption("repos"),
-                 contriburl = contrib.url(repos, type),
-                 method, available = NULL, destdir = NULL,
-                 dependencies = NA, type = getOption("pkgType"),
-                 configure.args = getOption("configure.args"),
-                 configure.vars = getOption("configure.vars"),
-                 clean = FALSE, Ncpus = getOption("Ncpus", 1L),
-                 verbose = getOption("verbose"),
-                 libs_only = FALSE, INSTALL_opts, quiet = FALSE,
-                 keep_outputs = FALSE, ...)
-```
-
-## The DESCRIPTION File
-
-Whether you are aware of it or not, your R application uses DESCRIPTION files.
-This is because every R package must have one DESCRIPTION file that conforms
-with the "Writing R extensions" protocol dictated by the R Core
-Team[@team1999writing]. 
-
-The following is a DESCRIPTION file excerpt of the
-[`ggplot2`](https://github.com/tidyverse/ggplot2/blob/v3.3.0/DESCRIPTION)
-package:
+The DESCRIPTION is a file comprising metadata about a specific R package. Having
+a DESCRIPTION file in a package root folder is a prerequisite for any R package.
+The following is an excerpt of the
+[ggplot2](https://github.com/tidyverse/ggplot2/blob/v3.2.1/DESCRIPTION)
+DESCRIPTION file.
 
 ```
 Package: ggplot2
-Version: 3.3.0
+Version: 3.2.1
 Title: Create Elegant Data Visualisations Using the Grammar of Graphics
 Description: A system for 'declaratively' creating graphics,
     based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
@@ -95,20 +63,26 @@ Description: A system for 'declaratively' creating graphics,
 Authors@R: person("Hadley","Wickham", ,"hadley@rstudio.com",c("aut", "cre"))
 Imports: 
     digest,
-    glue,
     grDevices,
     grid,
     gtable (>= 0.1.1),
-    isoband,
-    MASS,
-    mgcv,
-    rlang (>= 0.3.0),
-    scales (>= 0.5.0),
-    stats,
-    tibble,
-    withr (>= 2.0.0)
+    lazyeval
 ```
 
+DESCRIPTION uses an archaic file format called DCF (Debian control format) which
+was available during R inception. DCF is somewhat similar to YAML in its
+structure. Each line consists of a field name paired with one or more values
+separated by a colon. When values span multiple lines, they need to be indented
+by four spaces.
+
+Different mechanisms in R are using different sections of the DESCRIPTION file.
+For example, in RStudio under the package tab, the package name, description and
+version correspond to the Package, Title and Version fields specified in the
+DESCRIPTION file. The following figure is a snapshot from RStudio reporting the
+above DESCRIPTION file content.
 
 
-## References
+```{r ggplot2-metadata-in-RStudio}
+knitr::include_graphics('https://i.imgur.com/gxuSNpZ.png')
+```
+

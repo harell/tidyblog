@@ -7,6 +7,10 @@
     )
     
     options(
+        knitr.graphics.auto_pdf = FALSE
+    )
+    
+    options(
         blogdown.author = "Harel Lustiger",
         blogdown.ext = ".Rmd",
         blogdown.subdir = "post", # A subdirectory under content/
