@@ -40,3 +40,5 @@ vignettes/*.pdf
 
 # Blogdown
 static
+
+public/

@@ -319,3 +319,7 @@ code {
     box-shadow: none;
   }
 }
+
+.hljs {
+  font-size: 16px;
+}
