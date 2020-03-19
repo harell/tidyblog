@@ -86,3 +86,17 @@ above DESCRIPTION file content.
 knitr::include_graphics('https://i.imgur.com/gxuSNpZ.png')
 ```
 
+## Declaring Package Dependencies 
+
+The mechanism for checking and installing the required packages uses the
+**Imports** field within the DESCRIPTION file. In the case of `ggplot2` (see
+figure above), the requirements include `digest`, `grDevices`, `grid`, and
+`gtable (>= 0.1.1) `. The parenthesis with the greater equal sign after `gtable`
+specifies the package minimum version. In general, including the minimum
+version is a good practice. This is because some bug fixes or new features
+become available from a certain version and forward.
+
+
+While you can, manage the DESCRIPTION file manually, two R packages mitigate the
+workflow. Importantly, they reduce syntax errors and run without having the
+DESCRIPTION file open.
