@@ -17,6 +17,7 @@ link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
+`%>%` <- magrittr::`%>%`
 knitr::opts_chunk$set(
   echo = FALSE, 
   message = FALSE,
