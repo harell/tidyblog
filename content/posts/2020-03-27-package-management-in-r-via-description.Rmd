@@ -21,6 +21,41 @@ path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
 source(file.path(path_root, "R/post_options.R"))
 ```
 
+## Introduction
+
+All R-applications have requirements which are necessary for them to run. A
+predominant type of requirement is package dependencies. Most R-applications are
+built upon R packages which do not come with a fresh installation of R. Thus, to
+ensure any R application will run on different computers, its package
+dependencies must be managed. There are a few possible package management
+strategies to employ. A common thread of these strategies is the installation of
+missing packages.
+
+R workhorse function for installing packages is `utils::install.packages()`. A
+glimpse into the function help documentation shows us what input arguments
+impact the function behaviour.
+
+```
+install.packages(pkgs, lib, repos = getOption("repos"),
+                 contriburl = contrib.url(repos, type),
+                 method, available = NULL, destdir = NULL,
+                 dependencies = NA, type = getOption("pkgType"),
+                 configure.args = getOption("configure.args"),
+                 configure.vars = getOption("configure.vars"),
+                 clean = FALSE, Ncpus = getOption("Ncpus", 1L),
+                 verbose = getOption("verbose"),
+                 libs_only = FALSE, INSTALL_opts, quiet = FALSE,
+                 keep_outputs = FALSE, ...)
+```
+
+Primarily, the first three arguments `pkgs`, `lib` and `repos` specify what to
+install, where to install it and where to get it from, respectively. One
+possible way to discuss the elementary parts of a package management strategy is
+to think about these input arguments roles.
+
+Any package management strategy must identify the packages names required for
+the R-application to work. This information is passed into `pkgs`.
+
 ## Synopsis
 
 **In This Post**
@@ -36,8 +71,9 @@ packages dependencies.
 
 The approach in a nutshell:
 
-1. Maintaining package requirements in a `DESCRIPTION` file; and
-2. Using `remotes::install_deps()` to install the required packages.
+1. Maintaining package requirements in a `DESCRIPTION` file; 
+2. Setting the URL from which to pull the packages from; and
+3. Using `remotes::install_deps()` to install the required packages.
 
 ## Recipe
 
@@ -83,6 +119,10 @@ package name and version) for you.
 Removing a package from the `DESCRIPTION` file is done manually. Open
 `DESCRIPTION` and delete the package name from the `Imports` fields. Make sure
 the last package in `Imports` doesn’t end with a comma (',').
+
+#### Installing Package Requirements
+
+
 
 ## What is a `DESCRIPTION` File?
 
