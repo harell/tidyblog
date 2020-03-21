@@ -16,14 +16,9 @@ biblio-style: apalike
 link-citations: yes  
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE, 
-  message = FALSE,
-  warning = FALSE,
-  fig.align = "center",
-  out.width = "100%"
-)
+```{r, include = FALSE}
+path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
+source(file.path(path_root, "R/post_options.R"))
 ```
 
 ## Synopsis
@@ -53,7 +48,7 @@ The approach in a nutshell:
 
 You can install them all at once by running:
 
-```{r, echo = FALSE, cache = FALSE}
+```{r, results = 'markup'}
 pkgs_string <-  
   c("remotes", "usethis") %>% 
   encodeString(quote = '"') %>% 
@@ -63,7 +58,7 @@ pkgs_string <-
 install <- paste0("install.packages(c(\n  ", paste(pkgs_string, "\n", collapse = ""), "))")
 ```
 
-```{r code = install, eval = FALSE}
+```{r, code = install, results = 'markup', eval = FALSE}
 ```
 
 ## What is a DESCRIPTION File?
