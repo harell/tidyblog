@@ -48,17 +48,8 @@ The approach in a nutshell:
 
 You can install them all at once by running:
 
-```{r, results = 'markup'}
-pkgs_string <-  
-  c("remotes", "usethis") %>% 
-  encodeString(quote = '"') %>% 
-  paste(collapse = ", ") %>% 
-  strwrap(exdent = 2)
-
-install <- paste0("install.packages(c(\n  ", paste(pkgs_string, "\n", collapse = ""), "))")
 ```
-
-```{r, code = install, results = 'markup', eval = FALSE}
+install.packages(c("remotes", "usethis"))
 ```
 
 ## What is a DESCRIPTION File?
