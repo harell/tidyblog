@@ -23,6 +23,8 @@
         invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
         message("Live preview a site using 'blogdown::serve_site()'")
     }
+    
+    `%>%` <- magrittr::`%>%`
 }
 
 .Last <- function(){
