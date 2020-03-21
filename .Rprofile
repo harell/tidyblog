@@ -3,7 +3,7 @@
     
     if(getOption(".First.time")){
         options(.First.time = FALSE)
-        pkgs <- c("tidyverse", "blogdown", "kableExtra")
+        pkgs <- c("tidyverse", "blogdown", "usethis", "kableExtra")
         suppressPackageStartupMessages(
             invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
         )
