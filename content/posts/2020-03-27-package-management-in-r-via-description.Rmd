@@ -48,19 +48,22 @@ The approach in a nutshell:
 
 ### Ingredients
 
-```{r, echo = FALSE, results="asis"}
-pkgs <- c("usethis", "remotes")
-pkgs <- sessioninfo::package_info(pkgs, dependencies = FALSE)
-tibble::tibble(
-  package = pkgs$package,
-  version = pkgs$ondiskversion,
-  source = gsub("@", "\\\\@", pkgs$source)) %>% 
-  dplyr::select(-source) %>% 
-  knitr::kable(format = "markdown")
+* The [`remotes`](https://github.com/r-lib/remotes) package; and
+* The [`usethis`](https://github.com/r-lib/usethis/) package.
+
+You can install them all at once by running:
+
+```{r, echo = FALSE, cache = FALSE}
+pkgs_string <-  
+  c("remotes", "usethis") %>% 
+  encodeString(quote = '"') %>% 
+  paste(collapse = ", ") %>% 
+  strwrap(exdent = 2)
+
+install <- paste0("install.packages(c(\n  ", paste(pkgs_string, "\n", collapse = ""), "))")
 ```
 
-```
-usethis::use_description()
+```{r code = install, eval = FALSE}
 ```
 
 ## What is a DESCRIPTION File?
@@ -76,16 +79,16 @@ Package: ggplot2
 Version: 3.2.1
 Title: Create Elegant Data Visualisations Using the Grammar of Graphics
 Description: A system for 'declaratively' creating graphics,
-    based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
-    how to map variables to aesthetics, what graphical primitives to use,
-    and it takes care of the details.
+based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
+how to map variables to aesthetics, what graphical primitives to use,
+and it takes care of the details.
 Authors@R: person("Hadley","Wickham", ,"hadley@rstudio.com",c("aut", "cre"))
 Imports: 
-    digest,
-    grDevices,
-    grid,
-    gtable (>= 0.1.1),
-    lazyeval
+digest,
+grDevices,
+grid,
+gtable (>= 0.1.1),
+lazyeval
 ```
 
 DESCRIPTION uses an archaic file format called DCF (Debian control format) which
@@ -118,3 +121,21 @@ become available from a certain version and forward.
 While you can, manage the DESCRIPTION file manually, two R packages mitigate the
 workflow. Importantly, they reduce syntax errors and run without having the
 DESCRIPTION file open.
+
+
+
+```{r, echo = FALSE, results = 'asis', eval=FALSE}
+pkgs <- c("usethis", "remotes")
+pkgs <- sessioninfo::package_info(pkgs, dependencies = FALSE)
+tibble::tibble(
+  package = pkgs$package,
+  version = pkgs$ondiskversion,
+  source = gsub("@", "\\\\@", pkgs$source)) %>% 
+  dplyr::select(-source) %>% 
+  knitr::kable() %>% 
+  kableExtra::kable_styling(
+    bootstrap_options = "striped", 
+    full_width = TRUE, 
+    position = "left"
+  )
+```

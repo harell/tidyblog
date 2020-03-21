@@ -2,12 +2,18 @@
     if(is.null(getOption(".First.time"))) options(.First.time = TRUE)
     
     options(
+        width = 66,
+        digits = 2
+    )
+    
+    options(
         tidyverse.quiet = TRUE,
         tibble.width = 66
     )
     
     options(
-        knitr.graphics.auto_pdf = FALSE
+        knitr.graphics.auto_pdf = FALSE,
+        knitr.table.format = "html"
     )
     
     options(
