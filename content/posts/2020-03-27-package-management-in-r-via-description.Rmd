@@ -26,12 +26,12 @@ source(file.path(path_root, "R/post_options.R"))
 All R-applications have requirements which are necessary for them to run. A
 predominant type of requirement is package dependencies. Most R-applications are
 built upon R packages which do not come with a fresh installation of R. Thus, to
-ensure any R application will run on different computers, its package
-dependencies must be managed. There are a few possible package management
+ensure an R application will run on different computers, it is necessary to
+manage its package dependencies. There are a few possible package management
 strategies to employ. A common thread of these strategies is the installation of
-missing packages.
+missing R packages.
 
-R workhorse function for installing packages is `utils::install.packages()`. A
+R workhorse function for installing R packages is `utils::install.packages()`. A
 glimpse into the function help documentation shows us what input arguments
 impact the function behaviour.
 
@@ -49,9 +49,11 @@ install.packages(pkgs, lib, repos = getOption("repos"),
 ```
 
 Primarily, the first three arguments `pkgs`, `lib` and `repos` specify what to
-install, where to install it and where to get it from, respectively. One
-possible way to discuss the elementary parts of a package management strategy is
-to think about these input arguments roles.
+install, where to install it and where to get it from, respectively. Among
+different package management strategies, `pkgs` should be (almost) identical.
+However, the methods employed for gathering `pkgs` varies between strategies.
+The other two input arguments `lib` and `repos` vary considerably by their
+values and generating mechanism between different strategies.
 
 Any package management strategy must identify the packages names required for
 the R-application to work. This information is passed into `pkgs`.
