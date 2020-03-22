@@ -21,10 +21,29 @@ path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
 source(file.path(path_root, "R/post_options.R"))
 ```
 
+## Synopsis
+
+**In This Post**
+
+* Using a package manager that capitalises on existing infrastructure. 
+* Forming a discipline of grooming the `DESCRIPTION` file
+* Managing R package dependencies in Docker.
+
+<!-- Who should read this post? Any person who needs a simple way to manager R -->
+<!-- packages dependencies. -->
+
+<!-- What makes the approach simple? familiarity and existing toolbox -->
+
+The approach in a nutshell:
+
+1. Maintaining package requirements in a `DESCRIPTION` file; 
+2. Setting the URL from which to pull the packages from; and
+3. Using `remotes::install_deps()` to install the required packages.
+
 ## Introduction
 
-All R-applications have requirements which are necessary for them to run. A
-predominant type of requirement is package dependencies. Most R-applications are
+All R applications have requirements which are necessary for them to run. A
+predominant type of requirement is package dependencies. Most R applications are
 built upon R packages which do not come with a fresh installation of R. Thus, to
 ensure an R application will run on different computers, it is necessary to
 manage its package dependencies. There are a few possible package management
@@ -56,32 +75,13 @@ The other two input arguments `lib` and `repos` vary considerably by their
 values and generating mechanism between different strategies.
 
 Any package management strategy must identify the packages names required for
-the R-application to work. This information is passed into `pkgs`.
-
-## Synopsis
-
-**In This Post**
-
-* Using a package manager that capitalises on existing infrastructure. 
-* Forming a discipline of grooming the `DESCRIPTION` file
-* Managing R package dependencies in Docker.
-
-Who should read this post? Any person who needs a simple way to manager R
-packages dependencies.
-
-<!-- What makes the approach simple? familiarity and existing toolbox -->
-
-The approach in a nutshell:
-
-1. Maintaining package requirements in a `DESCRIPTION` file; 
-2. Setting the URL from which to pull the packages from; and
-3. Using `remotes::install_deps()` to install the required packages.
+the R application to work. This information is passed into `pkgs`.
 
 ## Recipe
 
 ### Ingredients
 
-* The [`remotes`](https://github.com/r-lib/remotes) package; and
+* The [`remotes`](https://github.com/r-lib/remotes) package;
 * The [`usethis`](https://github.com/r-lib/usethis/) package; and
 * A `DESCRIPTION` file.
 
@@ -101,9 +101,9 @@ usethis::use_description()
 
 #### Grooming the `DESCRIPTION` file
 
-As the R-application evolves, anytime an additional package is required for the
+As the R application evolves, anytime an additional package is required for the
 application to work, specify that packages in the `DESCRIPTION` file. You can
-add a package to the `DESCRIPTION` file by running:
+add a package to the `DESCRIPTION` file by running[^dplyr]:
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_package("dplyr")
@@ -124,78 +124,40 @@ the last package in `Imports` doesn’t end with a comma (',').
 
 #### Installing Package Requirements
 
+First, replicate the package versions that were available at the time of
+developing the program. Following this step increases application behaviour
+consistency regardless of the date it is executed.
 
+(recommended) You can specify `repos` to point at a snapshot in time of CRAN by
+running:
 
-## What is a `DESCRIPTION` File?
-
-The `DESCRIPTION` is a file comprising metadata about a specific R package. Having
-a `DESCRIPTION` file in a package root folder is a prerequisite for any R package.
-The following is an excerpt of the
-[ggplot2](https://github.com/tidyverse/ggplot2/blob/v3.2.1/DESCRIPTION)
-DESCRIPTION file.
-
-```
-Package: ggplot2
-Version: 3.2.1
-Title: Create Elegant Data Visualisations Using the Grammar of Graphics
-Description: A system for 'declaratively' creating graphics,
-based on "The Grammar of Graphics". You provide the data, tell 'ggplot2'
-how to map variables to aesthetics, what graphical primitives to use,
-and it takes care of the details.
-Authors@R: person("Hadley","Wickham", ,"hadley@rstudio.com",c("aut", "cre"))
-Imports: 
-digest,
-grDevices,
-grid,
-gtable (>= 0.1.1),
-lazyeval
+```{r, echo = TRUE, eval = FALSE}
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
 ```
 
-DESCRIPTION uses an archaic file format called DCF (Debian control format) which
-was available during R inception. DCF is somewhat similar to YAML in its
-structure. Each line consists of a field name paired with one or more values
-separated by a colon. When values span multiple lines, they need to be indented
-by four spaces.
+(replace _2020-03-27_ with the date required for reproducibility)
 
-Different mechanisms in R are using different sections of the `DESCRIPTION` file.
-For example, in RStudio under the package tab, the package name, description and
-version correspond to the Package, Title and Version fields specified in the
-DESCRIPTION file. The following figure is a snapshot from RStudio reporting the
-above `DESCRIPTION` file content.
+If you skip that step, the latest R packages will be installed on the hosting
+computer.
 
+Second, it is possible to direct R where to look for and install in R packages.
+R starts up with one or more sensible default values, usually pointing at a user
+library[^library] and a system library. In addition to system and user
+libraries, consider an additional scope – project library. Project library
+comprises R packages which are not shared with other projects.
 
-```{r ggplot2-metadata-in-RStudio}
-knitr::include_graphics('https://i.imgur.com/gxuSNpZ.png')
+(optional) You can add a project library by running[^R_LIBS_PROJECT]:
+
+```{r, echo = TRUE, eval = FALSE}
+Sys.setenv(R_LIBS_PROJECT = "./cache")
+.libPaths(Sys.getenv("R_LIBS_PROJECT"))
 ```
 
-## Declaring Package Dependencies 
+You will also need to declear the project library in ... (Rproject?)
 
-The mechanism for checking and installing the required packages uses the
-**Imports** field within the `DESCRIPTION` file. In the case of `ggplot2` (see
-figure above), the requirements include `digest`, `grDevices`, `grid`, and
-`gtable (>= 0.1.1) `. The parenthesis with the greater equal sign after `gtable`
-specifies the package minimum version. In general, including the minimum
-version is a good practice. This is because some bug fixes or new features
-become available from a certain version and forward.
+## References
 
-While you can, manage the `DESCRIPTION` file manually, two R packages mitigate the
-workflow. Importantly, they reduce syntax errors and run without having the
-DESCRIPTION file open.
-
-
-
-```{r, echo = FALSE, results = 'asis', eval=FALSE}
-pkgs <- c("usethis", "remotes")
-pkgs <- sessioninfo::package_info(pkgs, dependencies = FALSE)
-tibble::tibble(
-  package = pkgs$package,
-  version = pkgs$ondiskversion,
-  source = gsub("@", "\\\\@", pkgs$source)) %>% 
-  dplyr::select(-source) %>% 
-  knitr::kable() %>% 
-  kableExtra::kable_styling(
-    bootstrap_options = "striped", 
-    full_width = TRUE, 
-    position = "left"
-  )
-```
+[^dplyr]: These commands add `dplyr` to the `DESCRIPTION` file.
+[^library]: A library is a folder with a collection of installed R packages.
+[^R_LIBS_PROJECT]: This command will consider a project subfolder named _cache_
+where R packages will be looked for and installed in.
