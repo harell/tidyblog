@@ -1,5 +1,5 @@
 ---
-title: Package Management in R via DESCRIPTION
+title: R Package Management via DESCRIPTION
 author: Harel Lustiger
 date: '2020-03-27'
 draft: true
@@ -8,9 +8,8 @@ categories:
   - R Projects
   - Reproducible R
 tags:
-  - dependency management
-  - package reproducibility
   - package management
+  - DESCRIPTION
 bibliography: [references-posts.bib]
 biblio-style: apalike
 link-citations: yes  
@@ -27,7 +26,7 @@ source(file.path(path_root, "R/post_options.R"))
 
 * Using a package manager that capitalises on existing infrastructure. 
 * Forming a discipline of grooming the `DESCRIPTION` file
-* Managing R package dependencies in Docker.
+<!-- * Managing R package dependencies in Docker. -->
 
 <!-- Who should read this post? Any person who needs a simple way to manager R -->
 <!-- packages dependencies. -->
@@ -73,9 +72,6 @@ different package management strategies, `pkgs` should be (almost) identical.
 However, the methods employed for gathering `pkgs` varies between strategies.
 The other two input arguments `lib` and `repos` vary considerably by their
 values and generating mechanism between different strategies.
-
-Any package management strategy must identify the packages names required for
-the R application to work. This information is passed into `pkgs`.
 
 ## Recipe
 
@@ -153,7 +149,7 @@ Sys.setenv(R_LIBS_PROJECT = "./cache")
 .libPaths(Sys.getenv("R_LIBS_PROJECT"))
 ```
 
-You will also need to declear the project library in ... (Rproject?)
+You will also need to declare the project library in ... (Rproject?)
 
 ## References
 
