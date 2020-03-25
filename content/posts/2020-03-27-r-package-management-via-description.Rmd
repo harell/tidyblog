@@ -54,7 +54,7 @@ R workhorse function for installing R packages is `utils::install.packages()`. A
 glimpse into the function help documentation shows us what input arguments
 impact the function behaviour.
 
-```{r install.packages, echo = TRUE, eval = FALSE, tidy = !FALSE}
+```{r install.packages, echo = TRUE, eval = FALSE}
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
@@ -143,8 +143,6 @@ within DESCRIPTION.
 
 Notice the "x" in the console output
 
-<font size="2 !important" color="blue">
-
 ```
 Installing packages into ‘/usr/local/lib/R/site-library’
 (as ‘lib’ is unspecified)
@@ -154,7 +152,6 @@ Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
 ==================================================
 downloaded 3.1 MB
 ```
-</font>
 
 ## References
 
