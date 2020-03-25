@@ -1,18 +1,19 @@
 ---
-title: R Package Management via DESCRIPTION
-author: Harel Lustiger
+title: "R Package Management via DESCRIPTION"
+author: "Harel Lustiger"
 date: '2020-03-27'
-draft: true
-slug: package-management-in-r-via-description
+output: word_document
+bibliography: references-posts.bib
+draft: yes
+link-citations: yes
 categories:
-  - R Projects
-  - Reproducible R
+- R Projects
+- Reproducible R
+slug: r-package-management-via-description
 tags:
-  - package management
-  - DESCRIPTION
-bibliography: [references-posts.bib]
+- package management
+- DESCRIPTION
 biblio-style: apalike
-link-citations: yes  
 ---
 
 ```{r, include = FALSE}
@@ -53,7 +54,7 @@ R workhorse function for installing R packages is `utils::install.packages()`. A
 glimpse into the function help documentation shows us what input arguments
 impact the function behaviour.
 
-```
+```{r install.packages, echo = TRUE, eval = FALSE, tidy = !FALSE}
 install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
                  method, available = NULL, destdir = NULL,
@@ -108,7 +109,7 @@ usethis::use_package("dplyr")
 Alternatively, you can declare the package name and minimum version by running:
 
 ```{r, echo = TRUE, eval = FALSE}
-usethis::use_package("dplyr", min_version = "0.8.3")
+usethis::use_package("dplyr", min_version = "0.8.0")
 ```
 
 `usethis::use_package` takes care of syntax, duplication and typos (both in
@@ -120,7 +121,7 @@ the last package in `Imports` doesn’t end with a comma (',').
 
 #### Installing Package Requirements
 
-First, replicate the package versions that were available at the time of
+Firstly, replicate the package versions that were available at the time of
 developing the program. Following this step increases application behaviour
 consistency regardless of the date it is executed.
 
@@ -133,13 +134,29 @@ options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
 
 (replace _2020-03-27_ with the date required for reproducibility)
 
-If you skip that step, the latest R packages will be installed on the hosting
+If you skip that step, R installs the latest package versions on the hosting
 computer.
 
+Lastly, Given an R project with a `DESCRIPTION` file in the root folder, when
+`remotes::install_deps()` is called, then R tries to install the listed packages
+within DESCRIPTION.
+
+Notice the "x" in the console output
+
+<font size="2 !important" color="blue">
+
+```
+Installing packages into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+
+trying URL 'https://mran.microsoft.com/snapshot/2020-03-27/src/contrib/dplyr_0.8.5.tar.gz'
+Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
+==================================================
+downloaded 3.1 MB
+```
+</font>
 
 ## References
 
 [^dplyr]: These commands add `dplyr` to the `DESCRIPTION` file.
-[^library]: A library is a folder with a collection of installed R packages.
-[^R_LIBS_PROJECT]: This command will consider a project subfolder named _cache_
-where R packages will be looked for and installed in.
+

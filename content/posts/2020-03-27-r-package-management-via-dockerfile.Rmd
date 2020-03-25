@@ -3,7 +3,7 @@ title: R Package Management via Dockerfile
 author: Harel Lustiger
 date: '2020-03-27'
 draft: true
-slug: package-management-in-r-via-description
+slug: r-package-management-via-dockerfile
 categories:
   - R Projects
   - Reproducible R
@@ -60,3 +60,6 @@ You will also need to declare the project library in ... (Rproject?)
 
 ## References
 
+[^library]: A library is a folder with a collection of installed R packages.
+[^R_LIBS_PROJECT]: This command will consider a project subfolder named _cache_
+where R packages will be looked for and installed in.
