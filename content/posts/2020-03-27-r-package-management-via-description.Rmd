@@ -136,20 +136,6 @@ options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
 If you skip that step, the latest R packages will be installed on the hosting
 computer.
 
-Second, it is possible to direct R where to look for and install in R packages.
-R starts up with one or more sensible default values, usually pointing at a user
-library[^library] and a system library. In addition to system and user
-libraries, consider an additional scope – project library. Project library
-comprises R packages which are not shared with other projects.
-
-(optional) You can add a project library by running[^R_LIBS_PROJECT]:
-
-```{r, echo = TRUE, eval = FALSE}
-Sys.setenv(R_LIBS_PROJECT = "./cache")
-.libPaths(Sys.getenv("R_LIBS_PROJECT"))
-```
-
-You will also need to declare the project library in ... (Rproject?)
 
 ## References
 
