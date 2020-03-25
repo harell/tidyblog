@@ -141,9 +141,11 @@ Lastly, Given an R project with a `DESCRIPTION` file in the root folder, when
 `remotes::install_deps()` is called, then R tries to install the listed packages
 within DESCRIPTION.
 
-Notice the "x" in the console output
+The following is an extract from the output console:
 
 ```
+> remotes::install_deps()
+
 Installing packages into ‘/usr/local/lib/R/site-library’
 (as ‘lib’ is unspecified)
 
@@ -152,6 +154,17 @@ Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
 ==================================================
 downloaded 3.1 MB
 ```
+
+Notice that `remotes::install_deps`:
+
+* Searches and pulls the `dplyr` package from the `repos` address we have
+provided it; and
+
+* Installs `dplyr` version 0.8.5. 
+    * While we declared the minmum version to be 0.8.3 in `DESCRIPTION`, the
+    available version on _2020-03-27_ is 0.8.5.
+    * remotes::install_deps fails if any declared minimum version is not
+    available; otherwise it installs the latest available version on `repos`.
 
 ## References
 
