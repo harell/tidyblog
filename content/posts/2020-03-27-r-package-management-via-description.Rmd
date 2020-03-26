@@ -157,7 +157,7 @@ package name and version) for you.
 
 Removing a package from the `DESCRIPTION` file is done manually. Open
 `DESCRIPTION` and delete the package name from the `Imports` fields. Make sure
-the last package in `Imports` doesn’t end with a comma (',').
+the last package in `Imports` doesn't end with a comma (',').
 
 #### Installing Package Requirements
 
@@ -186,8 +186,8 @@ The following is an extract from the output console:
 ```
 > remotes::install_deps()
 
-Installing packages into ‘/usr/local/lib/R/site-library’
-(as ‘lib’ is unspecified)
+Installing packages into '/usr/local/lib/R/site-library'
+(as 'lib' is unspecified)
 
 trying URL 'https://mran.microsoft.com/snapshot/2020-03-27/src/contrib/dplyr_0.8.5.tar.gz'
 Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
@@ -207,11 +207,28 @@ provided it; and
     available; otherwise, it installs the latest available version on `repos`.
 
 
-## Further Reading
+## Installing Packages Not on CRAN 
 
-* [Install R Packages from GitHub, BitBucket, or other local or remote
-repositories](https://remotes.r-lib.org/articles/dependencies.html)
+There are two good reasons why one may want to override the installation of
+packages from the URL defined in `repos`:
 
+1. A particular R package is not available in `repos`, but is available
+somewhere else; and
+2. A particular R package is available in `repos`, but a specific version is
+required.
+
+To install `dplyr` version 0.8.0, despite the availability of a newer version
+(0.8.5) on `repos`, we add the `Remotes` field in the `DESCRIPTION` file. 
+The remote dependencies specified in Remotes should be described in the following form:
+
+```
+Remotes: 
+    [type::]<Repository>
+```
+
+The `dplyr` package is available on GitHub under `tidyverse/dplyr` repository,
+i.e. <https://github.com/tidyverse/dplyr>. Thus, in this case, *type = github*
+and *Repository = tidyverse/dplyr*. The DESCRIPTION file becomes:
 
 ```
 Package: project.name
@@ -233,8 +250,22 @@ Remotes:
     github::tidyverse/dplyr
 ```
 
-Other variants
+Without specifying more information, `remotes::install_deps` will pull and
+install the latest version available in the GitHub Repo (on the master branch).
+Instead, we can define a specif git commit to install:
 
 * Install specific release: [`github::tidyverse/dplyr@v0.8.0`](https://github.com/tidyverse/dplyr/releases/tag/v0.8.0)
 * Install specific commit: [`github::tidyverse/dplyr@f05230dd`](https://github.com/tidyverse/dplyr/tree/f05230dd110a729e95b9ffb86df2030bf3b8b26b)
+
+
+### Further Reading
+
+* [Install R Packages from GitHub, BitBucket, or other local or remote
+repositories](https://remotes.r-lib.org/articles/dependencies.html)
+
+
+
+
+Other variants
+
 
