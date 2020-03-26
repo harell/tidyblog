@@ -25,6 +25,8 @@ source(file.path(path_root, "R/post_options.R"))
 
 **In This Post**
 
+* Introducing an existing package management approach we could use while
+developing R extensions such as R packages, R projects and Shiny apps.
 * Using a package manager that capitalises on existing infrastructure. 
 * Forming a discipline of grooming the `DESCRIPTION` file
 
@@ -118,7 +120,7 @@ LazyData: true
 
 As the R application evolves, anytime an additional package is required for the
 application to work, specify that packages in the `DESCRIPTION` file. You can
-add a package to the `DESCRIPTION` file by running[^dplyr]:
+add a package to the `DESCRIPTION` file by running:
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_package("dplyr")
@@ -177,7 +179,7 @@ computer.
 
 Lastly, Given an R project with a `DESCRIPTION` file in the root folder, when
 `remotes::install_deps()` is called, then R tries to install the listed packages
-within DESCRIPTION.
+under `Imports` within `DESCRIPTION`.
 
 The following is an extract from the output console:
 
@@ -204,7 +206,4 @@ provided it; and
     * `remotes::install_deps` fails if any declared minimum version is not
     available; otherwise it installs the latest available version on `repos`.
 
-## References
-
-[^dplyr]: These commands add `dplyr` to the `DESCRIPTION` file.
 
