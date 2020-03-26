@@ -27,12 +27,6 @@ source(file.path(path_root, "R/post_options.R"))
 
 * Using a package manager that capitalises on existing infrastructure. 
 * Forming a discipline of grooming the `DESCRIPTION` file
-<!-- * Managing R package dependencies in Docker. -->
-
-<!-- Who should read this post? Any person who needs a simple way to manager R -->
-<!-- packages dependencies. -->
-
-<!-- What makes the approach simple? familiarity and existing toolbox -->
 
 The approach in a nutshell:
 
@@ -67,14 +61,19 @@ install.packages(pkgs, lib, repos = getOption("repos"),
                  keep_outputs = FALSE, ...)
 ```
 
-Primarily, the first three arguments `pkgs`, `lib` and `repos` specify what to
-install, where to install it and where to get it from, respectively. Among
-different package management strategies, `pkgs` should be (almost) identical.
-However, the methods employed for gathering `pkgs` varies between strategies.
-The other two input arguments `lib` and `repos` vary considerably by their
-values and generating mechanism between different strategies.
+The first three arguments `pkgs`, `lib` and `repos` specify what to install,
+where to install it and where to get it from, respectively. Among different
+package management strategies, `pkgs` should be (almost) identical. However, the
+methods employed for gathering `pkgs` varies between strategies. Other
+noticeable differences between strategies, are the values passed to `lib` and
+`repos`. The following [recipe](#Recipe) elaborates how to curate `pkgs` and how
+to leverage `repos` to emulate CRAN (the default package collection) at a
+particular date.
 
-## Recipe
+<!-- The objectives of the strategy in this document are -->
+<!-- https://www.infoq.com/presentations/Simple-Made-Easy/ -->
+
+## Recipe {#Recipe}
 
 ### Ingredients
 
@@ -92,6 +91,25 @@ You can create a new `DESCRIPTION` file by running:
 
 ```{r, echo = TRUE, eval = FALSE}
 usethis::use_description()
+```
+
+The last command saves a `DESCRIPTION` skeleton at the working directory with
+the following content:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
 ```
 
 ### Directions
@@ -162,8 +180,8 @@ provided it; and
 
 * Installs `dplyr` version 0.8.5. 
     * While we declared the minmum version to be 0.8.3 in `DESCRIPTION`, the
-    available version on _2020-03-27_ is 0.8.5.
-    * remotes::install_deps fails if any declared minimum version is not
+    available version on 2020-03-27 is 0.8.5.
+    * `remotes::install_deps` fails if any declared minimum version is not
     available; otherwise it installs the latest available version on `repos`.
 
 ## References
