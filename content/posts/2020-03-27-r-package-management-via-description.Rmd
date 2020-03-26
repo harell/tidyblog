@@ -201,9 +201,40 @@ Notice that `remotes::install_deps`:
 provided it; and
 
 * Installs `dplyr` version 0.8.5. 
-    * While we declared the minmum version to be 0.8.0 in `DESCRIPTION`, the
+    * While we declared the minimum version to be 0.8.0 in `DESCRIPTION`, the
     available version on 2020-03-27 is 0.8.5.
     * `remotes::install_deps` fails if any declared minimum version is not
-    available; otherwise it installs the latest available version on `repos`.
+    available; otherwise, it installs the latest available version on `repos`.
 
+
+## Further Reading
+
+* [Install R Packages from GitHub, BitBucket, or other local or remote
+repositories](https://remotes.r-lib.org/articles/dependencies.html)
+
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+Remotes:
+    github::tidyverse/dplyr
+```
+
+Other variants
+
+* Install specific release: [`github::tidyverse/dplyr@v0.8.0`](https://github.com/tidyverse/dplyr/releases/tag/v0.8.0)
+* Install specific commit: [`github::tidyverse/dplyr@f05230dd`](https://github.com/tidyverse/dplyr/tree/f05230dd110a729e95b9ffb86df2030bf3b8b26b)
 
