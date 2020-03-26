@@ -262,10 +262,3 @@ Instead, we can define a specif git commit to install:
 
 * [Install R Packages from GitHub, BitBucket, or other local or remote
 repositories](https://remotes.r-lib.org/articles/dependencies.html)
-
-
-
-
-Other variants
-
-
