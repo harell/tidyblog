@@ -130,6 +130,26 @@ Alternatively, you can declare the package name and minimum version by running:
 usethis::use_package("dplyr", min_version = "0.8.0")
 ```
 
+The last command appends `dplyr (>= 0.8.0)` under `Imports` in `DESCRIPTION`:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+```
+
 `usethis::use_package` takes care of syntax, duplication and typos (both in
 package name and version) for you.
 
@@ -179,7 +199,7 @@ Notice that `remotes::install_deps`:
 provided it; and
 
 * Installs `dplyr` version 0.8.5. 
-    * While we declared the minmum version to be 0.8.3 in `DESCRIPTION`, the
+    * While we declared the minmum version to be 0.8.0 in `DESCRIPTION`, the
     available version on 2020-03-27 is 0.8.5.
     * `remotes::install_deps` fails if any declared minimum version is not
     available; otherwise it installs the latest available version on `repos`.
