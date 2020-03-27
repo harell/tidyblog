@@ -16,14 +16,9 @@ biblio-style: apalike
 link-citations: yes  
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-  echo = FALSE, 
-  message = FALSE,
-  warning = FALSE,
-  fig.align = "center",
-  out.width = "100%"
-)
+```{r, include = FALSE}
+path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
+source(file.path(path_root, "R/post_options.R"))
 ```
 
 <!--

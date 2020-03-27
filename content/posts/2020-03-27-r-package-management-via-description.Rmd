@@ -1,0 +1,264 @@
+---
+title: "R Package Management via DESCRIPTION"
+author: "Harel Lustiger"
+date: '2020-03-27'
+output: word_document
+bibliography: references-posts.bib
+draft: yes
+link-citations: yes
+categories:
+- R Projects
+- Reproducible R
+slug: r-package-management-via-description
+tags:
+- package management
+- DESCRIPTION
+biblio-style: apalike
+---
+
+```{r, include = FALSE}
+path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
+source(file.path(path_root, "R/post_options.R"))
+```
+
+## Synopsis
+
+**In This Post**
+
+* Introducing an existing package management approach we could use while
+developing R extensions such as R packages, R projects and Shiny apps.
+* Using a package manager that capitalises on existing infrastructure. 
+* Forming a discipline of grooming the `DESCRIPTION` file
+
+The approach in a nutshell:
+
+1. Maintaining package requirements in a `DESCRIPTION` file; 
+2. Setting the URL from which to pull the packages from; and
+3. Using `remotes::install_deps()` to install the required packages.
+
+## Introduction
+
+All R applications have requirements which are necessary for them to run. A
+predominant type of requirement is package dependencies. Most R applications are
+built upon R packages which do not come with a fresh installation of R. Thus, to
+ensure an R application will run on different computers, it is necessary to
+manage its package dependencies. There are a few possible package management
+strategies to employ. A common thread of these strategies is the installation of
+missing R packages.
+
+R workhorse function for installing R packages is `utils::install.packages()`. A
+glimpse into the function help documentation shows us what input arguments
+impact the function behaviour.
+
+```{r install.packages, echo = TRUE, eval = FALSE}
+install.packages(pkgs, lib, repos = getOption("repos"),
+                 contriburl = contrib.url(repos, type),
+                 method, available = NULL, destdir = NULL,
+                 dependencies = NA, type = getOption("pkgType"),
+                 configure.args = getOption("configure.args"),
+                 configure.vars = getOption("configure.vars"),
+                 clean = FALSE, Ncpus = getOption("Ncpus", 1L),
+                 verbose = getOption("verbose"),
+                 libs_only = FALSE, INSTALL_opts, quiet = FALSE,
+                 keep_outputs = FALSE, ...)
+```
+
+The first three arguments `pkgs`, `lib` and `repos` specify what to install,
+where to install it and where to get it from, respectively. Among different
+package management strategies, `pkgs` should be (almost) identical. However, the
+methods employed for gathering `pkgs` varies between strategies. Other
+noticeable differences between strategies, are the values passed to `lib` and
+`repos`. The following [recipe](#Recipe) elaborates how to curate `pkgs` and how
+to leverage `repos` to emulate CRAN (the default package collection) at a
+particular date.
+
+<!-- The objectives of the strategy in this document are -->
+<!-- https://www.infoq.com/presentations/Simple-Made-Easy/ -->
+
+## Recipe {#Recipe}
+
+### Ingredients
+
+* The [`remotes`](https://github.com/r-lib/remotes) package;
+* The [`usethis`](https://github.com/r-lib/usethis/) package; and
+* A `DESCRIPTION` file.
+
+You can install both packages at once by running:
+
+```{r, echo = TRUE, eval = FALSE}
+install.packages(c("remotes", "usethis"))
+```
+
+You can create a new `DESCRIPTION` file by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_description()
+```
+
+The last command saves a `DESCRIPTION` skeleton at the working directory with
+the following content:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+```
+
+### Directions
+
+#### Grooming the `DESCRIPTION` file
+
+As the R application evolves, anytime an additional package is required for the
+application to work, specify that packages in the `DESCRIPTION` file. You can
+add a package to the `DESCRIPTION` file by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_package("dplyr")
+```
+
+Alternatively, you can declare the package name and minimum version by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_package("dplyr", min_version = "0.8.0")
+```
+
+The last command appends `dplyr (>= 0.8.0)` under `Imports` in `DESCRIPTION`:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+```
+
+`usethis::use_package` takes care of syntax, duplication and typos (both in
+package name and version) for you.
+
+Removing a package from the `DESCRIPTION` file is done manually. Open
+`DESCRIPTION` and delete the package name from the `Imports` fields. Make sure
+the last package in `Imports` doesn't end with a comma (',').
+
+#### Installing Package Requirements
+
+Firstly, replicate the package versions that were available at the time of
+developing the program. Following this step increases application behaviour
+consistency regardless of the date it is executed.
+
+(recommended) You can specify `repos` to point at a snapshot in time of CRAN by
+running:
+
+```{r, echo = TRUE, eval = FALSE}
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+```
+
+(replace _2020-03-27_ with the date required for reproducibility)
+
+If you skip that step, R installs the latest package versions on the hosting
+computer.
+
+Lastly, Given an R project with a `DESCRIPTION` file in the root folder, when
+`remotes::install_deps()` is called, then R tries to install the listed packages
+under `Imports` within `DESCRIPTION`.
+
+The following is an extract from the output console:
+
+```
+> remotes::install_deps()
+
+Installing packages into '/usr/local/lib/R/site-library'
+(as 'lib' is unspecified)
+
+trying URL 'https://mran.microsoft.com/snapshot/2020-03-27/src/contrib/dplyr_0.8.5.tar.gz'
+Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
+==================================================
+downloaded 3.1 MB
+```
+
+Notice that `remotes::install_deps`:
+
+* Searches and pulls the `dplyr` package from the `repos` address we have
+provided it; and
+
+* Installs `dplyr` version 0.8.5. 
+    * While we declared the minimum version to be 0.8.0 in `DESCRIPTION`, the
+    available version on 2020-03-27 is 0.8.5.
+    * `remotes::install_deps` fails if any declared minimum version is not
+    available; otherwise, it installs the latest available version on `repos`.
+
+
+## Installing Packages Not on CRAN 
+
+There are two good reasons why one may want to override the installation of
+packages from the URL defined in `repos`:
+
+1. A particular R package is not available in `repos`, but is available
+somewhere else; and
+2. A particular R package is available in `repos`, but a specific version is
+required.
+
+To install `dplyr` version 0.8.0, despite the availability of a newer version
+(0.8.5) on `repos`, we add the `Remotes` field in the `DESCRIPTION` file. 
+The remote dependencies specified in Remotes should be described in the following form:
+
+```
+Remotes: 
+    [type::]<Repository>
+```
+
+The `dplyr` package is available on GitHub under `tidyverse/dplyr` repository,
+i.e. <https://github.com/tidyverse/dplyr>. Thus, in this case, *type = github*
+and *Repository = tidyverse/dplyr*. The DESCRIPTION file becomes:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+Remotes:
+    github::tidyverse/dplyr
+```
+
+Without specifying more information, `remotes::install_deps` will pull and
+install the latest version available in the GitHub Repo (on the master branch).
+Instead, we can define a specif git commit to install:
+
+* Install specific release: [`github::tidyverse/dplyr@v0.8.0`](https://github.com/tidyverse/dplyr/releases/tag/v0.8.0)
+* Install specific commit: [`github::tidyverse/dplyr@f05230dd`](https://github.com/tidyverse/dplyr/tree/f05230dd110a729e95b9ffb86df2030bf3b8b26b)
+
+
+### Further Reading
+
+* [Install R Packages from GitHub, BitBucket, or other local or remote
+repositories](https://remotes.r-lib.org/articles/dependencies.html)
