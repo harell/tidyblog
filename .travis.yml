@@ -12,13 +12,6 @@ cache:
   - ccache
 latex: false
 
-# multiple R versions ----------------------------------------------------------
-#matrix:
-#  include:
-#  - r: devel
-#  - r: oldrel
-#  - r: release
-
 # environment variables --------------------------------------------------------
 env:
   global:
