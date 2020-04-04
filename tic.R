@@ -3,7 +3,7 @@ source("./AppData/tic/helpers.R")
 
 # Branchs -----------------------------------------------------------------
 if(TRUE)
-    tic::do_blogdown()
+    tic::do_blogdown(private_key_name = Sys.getenv("GITHUB_PATH"))
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script") %>%
