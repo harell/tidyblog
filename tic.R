@@ -1,6 +1,10 @@
 library(tic, warn.conflicts = FALSE)
 source("./AppData/tic/helpers.R")
 
+# Branchs -----------------------------------------------------------------
+if(TRUE)
+    tic::do_blogdown()
+
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script") %>%
     add_code_step(remotes::install_deps(dependencies = TRUE))
