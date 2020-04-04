@@ -7,6 +7,7 @@ if(TRUE)
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script") %>%
+    add_code_step(if(nchar(Sys.getenv("id_rsa")) == 0) stop("id_rsa not defined; use travis::use_travis_deploy()")) %>% 
     add_code_step(remotes::install_deps(dependencies = TRUE))
 
 # Stage: Script -----------------------------------------------------------
@@ -20,7 +21,7 @@ get_stage("after_failure") %>%
     add_code_step(print(sessioninfo::session_info(include_base = FALSE)))
 
 # Stage: Before Deploy ----------------------------------------------------
-get_stage("before_deploy")
+get_stage("before_deploy") %>% 
     add_code_step(blogdown::install_hugo())
 
 # Stage: Deploy -----------------------------------------------------------
