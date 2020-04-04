@@ -1,4 +1,5 @@
 .First <- function(){
+    if(identical(Sys.getenv("CI"), TRUE)) return()
     if(is.null(getOption(".First.time"))) options(.First.time = TRUE)
     
     if(getOption(".First.time")){
