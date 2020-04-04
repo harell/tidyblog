@@ -2,9 +2,11 @@ Package: tidyblog
 Type: Blog
 Title: Blogdown Site
 Version: 1.0.0
+Date: 2020-02-29
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Imports: 
-    magrittr (>= 1.5.0),
-    tibble (>= 2.1.0),
-    dplyr (>= 1.26.0),
-    kableExtra (>= 1.1.0)
+    kableExtra (>= 1.1.0),
+Depends: 
+    blogdown,
+    devtools,
+    tidyvers
