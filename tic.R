@@ -3,7 +3,7 @@ source("./AppData/tic/helpers.R")
 
 # Branchs -----------------------------------------------------------------
 if(TRUE)
-    tic::do_blogdown(private_key_name = Sys.getenv("GITHUB_PATH"))
+    tic::do_blogdown()
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script") %>%
@@ -21,6 +21,7 @@ get_stage("after_failure") %>%
 
 # Stage: Before Deploy ----------------------------------------------------
 get_stage("before_deploy")
+    add_code_step(blogdown::install_hugo())
 
 # Stage: Deploy -----------------------------------------------------------
 get_stage("deploy")
