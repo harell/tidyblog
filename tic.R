@@ -1,9 +1,6 @@
 library(tic, warn.conflicts = FALSE)
 source("./AppData/tic/helpers.R")
 
-# Macros ------------------------------------------------------------------
-# if(TRUE) tic::do_blogdown()
-
 # Stage: Before Install ---------------------------------------------------
 get_stage("before_install") 
 
