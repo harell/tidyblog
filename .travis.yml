@@ -27,7 +27,6 @@ before_install:
   - R -q -e
    'source(".Rprofile");
     if(!require(remotes, quietly = TRUE)) utils::install.packages("remotes");
-    remotes::install_cran("usethis");
     remotes::install_github("ropensci/tic", dependencies = "Imports", quiet = TRUE);
     tic::dsl_load();
     tic::prepare_all_stages();
