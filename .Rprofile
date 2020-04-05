@@ -1,4 +1,5 @@
 .First <- function(){
+    if(isTRUE(as.logical(Sys.getenv("CI")))) return()
     if(is.null(getOption(".First.time"))) options(.First.time = TRUE)
     
     if(getOption(".First.time")){
@@ -19,6 +20,7 @@
 }
 
 .Last <- function(){
+    if(isTRUE(as.logical(Sys.getenv("CI")))) return()
     message("Shuting down live site preview")
     try(blogdown::stop_server())
     message("Cleaning up site repo")
