@@ -5,11 +5,11 @@ source("./AppData/tic/helpers.R")
 if(TRUE) tic::do_blogdown()
 
 # Stage: Before Install ---------------------------------------------------
-get_stage("before_install") %>% 
-    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE))
+get_stage("before_install") 
 
 # Stage: Install ----------------------------------------------------------
-get_stage("install")
+get_stage("install") %>% 
+    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE))
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script")
