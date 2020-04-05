@@ -23,13 +23,17 @@ get_stage("after_failure") %>%
     add_code_step(print(sessioninfo::session_info(include_base = FALSE)))
 
 # Stage: Before Deploy ----------------------------------------------------
-get_stage("before_deploy") %>% 
+if(is_master_branch() | is_develop_branch())
+    get_stage("before_deploy") %>% 
     add_step(step_setup_ssh(private_key_name = "TIC_DEPLOY_KEY")) %>% 
     add_step(step_setup_push_deploy(path = "public", branch = "gh-pages", remote_url = NULL, orphan = FALSE, checkout = TRUE))
+
 # Stage: Deploy -----------------------------------------------------------
-get_stage("deploy") %>% 
+if(is_master_branch() | is_develop_branch())
+    get_stage("deploy") %>% 
     add_step(step_build_blogdown()) %>% 
     add_step(step_do_push_deploy(path = "public", commit_message = NULL, commit_paths = "."))
 
 # Stage: After Deploy -----------------------------------------------------
-get_stage("after_deploy")
+if(is_master_branch() | is_develop_branch())
+    get_stage("after_deploy")
