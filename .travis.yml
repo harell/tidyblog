@@ -16,7 +16,6 @@ latex: false
 env:
   global:
     - MAKEFLAGS="-j 2"
-    - R_REPOS="https://mran.microsoft.com/snapshot/2020-02-29"
 
 # jobs -------------------------------------------------------------------------
 before_install:
@@ -27,7 +26,7 @@ before_install:
   - R -q -e 'DESCRIPTION <- readLines("DESCRIPTION");
              Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]));
              URL <- if(length(Date) == 1) paste0("https://mran.microsoft.com/snapshot/", Date) else "https://cran.rstudio.com/";
-             writeLines("options(Ncpus = 8, repos = structure(c(CRAN = URL)))", ".Rprofile")'  
+             writeLines(paste0("options(Ncpus = 8, repos = structure(c(CRAN = \"", URL, "\")))"), ".Rprofile")'  
   - R -q -e 'if(!require(remotes, quietly = TRUE)) utils::install.packages("remotes");
              remotes::install_github("ropensci/tic", dependencies = "Imports", quiet = TRUE);
              tic::dsl_load();
