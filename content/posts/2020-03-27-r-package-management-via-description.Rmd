@@ -2,10 +2,7 @@
 title: "R Package Management via DESCRIPTION"
 author: "Harel Lustiger"
 date: '2020-03-27'
-output: word_document
-bibliography: references-posts.bib
-draft: yes
-link-citations: yes
+draft: no
 categories:
 - R Projects
 - Reproducible R
@@ -13,6 +10,8 @@ slug: r-package-management-via-description
 tags:
 - package management
 - DESCRIPTION
+link-citations: yes 
+bibliography: [references-posts.bib]
 biblio-style: apalike
 ---
 
