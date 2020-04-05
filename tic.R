@@ -5,15 +5,14 @@ source("./AppData/tic/helpers.R")
 if(TRUE) tic::do_blogdown()
 
 # Stage: Before Install ---------------------------------------------------
-get_stage("before_install")
+get_stage("before_install") %>% 
+    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE))
 
 # Stage: Install ----------------------------------------------------------
 get_stage("install")
 
 # Stage: Before Script ----------------------------------------------------
-get_stage("before_script") %>%
-    add_code_step(if(nchar(Sys.getenv("id_rsa")) == 0) stop("id_rsa not defined; use travis::use_travis_deploy()")) %>% 
-    add_code_step(remotes::install_deps(dependencies = TRUE))
+get_stage("before_script")
 
 # Stage: Script -----------------------------------------------------------
 get_stage("script") 
@@ -26,7 +25,8 @@ get_stage("after_failure") %>%
     add_code_step(print(sessioninfo::session_info(include_base = FALSE)))
 
 # Stage: Before Deploy ----------------------------------------------------
-get_stage("before_deploy")
+get_stage("before_deploy") %>% 
+    step_setup_ssh(private_key_name = "TIC_DEPLOY_KEY")
 
 # Stage: Deploy -----------------------------------------------------------
 get_stage("deploy")
