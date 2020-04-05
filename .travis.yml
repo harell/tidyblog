@@ -24,7 +24,7 @@ before_install:
   - echo -e "options(Ncpus = 8, repos = structure(c(CRAN = '"$R_REPOS"')))" > $HOME/.Rprofile
   - mkdir $HOME/.R && echo -e 'CXX_STD = CXX14\n\nCC=ccache gcc -std=gnu99\nCXX=ccache g++\nCXX11=ccache g++ -std=gnu99\nCXX14=ccache g++ -std=gnu99\nC11=ccache g++\nC14=ccache g++\nFC=ccache gfortran\nF77=ccache gfortran' > $HOME/.R/Makevars
   - mkdir -p $HOME/.ccache &&  echo -e 'max_size = 5.0G\nsloppiness = include_file_ctime\nhash_dir=false' > $HOME/.ccache/ccache.conf
-  - R -q -e 'source(".Rprofile")'
+  - R -q -e 'source(file.path(Sys.getenv("HOME"), ".Rprofile"))'
   - R -q -e 'if(!require(remotes, quietly = TRUE)) utils::install.packages("remotes")'
   - R -q -e 'remotes::install_github("ropensci/tic", dependencies = "Imports", quiet = TRUE)'
   - R -q -e 'tic::dsl_load()'
