@@ -26,7 +26,8 @@ get_stage("after_failure") %>%
 
 # Stage: Before Deploy ----------------------------------------------------
 get_stage("before_deploy") %>% 
-    add_step(step_setup_ssh(private_key_name = "TIC_DEPLOY_KEY"))
+    add_step(step_setup_ssh(private_key_name = "TIC_DEPLOY_KEY")) %>% 
+    add_step(step_setup_push_deploy(path = "public", branch = "gh-pages", remote_url = NULL, orphan = FALSE, checkout = TRUE))
 
 # Stage: Deploy -----------------------------------------------------------
 get_stage("deploy")

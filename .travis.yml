@@ -30,7 +30,7 @@ before_install:
   - R -q -e 'tic::dsl_load()'
   - R -q -e 'tic::prepare_all_stages()'
   - R -q -e 'tic::before_install()'
-   #'source(".Rprofile");
+   #'source(file.path(Sys.getenv("HOME"), ".Rprofile"));
    #if(!require(remotes, quietly = TRUE)) utils::install.packages("remotes");
    #remotes::install_github("ropensci/tic", dependencies = "Imports", quiet = TRUE);
    #tic::dsl_load();
