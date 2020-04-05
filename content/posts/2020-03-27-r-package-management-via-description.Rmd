@@ -254,8 +254,15 @@ install the latest version available in the GitHub Repo (on the master branch).
 Instead, we can define a specif git commit to install:
 
 * Install specific release: [`github::tidyverse/dplyr@v0.8.0`](https://github.com/tidyverse/dplyr/releases/tag/v0.8.0)
+```
+Remotes:
+    github::tidyverse/dplyr@v0.8.0
+```
 * Install specific commit: [`github::tidyverse/dplyr@f05230dd`](https://github.com/tidyverse/dplyr/tree/f05230dd110a729e95b9ffb86df2030bf3b8b26b)
-
+```
+Remotes:
+    github::tidyverse/dplyr@f05230dd
+```
 
 ### Further Reading
 
