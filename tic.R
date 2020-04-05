@@ -2,14 +2,15 @@ library(tic, warn.conflicts = FALSE)
 source("./AppData/tic/helpers.R")
 
 # Macros ------------------------------------------------------------------
-if(TRUE) tic::do_blogdown()
+# if(TRUE) tic::do_blogdown()
 
 # Stage: Before Install ---------------------------------------------------
 get_stage("before_install") 
 
 # Stage: Install ----------------------------------------------------------
 get_stage("install") %>% 
-    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE))
+    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE)) %>% 
+    add_code_step(blogdown::install_hugo())
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script")
@@ -28,9 +29,10 @@ get_stage("after_failure") %>%
 get_stage("before_deploy") %>% 
     add_step(step_setup_ssh(private_key_name = "TIC_DEPLOY_KEY")) %>% 
     add_step(step_setup_push_deploy(path = "public", branch = "gh-pages", remote_url = NULL, orphan = FALSE, checkout = TRUE))
-
 # Stage: Deploy -----------------------------------------------------------
-get_stage("deploy")
+get_stage("deploy") %>% 
+    add_step(step_build_blogdown()) %>% 
+    add_step(step_do_push_deploy(path = "public", commit_message = NULL, commit_paths = "."))
 
 # Stage: After Deploy -----------------------------------------------------
 get_stage("after_deploy")
