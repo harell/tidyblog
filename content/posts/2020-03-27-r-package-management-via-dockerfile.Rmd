@@ -2,7 +2,7 @@
 title: R Package Management via Dockerfile
 author: Harel Lustiger
 date: '2020-03-27'
-draft: true
+draft: yes
 slug: r-package-management-via-dockerfile
 categories:
   - R Projects
@@ -11,9 +11,9 @@ tags:
   - package management
   - DESCRIPTION
   - Docker
+link-citations: yes 
 bibliography: [references-posts.bib]
-biblio-style: apalike
-link-citations: yes  
+biblio-style: apalike 
 ---
 
 ```{r, include = FALSE}
