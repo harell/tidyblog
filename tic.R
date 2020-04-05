@@ -1,9 +1,14 @@
 library(tic, warn.conflicts = FALSE)
 source("./AppData/tic/helpers.R")
 
-# Branchs -----------------------------------------------------------------
-if(TRUE)
-    tic::do_blogdown()
+# Macros ------------------------------------------------------------------
+if(TRUE) tic::do_blogdown()
+
+# Stage: Before Install ---------------------------------------------------
+get_stage("before_install")
+
+# Stage: Install ----------------------------------------------------------
+get_stage("install")
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script") %>%
@@ -21,8 +26,7 @@ get_stage("after_failure") %>%
     add_code_step(print(sessioninfo::session_info(include_base = FALSE)))
 
 # Stage: Before Deploy ----------------------------------------------------
-get_stage("before_deploy") %>% 
-    add_code_step(blogdown::install_hugo())
+get_stage("before_deploy")
 
 # Stage: Deploy -----------------------------------------------------------
 get_stage("deploy")
