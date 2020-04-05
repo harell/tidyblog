@@ -1,0 +1,65 @@
+---
+title: R Package Management via Dockerfile
+author: Harel Lustiger
+date: '2020-03-27'
+draft: true
+slug: r-package-management-via-dockerfile
+categories:
+  - R Projects
+  - Reproducible R
+tags:
+  - package management
+  - DESCRIPTION
+  - Docker
+bibliography: [references-posts.bib]
+biblio-style: apalike
+link-citations: yes  
+---
+
+```{r, include = FALSE}
+path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
+source(file.path(path_root, "R/post_options.R"))
+```
+
+## Synopsis
+
+**In This Post**
+
+* Managing R package dependencies in Docker.
+
+The approach in a nutshell:
+
+1. xxx
+
+## Introduction
+
+## Recipe
+
+### Ingredients
+
+* A `DESCRIPTION` file.
+
+### Directions
+
+#### Installing Package Requirements
+
+Second, it is possible to direct R where to look for and install in R packages.
+R starts up with one or more sensible default values, usually pointing at a user
+library[^library] and a system library. In addition to system and user
+libraries, consider an additional scope – project library. Project library
+comprises R packages which are not shared with other projects.
+
+(optional) You can add a project library by running[^R_LIBS_PROJECT]:
+
+```{r, echo = TRUE, eval = FALSE}
+Sys.setenv(R_LIBS_PROJECT = "./cache")
+.libPaths(Sys.getenv("R_LIBS_PROJECT"))
+```
+
+You will also need to declare the project library in ... (Rproject?)
+
+## References
+
+[^library]: A library is a folder with a collection of installed R packages.
+[^R_LIBS_PROJECT]: This command will consider a project subfolder named _cache_
+where R packages will be looked for and installed in.
