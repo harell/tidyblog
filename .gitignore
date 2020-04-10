@@ -43,3 +43,4 @@ static
 
 public/
 *.html
+content/_output.yml
