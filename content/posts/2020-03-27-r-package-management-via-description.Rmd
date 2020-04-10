@@ -20,7 +20,7 @@ path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
 source(file.path(path_root, "R/post_options.R"))
 ```
 
-## Synopsis
+# Synopsis
 
 **In This Post**
 
@@ -35,7 +35,7 @@ The approach in a nutshell:
 2. Setting the URL from which to pull the packages from; and
 3. Using `remotes::install_deps()` to install the required packages.
 
-## Introduction
+# Introduction
 
 All R applications have requirements which are necessary for them to run. A
 predominant type of requirement is package dependencies. Most R applications are
@@ -74,9 +74,9 @@ particular date.
 <!-- The objectives of the strategy in this document are -->
 <!-- https://www.infoq.com/presentations/Simple-Made-Easy/ -->
 
-## Recipe {#Recipe}
+# Recipe {#Recipe}
 
-### Ingredients
+## Ingredients
 
 * The [`remotes`](https://github.com/r-lib/remotes) package;
 * The [`usethis`](https://github.com/r-lib/usethis/) package; and
@@ -122,9 +122,9 @@ be indented by four spaces.
 Package management in R is done primarily through assigning packages names to
 the `Imports` field which we handle next.
 
-### Directions
+## Directions
 
-#### Grooming the `DESCRIPTION` file
+### Grooming the `DESCRIPTION` file
 
 As the R application evolves, anytime an additional package is required for the
 application to work, specify that packages in the `DESCRIPTION` file. You can
@@ -167,7 +167,7 @@ Removing a package from the `DESCRIPTION` file is done manually. Open
 `DESCRIPTION` and delete the package name from the `Imports` fields. Make sure
 the last package in `Imports` doesn't end with a comma (',').
 
-#### Installing Package Requirements
+### Installing Package Requirements
 
 Firstly, replicate the package versions that were available at the time of
 developing the program. Following this step increases application behaviour
@@ -215,7 +215,7 @@ provided it; and
     available; otherwise, it installs the latest available version on `repos`.
 
 
-## Installing Packages Not on CRAN 
+# Installing Packages Not on CRAN 
 
 There are two good reasons why one may want to override the installation of
 packages from the URL defined in `repos`:
@@ -273,7 +273,7 @@ Remotes:
     github::tidyverse/dplyr@f05230dd
 ```
 
-### Further Reading
+# Further Reading
 
 * [Install R Packages from GitHub, BitBucket, or other local or remote
 repositories](https://remotes.r-lib.org/articles/dependencies.html)

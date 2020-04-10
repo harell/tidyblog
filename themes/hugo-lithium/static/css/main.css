@@ -21,6 +21,10 @@ h6 {
   color: #222;
 }
 
+h1 {
+  font-size: 1.75em;
+}
+
 a {
   outline: none;
 }

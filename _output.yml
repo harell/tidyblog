@@ -1,4 +1,5 @@
 blogdown::html_page:
+  number_sections: true
   toc: true
   fig_width: 6
   dev: "svg"
