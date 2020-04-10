@@ -1,14 +1,16 @@
 ---
 title: "R Package Management via DESCRIPTION"
+subtitle: "The R equivalent of requirements.txt in Python"
 author: "Harel Lustiger"
 date: '2020-03-27'
 draft: no
 categories:
 - R Projects
-- Reproducible R
+- Reproducible Research
 slug: r-package-management-via-description
 tags:
-- package management
+- Package Management    
+- Reproducible Research    
 - DESCRIPTION
 link-citations: yes 
 bibliography: [references-posts.bib]
@@ -22,7 +24,7 @@ source(file.path(path_root, "R/post_options.R"))
 
 # Synopsis
 
-**In This Post**
+In This Post
 
 * Introducing an existing package management approach we could use while
 developing R extensions such as R packages, R projects and Shiny apps.
