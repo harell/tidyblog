@@ -2,6 +2,9 @@
 title: "About"
 author: "Harel Lustiger"
 slug: about
+blogdown::html_page:
+  number_sections: true
+  toc: false
 ---
 
 ```{r, include = FALSE}
@@ -15,7 +18,25 @@ See the first paragraph in https://adamdrake.com/command-and-control.html
 
 -->
 
-This is a "hello world" example website for the [**blogdown**](https://github.com/rstudio/blogdown) package. The theme was forked from [@jrutheiser/hugo-lithium-theme](https://github.com/jrutheiser/hugo-lithium-theme) and modified by [Yihui Xie](https://github.com/yihui/hugo-lithium).
+<!-- # Foreword -->
+
+I am a Senior Data Scientist with qualifications in Electronics Engineering and
+Applied Statistics. In nither qualifications, I received good practices of
+software engineering. As a result, many of my projects are haphazardly
+structured, sprawling, sloppy, duct-tape-and-baling-wire, spaghetti-code jungle.
+Realising my deficiencies, I embarked on a quest for good data science practices
+in three domains: software engineering, statistical analysis, and project
+management.
+
+On project milestones, I look back and reflect on my craft. How have things
+gone? How could I do things better? Developing a deeper understanding of the
+data science domain and formulating concrete next steps give me pleasure.
+
+This blog is part of my effort to document and communicate new findings and
+insights. Rather than leading the audience after my blood trail, I try to write
+in a clear and concise manner. I hope readers find those posts actionable and
+impactful.
+
 
 ---
 
