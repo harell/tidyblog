@@ -113,6 +113,15 @@ Encoding: UTF-8
 LazyData: true
 ```
 
+`DESCRIPTION` uses an archaic file format called DCF (Debian control format)
+which was available during R inception. DCF is somewhat similar to YAML in its
+structure. Each line consists of a **field** name paired with one or more
+**values** separated by a colon. When values span multiple lines, they need to
+be indented by four spaces.
+
+Package management in R is done primarily through assigning packages names to
+the `Imports` field which we handle next.
+
 ### Directions
 
 #### Grooming the `DESCRIPTION` file
