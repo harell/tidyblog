@@ -29,11 +29,14 @@ a {
   outline: none;
 }
 
+code {
+  background-color: rgba(0, 0, 0, 0.05);
+}
 
 pre code {
   display: block;
-  background-color: rgba(0, 0, 0, 0.02);
   font-size: 0.73em;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .wrapper {
