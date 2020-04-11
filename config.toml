@@ -25,7 +25,7 @@ enableEmoji = true
     hideCopyright = false
     rtl = false
     inverted = false
-    custom_css = ["/css/xcode.css", "/css/style.css", "https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"]
+    custom_css = ["/css/xcode.css", "/css/style.css"]
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"
@@ -35,15 +35,6 @@ enableEmoji = true
 
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
     MathJaxVersion = "2.7.5"
-
-    # path to the favicon, under "static"
-    favicon = "favicon.ico"
-
-    [params.logo]
-    url = "logos/logo.png"
-    width = 50
-    height = 50
-    alt = "Logo"
     
 # params.social ----------------------------------------------------------------
 [[params.social]]
