@@ -54,34 +54,18 @@ p.info {
     --twitter: #0084b4;
     --linkedin: #0e76a8; 
     --medium: #00a669;
-    --rainbow1: #cc1616; 
-    --rainbow2: #dd9606;
-    --rainbow3: #ead320;
-    --rainbow4: #1cb22d;
-    --rainbow5: #1c83b2;
-    --rainbow6: #7a22c1;
-    --rainbow7: #c121b3;
+    --r-gray: #b9bbbf;
+    --r-blue: #246abe;
 }
-
-li a i { color: var(--rainbow1); }
-li + li a i { color: var(--rainbow2); }
-li + li + li a i { color: var(--rainbow3); }
-li + li + li + li a i { color: var(--rainbow4); }
-li + li + li + li + li a i { color: var(--rainbow5); }
-li + li + li + li + li + li a i { color: var(--rainbow6); }
-li + li + li + li + li + li + li a i { color: var(--rainbow7); }
-li a:hover i { color: #212121; }
 
 .fa-github { color: var(--github); }
 .fa-twitter { color: var(--twitter); }
 .fa-linkedin { color: var(--linkedin); }
 .fa-medium { color: var(--medium); }
 
+li a:hover i { color: #212121; }
+
 div.avatar img {
-  box-shadow: 0 0 0 2px var(--rainbow6),
-              0 0 0 4px var(--rainbow5),
-              0 0 0 6px var(--rainbow4),
-              0 0 0 8px var(--rainbow3),
-              0 0 0 10px var(--rainbow2),
-              0 0 0 12px var(--rainbow1);
+  box-shadow: 0 0 0 2px var(--r-blue),
+              0 0 0 4px var(--r-gray)
 }
