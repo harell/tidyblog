@@ -25,7 +25,7 @@ enableEmoji = true
     hideCopyright = false
     rtl = false
     inverted = false
-    custom_css = ["/css/xcode.css", "/css/style.css"]
+    custom_css = ["/css/fonts.css", "/css/main.css", "/css/xcode.css"]
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"
