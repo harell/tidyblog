@@ -29,7 +29,9 @@ a {
   outline: none;
 }
 
+
 pre code {
+  display: block;
   background-color: rgba(0, 0, 0, 0.02);
   font-size: 0.73em;
 }
@@ -104,6 +106,10 @@ pre code {
   color: #333;
 }
 
+.content article p {
+  text-align: -webkit-match-parent;
+}
+
 .article-title {
   font-size: 34px;
   color: #222;
@@ -128,7 +134,6 @@ pre code {
 
 .article-content p {
   margin: 15px 0 25px;
-  text-align: left;
   font-size: 21px;
 }
 
