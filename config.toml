@@ -16,7 +16,7 @@ enableEmoji = true
     description = "A website built through Hugo and blogdown."
     keywords = "Data Science, R Programming"
     info = "Senior Data Scientist"
-    avatarurl = "logos/profile.jpg"
+    avatarurl = "images/logos/profile.jpg"
     footercontent = ""
 
     dateformat = "2006-01-02"
