@@ -14,17 +14,17 @@
     options(
         blogdown.author = "Harel Lustiger",
         blogdown.ext = ".Rmd",
-        blogdown.subdir = "post", # A subdirectory under content/
+        blogdown.subdir = "tutorials", # A subdirectory under content/
         blogdown.warn.future = FALSE
     )
 }
 
 .Last <- function(){
-    if(isTRUE(as.logical(Sys.getenv("CI")))) return()
-    message("Shuting down live site preview")
-    try(blogdown::stop_server())
-    message("Cleaning up site repo")
-    unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
-    unlink("./static", recursive = TRUE, force = TRUE)
-    unlink("./public", recursive = TRUE, force = TRUE)
+    # if(isTRUE(as.logical(Sys.getenv("CI")))) return()
+    # message("Shuting down live site preview")
+    # try(blogdown::stop_server())
+    # message("Cleaning up site repo")
+    # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
+    # unlink("./static", recursive = TRUE, force = TRUE)
+    # unlink("./public", recursive = TRUE, force = TRUE)
 }

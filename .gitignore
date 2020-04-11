@@ -39,7 +39,8 @@ vignettes/*.pdf
 .Renviron
 
 # Blogdown
-static
-
+static/
 public/
 *.html
+content/_output.yml
+!/themes/**/*
