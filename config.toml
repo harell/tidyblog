@@ -1,29 +1,16 @@
+# https://github.com/luizdepra/hugo-coder/wiki/Configurations
+
 baseurl = "/"
-languageCode = "en-us"
 title = "A cRaftsman's Guide to R"
+
+languageCode = "en-us"
 theme = "hugo-coder"
 googleAnalytics = "UA-162843697-1"
 disqusShortname = ""
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+enableEmoji = true
 
-[permalinks]
-    post = "/:year/:month/:day/:slug/"
-
-[[menu.main]]
-    weight = 1
-    name = "Tutorials"
-    url = "/tutorials/"
-
-[[menu.main]]
-    weight = 2
-    name = "Talks"
-    url = "/talks/"
-
-[[menu.main]]
-    weight = 3  
-    name = "About"
-    url = "/about/"
-
+# params -----------------------------------------------------------------------
 [params]
     author = "Harel Lustiger"
     description = "A website built through Hugo and blogdown."
@@ -32,12 +19,13 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     avatarurl = "logos/profile.jpg"
     footercontent = ""
 
-    dateformat = "2019-12-31"
-    
+    dateformat = "2006-01-02"
+
     hideCredits = true
     hideCopyright = false
     rtl = false
     inverted = false
+    custom_css = ["/css/xcode.css", "/css/style.css", "https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css"]
 
     # options for highlight.js (version, additional languages, and theme)
     highlightjsVersion = "9.12.0"
@@ -56,7 +44,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     width = 50
     height = 50
     alt = "Logo"
-
+    
+# params.social ----------------------------------------------------------------
 [[params.social]]
     name = "GitHub"
     icon = "fab fa-github"
@@ -80,3 +69,20 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     icon = "fab fa-medium"
     weight = 2
     url = "https://medium.com/@harell"        
+
+# menu.main --------------------------------------------------------------------    
+[[menu.main]]
+    weight = 1
+    name = "Tutorials"
+    url = "/tutorials/"
+
+[[menu.main]]
+    weight = 2
+    name = "Talks"
+    url = "/talks/"
+
+[[menu.main]]
+    weight = 3  
+    name = "About"
+    url = "/about/"
+
