@@ -50,6 +50,10 @@ p.info {
 }
 
 :root {
+    --github: #ef5132;
+    --twitter: #0084b4;
+    --linkedin: #0e76a8; 
+    --medium: #00a669;
     --rainbow1: #cc1616; 
     --rainbow2: #dd9606;
     --rainbow3: #ead320;
@@ -68,7 +72,10 @@ li + li + li + li + li + li a i { color: var(--rainbow6); }
 li + li + li + li + li + li + li a i { color: var(--rainbow7); }
 li a:hover i { color: #212121; }
 
-
+.fa-github { color: var(--github); }
+.fa-twitter { color: var(--twitter); }
+.fa-linkedin { color: var(--linkedin); }
+.fa-medium { color: var(--medium); }
 
 div.avatar img {
   box-shadow: 0 0 0 2px var(--rainbow6),
