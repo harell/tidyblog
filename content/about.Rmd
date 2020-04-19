@@ -12,12 +12,6 @@ path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
 source(file.path(path_root, "R/post_options.R"))
 ```
 
-<!--
-
-See the first paragraph in https://adamdrake.com/command-and-control.html
-
--->
-
 <!-- # Foreword {-} -->
 
 I am a Senior Data Scientist with qualifications in Electronics Engineering and

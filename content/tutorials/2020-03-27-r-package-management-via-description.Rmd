@@ -12,6 +12,7 @@ tags:
 - Package Management    
 - Reproducible Research    
 - DESCRIPTION
+series: [R-Projects]
 link-citations: yes 
 bibliography: [references-posts.bib]
 biblio-style: apalike
@@ -37,7 +38,15 @@ The approach in a nutshell:
 2. Setting the URL from which to pull the packages from; and
 3. Using `remotes::install_deps()` to install the required packages.
 
+Main features:
+
+* Native solution - the DESCRIPTION is a standard file used in any R package. This has two implications:
+    1. Easy to use: There is an existing toolkit to maniplualte the DESCRIPTION content.
+    2. Cohesive to R package development. Either you are familier with the DESCRIPTION file, or it will facilitate you when you learn to develop R packages.
+
 # Introduction
+
+## The Problem
 
 All R applications have requirements which are necessary for them to run. A
 predominant type of requirement is package dependencies. Most R applications are
@@ -72,6 +81,7 @@ noticeable differences between strategies, are the values passed to `lib` and
 `repos`. The following [recipe](#Recipe) elaborates how to curate `pkgs` and how
 to leverage `repos` to emulate CRAN (the default package collection) at a
 particular date.
+
 
 <!-- The objectives of the strategy in this document are -->
 <!-- https://www.infoq.com/presentations/Simple-Made-Easy/ -->
