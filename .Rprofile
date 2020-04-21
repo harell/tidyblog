@@ -1,6 +1,6 @@
 .First <- function(){
     if(isTRUE(as.logical(Sys.getenv("CI")))) return()
-    if(is.null(getOption(".First.time"))) options(.First.time = TRUE)
+    if(identical(getOption(".First.time"), FALSE)) return() else options(.First.time = TRUE)
     
     if(getOption(".First.time")){
         options(.First.time = FALSE)
