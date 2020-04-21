@@ -1,13 +1,8 @@
 ---
-title: Writing Blog Posts
-author: Harel Lustiger
+title: "Writing Blog Posts"
+author: "Harel Lustiger"
 date: '2020-01-01'
-slug: writing-blog-posts
-categories: []
-tags: []
-description: ''
-externalLink: ''
-series: []
+slug: "writing-blog-posts"
 draft: yes
 ---
 

@@ -12,7 +12,6 @@ tags:
 - Package Management    
 - Reproducible Research    
 - DESCRIPTION
-series: [R-Projects]
 link-citations: yes 
 bibliography: [references-posts.bib]
 biblio-style: apalike
