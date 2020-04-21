@@ -288,7 +288,7 @@ Remotes:
 
 Putting it all together, we get:
 
-```{r conclusion, eval = FALSE}
+```{r conclusion, eval = FALSE, echo = TRUE}
 # During project development use this code --------------------------------
 ## Set the repos link for a specific date
 options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
