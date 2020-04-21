@@ -285,6 +285,34 @@ Remotes:
     github::tidyverse/dplyr@f05230dd
 ```
 
+# Conclusion
+
+Putting it all together, we get:
+
+```{r conclusion, eval = FALSE}
+# During project development use this code --------------------------------
+## Set the repos link for a specific date
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+
+## Install the required packages
+install.packages(c("remotes", "usethis"))
+
+## Create a DESCRIPTION file
+usethis::use_description()
+
+## Add package dependencies to the DESCRIPTION file
+usethis::use_package("dplyr", min_version = "0.8.0")
+usethis::use_package("ggplot")
+
+# During project deployment use this code ---------------------------------
+## Set the repos link for a specific date
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+## Install all package dependencies
+remotes::install_deps()
+```
+
+You could try it yourself on RStudio cloud by [clicking here](https://rstudio.cloud/project/1179635)
+
 # Further Reading
 
 * [Install R Packages from GitHub, BitBucket, or other local or remote
