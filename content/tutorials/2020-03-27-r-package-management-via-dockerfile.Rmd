@@ -11,6 +11,7 @@ tags:
   - package management
   - DESCRIPTION
   - Docker
+series: [R-Projects]
 link-citations: yes 
 bibliography: [references-posts.bib]
 biblio-style: apalike 

@@ -1,0 +1,22 @@
+---
+title: Writing Blog Posts
+author: Harel Lustiger
+date: '2020-01-01'
+slug: writing-blog-posts
+categories: []
+tags: []
+description: ''
+externalLink: ''
+series: []
+draft: yes
+---
+
+# Blog Post Structure
+
+* [How to Structure a Blog Post to Attract + Retain Readers](https://www.creativerevolt.com/how-to-structure-a-blog-post/)
+
+# [The PASO Formula](https://copywritematters.com/paso-copywriting-formula/)
+
+1. Lay out the problem
+2. Agitate it until it really hurts
+3. Provide a solution

@@ -1,15 +1,18 @@
 ---
 title: "R Package Management via DESCRIPTION"
+subtitle: "The R equivalent of requirements.txt in Python"
 author: "Harel Lustiger"
 date: '2020-03-27'
 draft: no
 categories:
 - R Projects
-- Reproducible R
+- Reproducible Research
 slug: r-package-management-via-description
 tags:
-- package management
+- Package Management    
+- Reproducible Research    
 - DESCRIPTION
+series: [R-Projects]
 link-citations: yes 
 bibliography: [references-posts.bib]
 biblio-style: apalike
@@ -22,7 +25,7 @@ source(file.path(path_root, "R/post_options.R"))
 
 # Synopsis
 
-**In This Post**
+In This Post
 
 * Introducing an existing package management approach we could use while
 developing R extensions such as R packages, R projects and Shiny apps.
@@ -35,7 +38,15 @@ The approach in a nutshell:
 2. Setting the URL from which to pull the packages from; and
 3. Using `remotes::install_deps()` to install the required packages.
 
+Main features:
+
+* Native solution - the DESCRIPTION is a standard file used in any R package. This has two implications:
+    1. Easy to use: There is an existing toolkit to maniplualte the DESCRIPTION content.
+    2. Cohesive to R package development. Either you are familier with the DESCRIPTION file, or it will facilitate you when you learn to develop R packages.
+
 # Introduction
+
+## The Problem
 
 All R applications have requirements which are necessary for them to run. A
 predominant type of requirement is package dependencies. Most R applications are
@@ -70,6 +81,7 @@ noticeable differences between strategies, are the values passed to `lib` and
 `repos`. The following [recipe](#Recipe) elaborates how to curate `pkgs` and how
 to leverage `repos` to emulate CRAN (the default package collection) at a
 particular date.
+
 
 <!-- The objectives of the strategy in this document are -->
 <!-- https://www.infoq.com/presentations/Simple-Made-Easy/ -->
@@ -272,6 +284,34 @@ Remotes:
 Remotes:
     github::tidyverse/dplyr@f05230dd
 ```
+
+# Conclusion
+
+Putting it all together, we get:
+
+```{r conclusion, eval = FALSE}
+# During project development use this code --------------------------------
+## Set the repos link for a specific date
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+
+## Install the required packages
+install.packages(c("remotes", "usethis"))
+
+## Create a DESCRIPTION file
+usethis::use_description()
+
+## Add package dependencies to the DESCRIPTION file
+usethis::use_package("dplyr", min_version = "0.8.0")
+usethis::use_package("ggplot")
+
+# During project deployment use this code ---------------------------------
+## Set the repos link for a specific date
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+## Install all package dependencies
+remotes::install_deps()
+```
+
+You could try it yourself on RStudio cloud by [clicking here](https://rstudio.cloud/project/1179635)
 
 # Further Reading
 
