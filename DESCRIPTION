@@ -5,7 +5,7 @@ Version: 1.0.2
 Date: 2020-02-29
 Authors@R: c(person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre")))
 Imports: 
-    kableExtra (>= 1.1.0),
+    kableExtra (>= 1.1.0)
 Depends: 
     blogdown,
     devtools,

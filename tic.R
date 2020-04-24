@@ -6,7 +6,7 @@ get_stage("before_install")
 
 # Stage: Install ----------------------------------------------------------
 get_stage("install") %>% 
-    add_code_step(remotes::install_deps(repos = repo_default(), dependencies = TRUE))
+    add_code_step(remotes::install_deps(dependencies = TRUE))
 
 # Stage: Before Script ----------------------------------------------------
 get_stage("before_script")

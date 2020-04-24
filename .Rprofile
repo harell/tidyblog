@@ -1,7 +1,14 @@
 .First <- function(){
-    if(isTRUE(as.logical(Sys.getenv("CI")))) return()
-    if(isFALSE(getOption(".First.time"))) return() else options(.First.time = TRUE)
+    # Helper Functions
+    set_repos <- function(){
+        DESCRIPTION <- readLines("DESCRIPTION")
+        Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
+        if(length(Date) == 1) options(repos = paste0("https://mran.microsoft.com/snapshot/", Date))
+    }
     
+    # Programming Logic
+    suppressWarnings(try(set_repos(), silent = TRUE))
+    if(isFALSE(getOption(".First.time"))) return() else options(.First.time = TRUE)
     if(getOption(".First.time")){
         options(.First.time = FALSE)
         pkgs <- c("tidyverse", "blogdown", "usethis", "kableExtra")
