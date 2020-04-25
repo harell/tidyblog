@@ -16,23 +16,6 @@ biblio-style: apalike
 link-citations: yes  
 ---
 
-```{r, include = FALSE}
-path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
-source(file.path(path_root, "R/post_options.R"))
-```
-
-<!--
-## Glossary
-
-* Data + Data Access Object = Data Source
-* Data Source + Analytic Module = Analytic App
-
-## Examples
-
-* Data Source: A combination of one or more databases, APIs, flat files etc.
-* Analytic App: Dashboard, report, predictive modelling, etc.
--->
-
 ## Abstract
 
 Data science projects in commercial companies often experience a challenge

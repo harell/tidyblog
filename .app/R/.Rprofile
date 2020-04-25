@@ -23,8 +23,8 @@
     
     ## Empty cache
     # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
-    # unlink("./static", recursive = TRUE, force = TRUE)
-    # unlink("./public", recursive = TRUE, force = TRUE)
+    unlink("./static", recursive = TRUE, force = TRUE)
+    unlink("./public", recursive = TRUE, force = TRUE)
     
     ## Show information
     message("Live preview a site using 'blogdown::serve_site()'")

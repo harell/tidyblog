@@ -8,11 +8,6 @@ blogdown::html_page:
   toc: false
 ---
 
-```{r, include = FALSE}
-path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
-source(file.path(path_root, "R/post_options.R"))
-```
-
 <!-- # Foreword {-} -->
 
 I am a Senior Data Scientist with qualifications in Electronics Engineering and

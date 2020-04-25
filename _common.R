@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # Options Settings --------------------------------------------------------
 options(
-    width = 66,
+    width = 68,
     digits = 2
 )
 
@@ -30,4 +30,11 @@ options(
 options(
     knitr.graphics.auto_pdf = FALSE,
     knitr.table.format = "html"
+)
+
+options(
+    blogdown.author = "Harel Lustiger",
+    blogdown.ext = ".Rmd",
+    blogdown.subdir = "tutorials", # A subdirectory under content/
+    blogdown.warn.future = FALSE
 )
