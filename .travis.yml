@@ -19,7 +19,7 @@ env:
 
 # jobs -------------------------------------------------------------------------
 before_install:
- - cp -rf ./.app/R/{.Rprofile} ./
+ - cp -rf ./.app/R/.Rprofile .
  - R -q -e 'tic::dsl_load(); tic::prepare_all_stages(); tic::before_install()'
 install:
   - if [ "${TRAVIS_OS_NAME}" == "osx" ]; then brew install ccache; fi
