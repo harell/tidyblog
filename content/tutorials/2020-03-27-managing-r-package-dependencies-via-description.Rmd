@@ -32,7 +32,8 @@ The approach in a nutshell:
 3. Installing all required packages with `remotes::install_deps()`.
 
 If you need a solution quickly, jump to 
-["Putting Everything Together"](#conclusion) to see code for a working example.
+["Putting Everything Together"](#conclusion) section to see code for a working
+example.
 
 <!-- talk about addind the dplyr package as a dependecncy -->
 
