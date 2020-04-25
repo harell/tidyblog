@@ -28,17 +28,16 @@
         blogdown.warn.future = FALSE
     )
     
+    ## Empty cache
+    unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
+    unlink("./static", recursive = TRUE, force = TRUE)
+    unlink("./public", recursive = TRUE, force = TRUE)
+    
     ## Show information
     message("Live preview a site using 'blogdown::serve_site()'")
 }
 
 .Last <- function(){
     # Watchdog
-    unlink(".git/First.lock")
-    # message("Shuting down live site preview")
-    # try(blogdown::stop_server())
-    # message("Cleaning up site repo")
-    # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
-    # unlink("./static", recursive = TRUE, force = TRUE)
-    # unlink("./public", recursive = TRUE, force = TRUE)
+    if(file.exists(".git/First.lock")) unlink(".git/First.lock") else blogdown::stop_server()
 }
