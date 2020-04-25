@@ -1,6 +1,7 @@
 ---
 title: "About"
 author: "Harel Lustiger"
+description: "About Harel Lustiger"
 slug: about
 blogdown::html_page:
   number_sections: true

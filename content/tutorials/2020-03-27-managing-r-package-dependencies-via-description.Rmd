@@ -1,6 +1,6 @@
 ---
 title: "Managing R Package Dependencies"
-subtitle: "The R equivalent of requirements.txt in Python"
+description: "The R equivalent of requirements.txt in Python"
 author: "Harel Lustiger"
 date: '2020-03-27'
 draft: yes
