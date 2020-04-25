@@ -110,7 +110,8 @@ options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
 remotes::install_deps()
 ```
 
-You could try it yourself on RStudio cloud by [clicking here](https://rstudio.cloud/project/1179635)
+You could try running the yourself on RStudio cloud by 
+[clicking here](https://rstudio.cloud/project/1179635).
 
 # Reading more about the subject {#resources}
 
