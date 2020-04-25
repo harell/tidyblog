@@ -1,4 +1,6 @@
 .First <- function(){
+    unlink(".git/index.lock")
+    
     # Watchdog
     path <- ".git/First.lock"
     if(file.exists(path)) return() else file.create(path, recursive = TRUE)
@@ -29,7 +31,7 @@
     )
     
     ## Empty cache
-    unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
+    # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
     unlink("./static", recursive = TRUE, force = TRUE)
     unlink("./public", recursive = TRUE, force = TRUE)
     
