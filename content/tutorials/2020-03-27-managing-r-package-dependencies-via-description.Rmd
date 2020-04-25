@@ -73,11 +73,40 @@ If you need a solution quickly, jump to ["Putting Everything Together"](#conclus
 
 ## Installing Package Requirements
 
-### Emulating the available package versions on CRAN at a certain point in time
+### Emulating CRAN at a specific point in time
 
 ### Installing package dependencies
 
 # Putting Everything Together {#conclusion}
+
+Putting it all together, we get:
+
+```{r conclusion, eval = FALSE, echo = TRUE}
+###################################################################
+## During project development use this code
+###################################################################
+# Installing a tool kit for convenience
+install.packages(c("remotes", "usethis"))
+
+## Initiating the DESCRIPTION file
+usethis::use_description()
+
+## Grooming the DESCRIPTION file
+### add {ggplot2} as a requirement
+usethis::use_package("ggplot2")
+### add {dplyr} version 0.8.0 and above as a requirement
+usethis::use_package("dplyr", min_version = "0.8.0") 
+
+###################################################################
+## During project deployment use this code
+###################################################################
+## Emulating CRAN at a specific point in time
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+## Installing package dependencies
+remotes::install_deps()
+```
+
+You could try it yourself on RStudio cloud by [clicking here](https://rstudio.cloud/project/1179635)
 
 # Reading more about the subject {#resources}
 
