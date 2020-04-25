@@ -1,33 +1,40 @@
 .First <- function(){
+    # Watchdog
+    path <- ".git/First.lock"
+    if(file.exists(path)) return() else file.create(path, recursive = TRUE)
+    
     # Helper Functions
-    set_repos <- function(){
+    libraries <-  function(packages) suppressPackageStartupMessages(invisible(sapply(packages, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)))
+    get_repos <- function(){
         DESCRIPTION <- readLines("DESCRIPTION")
         Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
-        if(length(Date) == 1) options(repos = paste0("https://mran.microsoft.com/snapshot/", Date))
+        URL <- if(length(Date) == 1) paste0("https://mran.microsoft.com/snapshot/", Date) else "https://cran.rstudio.com/"
+        return(URL)
     }
     
     # Programming Logic
-    suppressWarnings(try(set_repos(), silent = TRUE))
-    if(isFALSE(getOption(".First.time"))) return() else options(.First.time = TRUE)
-    if(getOption(".First.time")){
-        options(.First.time = FALSE)
-        pkgs <- c("tidyverse", "blogdown", "usethis", "kableExtra")
-        suppressPackageStartupMessages(
-            invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
-        )
-        message("Live preview a site using 'blogdown::serve_site()'")
-    }
+    ## Set global options
+    .libPaths(Sys.getenv("R_LIBS_USER"))
+    options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = "Imports")
     
+    ## Load toolkit
+    libraries(c("tidyverse", "blogdown", "usethis", "kableExtra"))
+    
+    ## Set blogdown options
     options(
         blogdown.author = "Harel Lustiger",
         blogdown.ext = ".Rmd",
         blogdown.subdir = "tutorials", # A subdirectory under content/
         blogdown.warn.future = FALSE
     )
+    
+    ## Show information
+    message("Live preview a site using 'blogdown::serve_site()'")
 }
 
 .Last <- function(){
-    # if(isTRUE(as.logical(Sys.getenv("CI")))) return()
+    # Watchdog
+    unlink(".git/First.lock")
     # message("Shuting down live site preview")
     # try(blogdown::stop_server())
     # message("Cleaning up site repo")
