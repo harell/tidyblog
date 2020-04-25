@@ -1,5 +1,5 @@
 ---
-title: "R Package Management via DESCRIPTION"
+title: "Managing R Package Dependencies via DESCRIPTION"
 subtitle: "The R equivalent of requirements.txt in Python"
 author: "Harel Lustiger"
 date: '2020-03-27'
@@ -7,7 +7,7 @@ draft: yes
 categories:
 - R Projects
 - Reproducible Research
-slug: r-package-management-via-description
+slug: managing-r-package-dependencies-via-description
 tags:
 - Package Management    
 - Reproducible Research    
