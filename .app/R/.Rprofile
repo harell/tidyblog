@@ -1,12 +1,10 @@
+# Rporfile for CI/CD ------------------------------------------------------
+#' When CI/CD starts, it replaces the .Rprofile of this repo (if any) with the
+#' content of this file.
+
+# First -------------------------------------------------------------------
 .First <- function(){
-    unlink(".git/index.lock")
-    
-    # Watchdog
-    path <- ".git/First.lock"
-    if(file.exists(path)) return() else file.create(path, recursive = TRUE)
-    
-    # Helper Functions
-    libraries <-  function(packages) suppressPackageStartupMessages(invisible(sapply(packages, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)))
+    # Helpers
     get_repos <- function(){
         DESCRIPTION <- readLines("DESCRIPTION")
         Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
@@ -15,24 +13,24 @@
     }
     
     # Programming Logic
+    source("_common.R")
+    
+    ## Setup watchdog
+    path <- ".git/First.lock"
+    if(file.exists(path)) return() else file.create(path, recursive = TRUE)
+    
     ## Set global options
+    .libPaths(Sys.getenv("R_LIBS_USER"))
     options(Ncpus = 8, repos = structure(c(CRAN = get_repos())), dependencies = "Imports")
     
-    ## Load toolkit
-    libraries(c("tidyverse", "blogdown", "usethis", "kableExtra"))
+    ## Install requirements
+    if(!"remotes" %in% rownames(utils::installed.packages())) utils::install.packages("remotes", dependencies = getOption("dependencies"))
+    remotes::install_github("ropenscilabs/tic@v0.6.0", dependencies = getOption("dependencies"), quiet = TRUE, build = FALSE)
     
-    ## Empty cache
-    # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
-    unlink("./static", recursive = TRUE, force = TRUE)
-    unlink("./public", recursive = TRUE, force = TRUE)
-    
-    ## Show information
-    message("Live preview a site using 'blogdown::serve_site()'")
+    return(invisible())
 }
 
+# Last --------------------------------------------------------------------
 .Last <- function(){
-    # Watchdog
-    if(file.exists(".git/First.lock")) unlink(".git/First.lock") else blogdown::stop_server()
+    unlink(".git/First.lock")
 }
-
-source("_common.R")
