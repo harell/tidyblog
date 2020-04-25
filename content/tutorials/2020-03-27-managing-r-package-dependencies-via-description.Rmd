@@ -24,7 +24,15 @@ biblio-style: apalike
 
 # Overview
 
-If you need a solution quickly, jump to ["Putting Everything Together"](#conclusion) section.
+The approach in a nutshell:
+
+1. Maintaining package requirements in a `DESCRIPTION` file; 
+2. Setting the URL from which to pull the packages from via `options(repos =
+"<MRAN-url>")`; and
+3. Installing all required packages with `remotes::install_deps()`.
+
+If you need a solution quickly, jump to 
+["Putting Everything Together"](#conclusion) to see code for a working example.
 
 <!-- talk about addind the dplyr package as a dependecncy -->
 
