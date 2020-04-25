@@ -1,6 +1,6 @@
 # https://bookdown.org/yihui/rmarkdown/html-document.html
 blogdown::html_page:
-  keep_md: true
+  keep_md: false
   number_sections: true
   toc: true
   fig_width: 6
