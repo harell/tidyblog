@@ -36,3 +36,8 @@ p, i, a {
   letter-spacing: -0.03px;
   line-height: 1.58;
 }
+
+div.about h1, div.about h2 {
+    font-family: 'Lato', sans-serif;
+}
+
