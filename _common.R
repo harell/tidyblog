@@ -36,5 +36,7 @@ options(
     blogdown.author = "Harel Lustiger",
     blogdown.ext = ".Rmd",
     blogdown.subdir = "tutorials", # A subdirectory under content/
-    blogdown.warn.future = FALSE
+    blogdown.warn.future = FALSE,
+    blogdown.method = "html",
+    blogdown.publishDir = tempfile("blogdown")
 )
