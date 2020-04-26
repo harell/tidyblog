@@ -17,10 +17,28 @@ bibliography: [references-posts.bib]
 biblio-style: apalike
 ---
 
-<!-- Problem -->
-<!-- Agitation -->
-<!-- Solution -->
-<!-- Outcome -->
+The dependency of an R project on R packages makes both the R user and the R
+developer lives difficult.
+
+Making an R project work on a different computer requires the installation of
+many R packages. This also holds when running an R project on the same computer
+after a major R version upgrade.
+
+On a granular level, an R project is dependent on functions within R packages.
+One would assume that a newer version of a package would be backward compatible.
+In practice, newer versions may remove functions and may contain changes that
+lead to different outcomes. Thus, installing different packages versions than
+those used during the development of the R project may lead to different
+outcomes or an execution error.
+
+Dependency management system for R help tracing, registering and installing
+packages dependencies for a particular R project. Using dependency management is
+essential for ensuring reproducible results and seamless collaboration within a
+team of developers.
+
+The dependency management system described here is simple and fits most
+applications. It may serve as the bedrock of more sophisticated systems when
+further needs arise.
 
 # Overview
 
