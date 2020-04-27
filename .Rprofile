@@ -36,7 +36,8 @@
 
 .Last <- function(){
     # Watchdog
-    if(file.exists(".git/First.lock")) unlink(".git/First.lock") else blogdown::stop_server()
+    blogdown::stop_server()
+    unlink(".git/First.lock")
     unlink("./static", recursive = TRUE, force = TRUE)
 }
 

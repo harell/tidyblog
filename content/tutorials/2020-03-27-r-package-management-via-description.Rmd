@@ -13,8 +13,6 @@ tags:
 - Reproducible Research    
 - DESCRIPTION
 link-citations: yes 
-bibliography: [references-posts.bib]
-biblio-style: apalike
 ---
 
 # Synopsis

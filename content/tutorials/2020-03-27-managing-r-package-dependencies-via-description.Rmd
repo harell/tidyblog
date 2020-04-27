@@ -13,8 +13,8 @@ tags:
 - Reproducible Research    
 - DESCRIPTION
 link-citations: yes 
-bibliography: [references-posts.bib]
 biblio-style: harvard1.csl
+bibliography: references.bib
 ---
 
 The dependency of an R project on R packages makes both the R user and the R
