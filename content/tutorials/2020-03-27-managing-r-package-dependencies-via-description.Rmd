@@ -24,17 +24,17 @@ Making an R project work on a different computer requires the installation of
 many R packages. This also holds when running an R project on the same computer
 after a major R version upgrade.
 
-On a granular level, an R project is dependent on functions within R packages.
-One would assume that a newer version of a package would be backward compatible.
-In practice, newer versions may remove functions and may contain changes that
-lead to different outcomes. Thus, installing different packages versions than
-those used during the development of the R project may lead to different
-outcomes or an execution error.
+On a granular level, an **R project is dependent on functions within R
+packages**. One would assume that a newer version of a package would be backward
+compatible. In practice, newer versions may remove functions and may contain
+changes that lead to different outcomes. Thus, installing different packages
+versions than those used during the development of the R project may lead to
+different outcomes or an execution error.
 
-Dependency management system for R help tracing, registering and installing
-packages dependencies for a particular R project. Using dependency management is
-essential for ensuring reproducible results and seamless collaboration within a
-team of developers.
+*Dependency management systems* help tracing, registering and installing
+packages dependencies for a particular R project. Using a dependency management
+system is essential for ensuring reproducible results and seamless collaboration
+within a team of developers.
 
 The dependency management system described here is simple and fits most
 applications. It may serve as the bedrock of more sophisticated systems when
@@ -45,8 +45,7 @@ further needs arise.
 The approach in a nutshell:
 
 1. Maintaining package requirements in a `DESCRIPTION` file; 
-2. Setting the URL from which to pull the packages from via `options(repos =
-"<MRAN-url>")`; and
+2. Setting the URL from which to pull the packages from via `repos`; and
 3. Installing all required packages with `remotes::install_deps()`.
 
 If you need a solution quickly, jump to 
@@ -237,7 +236,52 @@ the last package in `Imports` doesn't end with a comma (',').
 
 ### Emulating CRAN at a specific point in time
 
+Firstly, replicate the package versions that were available at the time of
+developing the program. Following this step increases application behaviour
+consistency regardless of the date it is executed.
+
+(recommended) You can specify `repos` to point at a snapshot in time of CRAN by
+running:
+
+```{r, echo = TRUE, eval = FALSE}
+options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
+```
+
+(replace _2020-03-27_ with the date required for reproducibility)
+
+If you skip that step, R installs the latest package versions on the hosting
+computer.
+
 ### Installing package dependencies
+
+Lastly, Given an R project with a `DESCRIPTION` file in the root folder, when
+`remotes::install_deps()` is called, then R tries to install the listed packages
+under `Imports` within `DESCRIPTION`.
+
+The following is an extract from the output console:
+
+```
+> remotes::install_deps()
+
+Installing packages into '/usr/local/lib/R/site-library'
+(as 'lib' is unspecified)
+
+trying URL 'microsoft.com/2020-03-27/src/contrib/dplyr_0.8.5.tar.gz'
+Content type 'application/octet-stream' length 3229510 bytes (3.1 MB)
+==================================================
+downloaded 3.1 MB
+```
+
+Notice that `remotes::install_deps`:
+
+* Searches and pulls the `dplyr` package from the `repos` address we have
+provided it; and
+
+* Installs `dplyr` version 0.8.5. 
+    * While we declared the minimum version to be 0.8.0 in `DESCRIPTION`, the
+    available version on 2020-03-27 is 0.8.5.
+    * `remotes::install_deps` fails if any declared minimum version is not
+    available; otherwise, it installs the latest available version on `repos`.
 
 # Putting Everything Together {#conclusion}
 
@@ -262,16 +306,16 @@ usethis::use_package("dplyr", min_version = "0.8.0")
 ###################################################################
 ## During project deployment use this code
 ###################################################################
-## Emulating CRAN at a specific point in time
+## Emulating CRAN at a specific point in time (27 March 2020)
 options(repos = "https://mran.microsoft.com/snapshot/2020-03-27")
 ## Installing package dependencies
 remotes::install_deps()
 ```
 
-You could try running the yourself on RStudio cloud by 
+You could try running the code yourself on RStudio Cloud by 
 [clicking here](https://rstudio.cloud/project/1179635).
 
-# Reading more about the subject {#resources}
+# Reading More About the Subject {#resources}
 
 # References {#references}
 
