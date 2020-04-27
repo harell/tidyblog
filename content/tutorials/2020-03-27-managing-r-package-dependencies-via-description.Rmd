@@ -83,15 +83,155 @@ example.
 
 ## Getting Started
 
-### Installing a tool kit for convenience
+The dependency management system calls for three ingredients:
 
-### Initiating the DESCRIPTION file
+* The [`remotes`](https://github.com/r-lib/remotes) package;
+* The [`usethis`](https://github.com/r-lib/usethis/) package; and
+* A `DESCRIPTION` file.
+
+You can install both packages at once by running:
+
+```{r, echo = TRUE, eval = FALSE}
+install.packages(c("remotes", "usethis"))
+```
+
+You can create a new `DESCRIPTION` file by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_description()
+```
+
+The last command saves a `DESCRIPTION` skeleton at the working directory with
+the following content:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+```
+
+`DESCRIPTION` uses an archaic file format called DCF (Debian control format)
+which was available during R inception. DCF is somewhat similar to YAML in its
+structure. Each line consists of a **field** name paired with one or more
+**values** separated by a colon. When values span multiple lines, they need to
+be indented by four spaces.
+
+Package management in R is done primarily through assigning packages names to
+the `Imports` field which we handle next.
 
 ## Grooming the DESCRIPTION file 
 
 ### Adding package requirements from CRAN
 
+As the R application evolves, anytime an additional package is required for the
+application to work, specify that packages in the `DESCRIPTION` file. You can
+add a package to the `DESCRIPTION` file by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_package("dplyr")
+```
+
+Alternatively, you can declare the package name and minimum version by running:
+
+```{r, echo = TRUE, eval = FALSE}
+usethis::use_package("dplyr", min_version = "0.8.0")
+```
+
+The last command appends `dplyr (>= 0.8.0)` under `Imports` in `DESCRIPTION`:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+```
+
+`usethis::use_package` takes care of syntax, duplication and typos (both in
+package name and version) for you.
+
 ### Adding package requirements outside CRAN
+
+There are two good reasons why one may want to install packages outside CRAN:
+
+1. A particular R package is not available in CRAN, but is available
+somewhere else; and
+2. A particular R package is available in CRAN, but a specific version is
+required.
+
+To install `dplyr` version 0.8.0, from GitHub rather than CRAN, we add it under
+the `Remotes` field in the `DESCRIPTION` file. The remote dependencies specified
+in Remotes should be described in the following form:
+
+```
+Remotes: 
+    [type::]<Repository>
+```
+
+The `dplyr` package is available on GitHub under `tidyverse/dplyr` repository,
+i.e. <https://github.com/tidyverse/dplyr>. Thus, in this case, *type = github*
+and *Repository = tidyverse/dplyr*. The DESCRIPTION file becomes:
+
+```
+Package: project.name
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "First",
+           family = "Last",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: What license it uses
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    dplyr (>= 0.8.0)
+Remotes:
+    github::tidyverse/dplyr
+```
+
+Without specifying more information, the dependency management system pulls
+and installs the latest version available in the GitHub Repo (on the master
+branch). Instead, we can define a specif git commit to pull and install:
+
+* Installing a specific release: [`github::tidyverse/dplyr@v0.8.0`](https://github.com/tidyverse/dplyr/releases/tag/v0.8.0)
+```
+Remotes:
+    github::tidyverse/dplyr@v0.8.0
+```
+* Installing a specific commit: [`github::tidyverse/dplyr@f05230dd`](https://github.com/tidyverse/dplyr/tree/f05230dd110a729e95b9ffb86df2030bf3b8b26b)
+```
+Remotes:
+    github::tidyverse/dplyr@f05230dd
+```
+
+###	Removing packages requirements
+
+Removing a package from the `DESCRIPTION` file is done manually. Open
+`DESCRIPTION` and delete the package name from the `Imports` fields. Make sure
+the last package in `Imports` doesn't end with a comma (',').
 
 ## Installing Package Requirements
 
