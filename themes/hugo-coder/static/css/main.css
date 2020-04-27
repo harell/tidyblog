@@ -22,6 +22,12 @@ h1 {
   font-size: 1.75em;
 }
 
+p {
+  margin-top: 21px;
+  letter-spacing: -0.03px;
+  line-height: 1.58;
+}
+
 a {
   outline: none;
 }
@@ -332,13 +338,6 @@ pre code {
   }
 }
 
-.hljs {
-  font-size: 0.7em;
-}
-
-.emphasized {
-   font-size: 1.2em;
-}
 
 /* home */
 :root {
@@ -361,3 +360,5 @@ div.avatar img {
   box-shadow: 0 0 0 2px var(--r-blue),
               0 0 0 4px var(--r-gray)
 }
+
+

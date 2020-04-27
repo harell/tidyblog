@@ -30,14 +30,20 @@ table {
 }
 
 p, i, a, li {
-  margin-top: 21px;
   font-family: "Lora";
   font-size: 19px;
-  letter-spacing: -0.03px;
-  line-height: 1.58;
 }
 
 div.about h1, div.about h2 {
     font-family: 'Lato', sans-serif;
 }
+
+.hljs {
+  font-size: 0.7em;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}
+
 
