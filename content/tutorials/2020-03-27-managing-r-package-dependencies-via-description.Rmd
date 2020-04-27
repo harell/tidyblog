@@ -14,7 +14,7 @@ tags:
 - DESCRIPTION
 link-citations: yes 
 bibliography: [references-posts.bib]
-biblio-style: apalike
+biblio-style: harvard1.csl
 ---
 
 The dependency of an R project on R packages makes both the R user and the R
@@ -67,6 +67,11 @@ example.
 <!-- * install.packages() -->
 
 ## Writing R Extensions
+
+The package management system proposed here adheres to the _Writing R
+Extensions_ guide [@team1999writing, ch. 1] which describes the process of
+creating R packages. There are two relevant sections in the guide for managing
+package dependencies: _The DESCRIPTION file_ and _Package Dependencies_.
 
 <!-- The DESCRIPTION file -->
 
