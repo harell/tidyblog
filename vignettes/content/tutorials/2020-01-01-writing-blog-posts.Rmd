@@ -3,8 +3,21 @@ title: "Writing Blog Posts"
 author: "Harel Lustiger"
 date: '2020-01-01'
 slug: "writing-blog-posts"
+blogdown::html_page:
+  number_sections: true
+  toc: true
 draft: yes
+link-citations: yes 
+bibliography: [../../../inst/REFERENCES.bib]
+biblio-style: [../../../inst/harvard1.csl]
+editor_options: 
+  markdown: 
+    wrap: 80  
 ---
+
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
 
 # Blog Post Structure
 
@@ -15,3 +28,15 @@ draft: yes
 1. Lay out the problem
 2. Agitate it until it really hurts
 3. Provide a solution
+
+```{r, message=TRUE}
+message("Signifies a tip or <code>suggestion</code>")
+```
+
+```{r, warning=TRUE}
+warning("Signifies a general <code>note</code>")
+```
+
+```{r, error=TRUE}
+stop("Signifies a warning or <code>caution</code>")
+```

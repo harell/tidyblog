@@ -13,7 +13,11 @@ tags:
   - small design up front
 ---
 
-## Abstract
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
+
+# Abstract
 
 Data science projects in commercial companies often experience a challenge
 arising from evolving data sources[^glossary-data-source]. As the project
@@ -39,14 +43,14 @@ sources</mark>.
 While the evolving data sources challenge is programming language agnostic, this
 post demonstrates an implementation of the suggested design in R.
 
-## Helping our clients by fitting a solution to their needs
+# Helping our clients by fitting a solution to their needs
 
 This talk features a confabulated story that covers real challenges. 
 
 We work in an Agile environment and we cover the first iteration, going from
 nothing to something.
 
-### Getting to know our client 
+## Getting to know our client 
 
 Our client is Euel Cheatam the Merceduce dealership manager.
 
@@ -69,7 +73,7 @@ succeed as a salesperson, regardless of their work tenure.
 - Eual **does** not have enough free time slots in his calendar to accommodate
 daily mentoring for all the dealership salespeople.
 
-### The proposed solution is a weekly fact sheet with popular Q&A  
+## The proposed solution is a weekly fact sheet with popular Q&A  
 
 ```{r car-stat-sheet} 
 knitr::include_graphics('https://i.imgur.com/CMbZ8h7.png')
@@ -86,7 +90,7 @@ distributed regularly.
 With the customer blessing and a firm handshake, we initiate product
 development.
 
-### Moving from ideation to implementation, data scientists encounter real-world impediments
+## Moving from ideation to implementation, data scientists encounter real-world impediments
 
 ```{r 1st-world-problems} 
 knitr::include_graphics('https://i.imgur.com/TAcOHZO.png')
@@ -113,13 +117,13 @@ In any case, datasets are hard to obtain.
 To mitigate what the real world imposes on us, we need a system design that can
 handle changes.
 
-## Iteration 0: developing a data-driven app without real data
+# Iteration 0: developing a data-driven app without real data
 
 In iteration zero we are going to move from no product to a product. Once we
 have something, we can show it to the client and receive feedback at an early
 stage of development.
 
-### Generate dataset assumption triplet
+## Generate dataset assumption triplet
 
 <!-- Having an analytic application in mind, we can derive assumption about what data -->
 <!-- is required. -->
@@ -162,7 +166,7 @@ In our example,
 <!-- tidy data table leaves heavy data wrangling tasks outside the
 responsibility of the analytic module. -->
 
-### Convert assumptions to assertions with data-tests
+## Convert assumptions to assertions with data-tests
 
 Having rudimentary assumptions about what the analytic module is likely to use,
 we write down assertions in a new module called data-tests.
@@ -175,21 +179,21 @@ concern the existence and structure of the data.
 
 ```{r data-tests, echo = TRUE, eval = FALSE}
 # data-tests.R
-## 1. Check if the dataset exists
+# 1. Check if the dataset exists
 stopifnot(exist("cars_data"), is.data.frame(cars_data))
   
-## 2. Check if the necessary columns exist
+# 2. Check if the necessary columns exist
 expected_cols <- c("car_model", "price", "gear", "mpg")
 stopifnot(all(expected_cols %in% colnames(cars_data)))
   
-## 3. Check if the records are unique
+# 3. Check if the records are unique
 is.distinct <- function(x) dplyr::n_distinct(x) == length(x)
 stopifnot(is.distinct(cars_data$car_model))
 ```
 
-### Implement a data source plugin
+## Implement a data source plugin
 
-#### Quick glimpse over the `mtcars` dataset
+### Quick glimpse over the `mtcars` dataset
 
 ```{r}
 mtcars %>% 
@@ -199,21 +203,21 @@ mtcars %>%
     kableExtra::kable_styling(bootstrap_options = "striped", full_width = TRUE)
 ```
 
-#### Generate synthetic data[^synthetic-data] plugin
+### Generate synthetic data[^synthetic-data] plugin
 
 ```{r data-access, echo = TRUE, eval = FALSE}
 # data-access.R
 get_cars_data <- function(){
-  ## 1. Generate records 
+  # 1. Generate records 
   data(mtcars, package = "datasets")
   cars_data <- mtcars %>% tibble::rownames_to_column("car_model")
   
-  ## 2. Generate price
+  # 2. Generate price
   set.seed(2020)
   price <- runif(n = nrow(cars_data), min = 41, max = 75)
   cars_data <- cars_data %>% tibble::add_column(price = price)
   
-  ## Run data-tests
+  # Run data-tests
   source("data-tests.R")
   return(cars_data)
 }
@@ -224,22 +228,22 @@ not come into existence. That means the data source is dependent on data-tests.
 Recall that the assertions in data-tests are dictated by the intent of the
 analytic module. It is these assertions that know about the analytic module.
 
-### Develop an analytic module
+## Develop an analytic module
 
 ```{r synthetic-data, echo = TRUE, eval = FALSE}
 # app.R
-## 1. Get the data
+# 1. Get the data
 source("data-source.R")
 cars_data <- get_cars_data()
   
-## 2. Render booklet
+# 2. Render booklet
 print(cars_data %>% dplyr::select(car_model, mpg, gear, price))
 lm(mpg ~ hp, cars_data) %>% summary()
 ```
 
-## Why and how we seperated the data source from the rest
+# Why and how we seperated the data source from the rest
 
-### Recall why we have separated the data source from the rest
+## Recall why we have separated the data source from the rest
 
 In short, change amplification and cognitive load.
 
@@ -251,7 +255,7 @@ This type of relationship puts the data source at the center of the system. The
 analytic modules revolve around the data source. They are plugins of the
 data source.
 
-#### Change amplification
+### Change amplification
 
 The problem is that both the data source and the analytic module change throughout
 the project life cycle. 
@@ -259,7 +263,7 @@ the project life cycle.
 In data-centric configuration, changes in the data source propagate into the
 analytic module.
 
-#### Cognitive load
+### Cognitive load
 
 It is not obvious what data in the database is important for the app to run.
 if one is asked to replace a data source with another implementation, it is not obvious what )
@@ -283,7 +287,7 @@ The primary advantage of using data-tests is that <mark>the data source module
 and the analytic module do not know anything of each other</mark>. This
 allows those modules to evolve frequently and independently.
 
-### Recall how we have separated the data source from the rest
+## Recall how we have separated the data source from the rest
 
 First, we identified the variables which the analytic module may need.
 
@@ -294,11 +298,11 @@ Third, we implemented a data source that conforms to the data-tests.
 Finally, we developed our application module using only the available
 information specified in data-tests.
 
-<!-- ## 2^nd^ iteration: implementing customer feedback -->
+<!-- # 2^nd^ iteration: implementing customer feedback -->
 
-<!-- ## 3^rd^ iteration: deploying the application with real data -->
+<!-- # 3^rd^ iteration: deploying the application with real data -->
 
-## References
+# References
 
 <!-- Footnotes -->
 

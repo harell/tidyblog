@@ -19,6 +19,7 @@ Language: en-GB
 Suggests: 
     blogdown,
     devtools,
-    tidyverse
+    tidyverse,
+    usethis
 Imports: 
     kableExtra (>= 1.1.0)

@@ -6,7 +6,17 @@ slug: about
 blogdown::html_page:
   number_sections: true
   toc: false
+link-citations: yes 
+bibliography: [../../inst/REFERENCES.bib]
+biblio-style: [../../inst/harvard1.csl]
+editor_options: 
+  markdown: 
+    wrap: 80
 ---
+
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
 
 <!-- # Foreword {-} -->
 
@@ -34,6 +44,6 @@ science projects.
 This blog is part of my effort to document and communicate my findings and
 insights. I hope readers will find these posts actionable and impactful.
 
----
+--------------------------------------------------------------------------------
 
 Last updated on `r Sys.Date()`
