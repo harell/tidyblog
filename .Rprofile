@@ -3,12 +3,12 @@ assign(".Rprofile", new.env(), envir = globalenv())
 # .First ------------------------------------------------------------------
 .First <- function(){
     try(if(testthat::is_testing()) return())
-    
+
     # Package Management System
     Date <- as.character(read.dcf("DESCRIPTION", "Date"));
     URL <- if(is.na(Date)) "https://cran.rstudio.com/" else paste0("https://mran.microsoft.com/snapshot/", Date)
     options(repos = URL)
-    
+
     suppressMessages(try({renv::consent(provided = TRUE); unlink("./renv")}))
     options(
         renv.lockfile = "renv.lock",
@@ -23,7 +23,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
             use.cache = TRUE
         )
     )
-    
+
     # Programming Logic
     pkgs <- c("usethis", "devtools", "magrittr", "testthat")
     invisible(sapply(pkgs, require, warn.conflicts = FALSE, character.only = TRUE))
@@ -32,9 +32,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
 # .Last -------------------------------------------------------------------
 .Last <- function(){
     try(if(testthat::is_testing()) return())
-    
-    unlink("./renv", recursive = TRUE)
-    try(system('docker-compose down'), silent = TRUE)
+    # try(blogdown::stop_server(1))
 }
 
 # pkgdown -----------------------------------------------------------------
@@ -53,7 +51,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
 .Rprofile$pkgdown$create <- function(){
     path_script <- tempfile("system-", fileext = ".R")
     job_name <- "Rendering Package Website"
-    
+
     writeLines(c(
         "devtools::document()",
         "rmarkdown::render('README.Rmd', 'md_document')",
@@ -61,21 +59,21 @@ assign(".Rprofile", new.env(), envir = globalenv())
         paste0("try(detach('package:",read.dcf("DESCRIPTION", "Package")[[1]], "', unload = TRUE, force = TRUE))"),
         "pkgdown::build_site(devel = FALSE, lazy = FALSE)"
     ), path_script)
-    
+
     .Rprofile$utils$run_script(path_script, job_name)
 }
 
 .Rprofile$pkgdown$update <- function(){
     path_script <- tempfile("system-", fileext = ".R")
     job_name <- "Rendering Package Website"
-    
+
     writeLines(c(
         "devtools::document()",
         "rmarkdown::render('README.Rmd', 'md_document')",
         paste0("try(detach('package:",read.dcf("DESCRIPTION", "Package")[[1]], "', unload = TRUE, force = TRUE))"),
         "pkgdown::build_site(devel = TRUE, lazy = TRUE)"
     ), path_script)
-    
+
     .Rprofile$utils$run_script(path_script, job_name)
 }
 
@@ -90,7 +88,7 @@ assign(".Rprofile", new.env(), envir = globalenv())
 .Rprofile$bookdown$create <- function(){
     path_script <- tempfile("system-", fileext = ".R")
     job_name <- "Rendering Book"
-    
+
     writeLines(c(
         "temp_dir <<- tempfile('bookdown-')",
         "if(fs::dir_exists(temp_dir)) fs::dir_delete(temp_dir)",
@@ -101,40 +99,22 @@ assign(".Rprofile", new.env(), envir = globalenv())
         "fs::file_copy(files, file.path(temp_dir, gsub('^\\\\./', '', files)))",
         "message('Rendering files')",
         "withr::with_dir(file.path(temp_dir, 'vignettes'), {",
-        "bookdown::render_book('index.Rmd', output_dir = '../_book', quiet = TRUE)", 
+        "bookdown::render_book('index.Rmd', output_dir = '../_book', quiet = TRUE)",
         "})",
         "message('Retrieving book from temp location')",
         "if(fs::dir_exists('_book')) fs::dir_delete('_book')",
-        "fs::dir_copy(file.path(temp_dir, '_book'), getwd())", 
+        "fs::dir_copy(file.path(temp_dir, '_book'), getwd())",
         "message('Done!')"),
         path_script)
-    
+
     .Rprofile$utils$run_script(path_script, job_name, workingDir = usethis::proj_get())
 }
 
 
 # blogdown ----------------------------------------------------------------
-.Rprofile$blogdown$build <- function(){
-    path_script <- tempfile("system-", fileext = ".R")
-    job_name <- "Rendering Blog"
-    
-    writeLines(c(
-        "public_dir <<- file.path(getwd(), 'vignettes', 'public')",
-        "temp_dir <<- tempfile('blogdown-')",
-        "if(fs::dir_exists(public_dir)) fs::dir_delete(public_dir)",
-        "files <- list.files(full.names = TRUE, recursive = TRUE)",
-        "fs::dir_create(temp_dir)",
-        "fs::dir_create(unique(dirname(file.path(temp_dir, gsub('^\\\\./', '', files)))))",
-        "message('Coping files to temp location')",
-        "fs::file_copy(files, file.path(temp_dir, gsub('^\\\\./', '', files)))",
-        "message('Rendering files')",
-        "withr::with_dir(file.path(temp_dir, 'vignettes'), blogdown::build_site())", 
-        "message('Retrieving blog from temp location')",
-        "fs::dir_copy(file.path(temp_dir, 'vignettes', 'public'), file.path(getwd(), 'vignettes'))", 
-        "message('Done!')"),
-        path_script)
-    
-    .Rprofile$utils$run_script(path_script, job_name, workingDir = usethis::proj_get())
+.Rprofile$blogdown$serve_site <- function(){
+    try(blogdown::stop_server())
+    withr::with_dir(file.path(getwd(), 'vignettes'), blogdown::serve_site())
 }
 
 
