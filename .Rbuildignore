@@ -1,0 +1,18 @@
+# Folders
+.*_cache/
+^\.dev/
+^\.ccache$
+^\.github
+\.gitkeep
+^data-raw/
+^docs/
+^renv/
+^vignettes/
+
+# Files
+^.*\.Rproj$
+^\.Rproj\.user$
+^codecov\.yml$
+^README\.Rmd$
+^LICENSE\.md$
+

@@ -1,6 +1,7 @@
 Package: tidyblog
-Type: Blog
+Type: Package
 Title: Blogdown Site
+Description: Personal Blogdown Site.
 URL: https://harell.netlify.app/
 BugReports: https://github.com/harell/tidyblog/issues
 Version: 1.0.2
@@ -15,4 +16,4 @@ Suggests:
     tidyverse
 Imports: 
     kableExtra (>= 1.1.0)
-
+License: MIT + file LICENSE
