@@ -1,16 +1,12 @@
 ---
 title: "About"
 author: "Harel Lustiger"
+description: "About Harel Lustiger"
 slug: about
 blogdown::html_page:
   number_sections: true
   toc: false
 ---
-
-```{r, include = FALSE}
-path_root <- rprojroot::find_root(rprojroot::has_file("DESCRIPTION"))
-source(file.path(path_root, "R/post_options.R"))
-```
 
 <!-- # Foreword {-} -->
 

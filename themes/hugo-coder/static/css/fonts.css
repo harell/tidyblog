@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700|Lora|Playfair+Display:700i,900');
+
 @font-face {
   font-family: 'Merriweather';
   font-style: normal;
@@ -14,12 +16,34 @@
        url('../fonts/lato-v11-latin-regular.woff2') format('woff2'),
        url('../fonts/lato-v11-latin-regular.woff') format('woff');
 }
+
 body {
   font-family: 'Merriweather', serif;
 }
+
 h1, h2, h3, h4, h5, h6, .nav, .article-duration, .archive-item-link, .footer {
-  font-family: 'Lato', sans-serif;
+  font-family: "Lora";
 }
+
 table {
   font-family: 'Source Code Pro', 'Lucida Console', monospace;
 }
+
+p, i, a, li {
+  font-family: "Lora";
+  font-size: 19px;
+}
+
+div.about h1, div.about h2 {
+    font-family: 'Lato', sans-serif;
+}
+
+.hljs {
+  font-size: 0.7em;
+}
+
+.emphasized {
+   font-size: 1.2em;
+}
+
+

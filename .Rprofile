@@ -1,30 +1,56 @@
 .First <- function(){
-    if(isTRUE(as.logical(Sys.getenv("CI")))) return()
-    if(isFALSE(getOption(".First.time"))) return() else options(.First.time = TRUE)
+    assign(".Rprofile", new.env(), envir = globalenv())
     
-    if(getOption(".First.time")){
-        options(.First.time = FALSE)
-        pkgs <- c("tidyverse", "blogdown", "usethis", "kableExtra")
-        suppressPackageStartupMessages(
-            invisible(sapply(pkgs, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE))
-        )
-        message("Live preview a site using 'blogdown::serve_site()'")
+    # Helpers
+    unlink <- function(x) base::unlink(x, recursive = TRUE, force = TRUE)
+    
+    .Rprofile$libraries <-  function(packages) suppressPackageStartupMessages(invisible(sapply(packages, library, character.only = TRUE, quietly = TRUE, warn.conflicts = FALSE)))
+    .Rprofile$get_repos <- function(){
+        DESCRIPTION <- readLines("DESCRIPTION")
+        Date <- trimws(gsub("Date:", "", DESCRIPTION[grepl("Date:", DESCRIPTION)]))
+        URL <- if(length(Date) == 1) paste0("https://mran.microsoft.com/snapshot/", Date) else "https://cran.rstudio.com/"
+        return(URL)
     }
     
-    options(
-        blogdown.author = "Harel Lustiger",
-        blogdown.ext = ".Rmd",
-        blogdown.subdir = "tutorials", # A subdirectory under content/
-        blogdown.warn.future = FALSE
-    )
+    .Rprofile$NEW_SESSION <- new.env()
+    .Rprofile$NEW_SESSION$unset <- function() Sys.unsetenv("NEW_SESSION")
+    .Rprofile$NEW_SESSION$set <- function() Sys.setenv(NEW_SESSION = FALSE)
+    .Rprofile$NEW_SESSION$get <- function() as.logical(Sys.getenv("NEW_SESSION"))
+    
+    .Rprofile$blogdown <- new.env()
+    .Rprofile$blogdown$clean_blog <- function(){
+        unlink("./static")
+        unlink(list.files("./content", "*.html|*.yml", full.names = TRUE, recursive = TRUE))
+    }
+    
+    # Programming Logic
+    source("_common.R")
+    
+    ## .First watchdog
+    if(isFALSE(.Rprofile$NEW_SESSION$get())) return() else .Rprofile$NEW_SESSION$set()
+    
+    ## Initiate the package management system
+    options(Ncpus = 8, repos = structure(c(CRAN = .Rprofile$get_repos())), dependencies = "Imports")
+    
+    ## Load toolkit
+    .Rprofile$libraries(c("tidyverse", "blogdown", "usethis", "kableExtra"))
+    
+    ## Empty cache
+    # .Rprofile$blogdown$clean_blog()
+    
+    ## Show information
+    message("Live preview a site using 'blogdown::serve_site()'")
+    message("For faster rendering experience, edit content in Notepad++'")
 }
 
 .Last <- function(){
-    # if(isTRUE(as.logical(Sys.getenv("CI")))) return()
-    # message("Shuting down live site preview")
-    # try(blogdown::stop_server())
-    # message("Cleaning up site repo")
-    # unlink(list.files("./content", "*.html", full.names = TRUE, recursive = TRUE), recursive = TRUE, force = TRUE)
-    # unlink("./static", recursive = TRUE, force = TRUE)
-    # unlink("./public", recursive = TRUE, force = TRUE)
+    unlink <- function(x) base::unlink(x, recursive = TRUE, force = TRUE)
+    
+    ## .First watchdog
+    .Rprofile$NEW_SESSION$unset()
+    
+    ## Tidy up
+    try(servr::daemon_stop())
+    unlink("./static")
 }
+

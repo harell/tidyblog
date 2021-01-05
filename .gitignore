@@ -44,3 +44,5 @@ public/
 *.html
 content/_output.yml
 !/themes/**/*
+content/tutorials/_output.yml
+content/talks/_output.yml
