@@ -56,7 +56,7 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
 
-      - name: Build book
+      - name: Build blog
         run: |
           withr::with_dir('./vignettes', blogdown::build_site())
         shell: Rscript {0}

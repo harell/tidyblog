@@ -7,7 +7,7 @@ languageCode = "en-us"
 theme = "hugo-coder"
 googleAnalytics = "UA-162843697-1"
 disqusShortname = ""
-ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 enableEmoji = true
 
 # params -----------------------------------------------------------------------
@@ -35,7 +35,7 @@ enableEmoji = true
 
     MathJaxCDN = "//cdnjs.cloudflare.com/ajax/libs"
     MathJaxVersion = "2.7.5"
-    
+
 # params.social ----------------------------------------------------------------
 [[params.social]]
     name = "GitHub"
@@ -47,21 +47,21 @@ enableEmoji = true
     name = "Twitter"
     icon = "fab fa-twitter"
     weight = 2
-    url = "https://twitter.com/harel_lustiger/"    
-    
+    url = "https://twitter.com/harel_lustiger/"
+
 [[params.social]]
     name = "LinkedIn"
     icon = "fab fa-linkedin"
     weight = 2
-    url = "https://www.linkedin.com/in/mean-statistician/"    
-    
+    url = "https://www.linkedin.com/in/mean-statistician/"
+
 [[params.social]]
     name = "Medium"
     icon = "fab fa-medium"
     weight = 2
-    url = "https://medium.com/@harell"        
+    url = "https://medium.com/@harell"
 
-# menu.main --------------------------------------------------------------------    
+# menu.main --------------------------------------------------------------------
 [[menu.main]]
     weight = 1
     name = "Tutorials"
@@ -73,7 +73,7 @@ enableEmoji = true
     url = "/talks/"
 
 [[menu.main]]
-    weight = 3  
+    weight = 3
     name = "About"
     url = "/about/"
 
