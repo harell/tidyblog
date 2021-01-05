@@ -58,7 +58,7 @@ jobs:
 
       - name: Build book
         run: |
-          withr::with_dir("./vignettes", blogdown::build_site())
+          withr::with_dir('./vignettes', blogdown::build_site())
         shell: Rscript {0}
         
       - name: Deploy to Netlify
