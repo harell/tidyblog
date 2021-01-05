@@ -39,10 +39,11 @@ vignettes/*.pdf
 .Renviron
 
 # Blogdown
-static/
-public/
 *.html
-content/_output.yml
-!/themes/**/*
-content/tutorials/_output.yml
-content/talks/_output.yml
+vignettes/static/
+vignettes/public/
+vignettes/resources/
+vignettes/content/_output.yml
+vignettes/content/tutorials/_output.yml
+vignettes/content/talks/_output.yml
+!vignettes/themes/**/*
