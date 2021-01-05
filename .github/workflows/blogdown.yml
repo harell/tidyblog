@@ -59,8 +59,9 @@ jobs:
       - name: Build book
         run: |
           withr::with_dir('./vignettes', blogdown::build_site())
+          print(list.dirs())
         shell: Rscript {0}
-        
+
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
