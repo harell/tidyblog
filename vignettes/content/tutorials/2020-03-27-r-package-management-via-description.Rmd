@@ -13,7 +13,15 @@ tags:
 - Reproducible Research    
 - DESCRIPTION
 link-citations: yes 
+bibliography: [../../../inst/REFERENCES.bib]
+editor_options: 
+  markdown: 
+    wrap: 80  
 ---
+
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
 
 # Synopsis
 
