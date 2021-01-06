@@ -3,12 +3,23 @@ title: "About"
 author: "Harel Lustiger"
 description: "About Harel Lustiger"
 slug: about
-blogdown::html_page:
-  number_sections: true
-  toc: false
+output:
+  blogdown::html_page:
+    number_sections: no
+    toc: no
+link-citations: yes 
+bibliography: [../../inst/REFERENCES.bib]
+biblio-style: [../../inst/harvard1.csl]
+editor_options: 
+  markdown: 
+    wrap: 80
 ---
 
-<!-- # Foreword {-} -->
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
+
+# Foreword
 
 I am a Senior Data Scientist with qualifications in Electronics Engineering and
 Applied Statistics.
@@ -34,6 +45,57 @@ science projects.
 This blog is part of my effort to document and communicate my findings and
 insights. I hope readers will find these posts actionable and impactful.
 
----
+# Writing Philosophy
+
+## Goals
+
+-   Maximum Real Value Added (RVA) time;
+
+-   Minimum Business Value Added (BVA) time; and
+
+-   Eliminate Non-Value Added (NVA) time.
+
+```{=html}
+<!-- 
+Though value added is working software (or extra features), real value added
+does not represent the usefulness of that working software.
+-->
+```
+```{=html}
+<!-- 
+A software program that is hard to understand, requires more communication.
+That means more time is spent on meetings or documentation (BVA).
+-->
+```
+## Qualities
+
+The six qualities of the Data Science teaching:
+
+1.  It is not a speculative philosophy but an exposition of the governing forces
+    in Data Science based on a causal analysis of past Data Science projects. It
+    is taught, therefore, as a science rather than a belief system.
+
+2.  It is open to scientific and other types of scrutiny and is not based on
+    faith. It can be tested by personal practice and one who follows it will see
+    the result for oneself by means of one's own experience.
+
+3.  It is able to bestow immediate results here and now. There is no need to
+    wait for the future or a next project.
+
+4.  It invites all Data Scientists to put it to the test and come see for
+    themselves.
+
+```{=html}
+<!-- 
+## Principles 
+ 1.  Premature activities, including: 
+     -   Premature optimization 
+     -   Premature generalisation 
+ 2.  The complexity of software is an essential property, not an incidental one. 
+Nonetheless, some complexity is neither necessary nor warranted. 
+-->
+```
+
+--------------------------------------------------------------------------------
 
 Last updated on `r Sys.Date()`
