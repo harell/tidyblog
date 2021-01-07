@@ -56,8 +56,9 @@ jobs:
 
       - name: Build blog
         run: |
+          unlink(list.files('.', '\\.gitignore', TRUE, TRUE, TRUE))
           withr::with_dir('./vignettes', blogdown::build_site())
-          print(list.files('./vignettes/public', all.files = TRUE, recursive = TRUE))
+          print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
 
         shell: Rscript {0}
 
