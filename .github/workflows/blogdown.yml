@@ -46,16 +46,17 @@ jobs:
           remotes::install_cran(c("tidyverse"))
           remotes::install_cran(c("devtools", "blogdown"))
           remotes::update_packages("blogdown")
-          blogdown::install_hugo()
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Install package
-        run: R CMD INSTALL .
+      - name: Install Hugo
+        run: |
+          blogdown::install_hugo()
+        shell: Rscript {0}
 
       - name: Build blog
         run: |
-          withr::with_dir('./vignettes', blogdown::build_site(local = TRUE))
+          options(blogdown.files_filter = blogdown:::filter_md5sum)
           print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
 
         shell: Rscript {0}
