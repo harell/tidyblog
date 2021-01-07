@@ -43,7 +43,4 @@ vignettes/*.pdf
 vignettes/static/
 vignettes/public/
 vignettes/resources/
-vignettes/content/_output.yml
-vignettes/content/tutorials/_output.yml
-vignettes/content/talks/_output.yml
 !vignettes/themes/**/*
