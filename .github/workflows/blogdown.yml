@@ -52,8 +52,7 @@ jobs:
       - name: Build blog
         run: |
           withr::with_dir('./vignettes',{
-            print(getwd())
-            print(blogdown:::list_rmds("content", TRUE))
+            blogdown:::build_rmds(blogdown:::list_rmds("content", TRUE))
             blogdown::build_site(local = TRUE)
           })
           print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
