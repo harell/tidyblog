@@ -22,7 +22,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      # - uses: r-lib/actions/setup-tinytex@v1
+      - uses: peaceiris/actions-hugo@v2
 
       - name: Prepare
         run: |
