@@ -49,11 +49,6 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Install Hugo
-        run: |
-          blogdown::install_hugo()
-        shell: Rscript {0}
-
       - name: Build blog
         run: |
           withr::with_dir('./vignettes',{
