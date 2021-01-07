@@ -45,7 +45,7 @@ jobs:
         run: |
           # To get links for homepage
           remotes::install_cran(c("tidyverse"))
-          remotes::install_cran(c("devtools", "blogdown"))
+          remotes::install_cran(c("devtools", "rmarkdown", "blogdown"))
           remotes::update_packages("blogdown")
           blogdown::install_hugo()
           remotes::install_deps(dependencies = TRUE)
@@ -56,7 +56,6 @@ jobs:
 
       - name: Build blog
         run: |
-          withr::with_dir('./vignettes', blogdown::hugo_build())
           withr::with_dir('./vignettes', blogdown::build_site())
           print(list.files('./vignettes/public', all.files = TRUE, recursive = TRUE))
 
