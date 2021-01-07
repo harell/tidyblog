@@ -55,7 +55,7 @@ jobs:
             blogdown:::build_rmds(blogdown:::list_rmds("content", TRUE))
             blogdown::build_site(local = TRUE)
           })
-          print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
+          print(list.files('./vignettes/public', all.files = TRUE, recursive = TRUE))
 
         shell: Rscript {0}
 
