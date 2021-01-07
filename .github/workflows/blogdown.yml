@@ -22,7 +22,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - uses: r-lib/actions/setup-tinytex@v1
+      # - uses: r-lib/actions/setup-tinytex@v1
 
       - name: Prepare
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Build blog
         run: |
           unlink(list.files('.', '\\.gitignore', TRUE, TRUE, TRUE))
-          withr::with_dir('./vignettes', blogdown::build_site())
+          withr::with_dir('./vignettes', blogdown::build_site(local = TRUE)))
           print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
 
         shell: Rscript {0}
@@ -65,7 +65,7 @@ jobs:
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v1.1.11
         with:
           publish-dir: './vignettes/public'
           production-branch: master
