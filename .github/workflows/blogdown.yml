@@ -57,6 +57,11 @@ jobs:
       - name: Build blog
         run: |
           options(blogdown.files_filter = blogdown:::filter_md5sum)
+          withr::with_dir('./vignettes',{
+            print(getwd())
+            print(blogdown:::list_rmds("content", TRUE))
+            blogdown::build_site(local = TRUE)
+          })
           print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
 
         shell: Rscript {0}
