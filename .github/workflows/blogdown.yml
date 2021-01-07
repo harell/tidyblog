@@ -45,7 +45,7 @@ jobs:
         run: |
           # To get links for homepage
           remotes::install_cran(c("tidyverse"))
-          remotes::install_cran(c("devtools", "rmarkdown", "blogdown"))
+          remotes::install_cran(c("devtools", "blogdown"))
           remotes::update_packages("blogdown")
           blogdown::install_hugo()
           remotes::install_deps(dependencies = TRUE)
