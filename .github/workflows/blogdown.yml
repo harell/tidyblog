@@ -3,9 +3,7 @@ on:
     branches:
       - master
       - release/*
-  pull_request:
-    branches:
-      - master
+      - hotfix/*
 
 name: blogdown
 
@@ -59,6 +57,8 @@ jobs:
       - name: Build blog
         run: |
           withr::with_dir('./vignettes', blogdown::build_site())
+          print(list.files('./vignettes', all.files = TRUE, recursive = TRUE))
+
         shell: Rscript {0}
 
       - name: Deploy to Netlify
