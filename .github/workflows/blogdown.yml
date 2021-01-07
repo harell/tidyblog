@@ -56,7 +56,6 @@ jobs:
 
       - name: Build blog
         run: |
-          options(blogdown.files_filter = blogdown:::filter_md5sum)
           withr::with_dir('./vignettes',{
             print(getwd())
             print(blogdown:::list_rmds("content", TRUE))
