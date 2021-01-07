@@ -3,9 +3,7 @@ on:
     branches:
       - master
       - release/*
-  pull_request:
-    branches:
-      - master
+      - hotfix/*
 
 name: blogdown
 
@@ -24,7 +22,7 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@master
 
-      - uses: r-lib/actions/setup-tinytex@v1
+      - uses: peaceiris/actions-hugo@v2
 
       - name: Prepare
         run: |
@@ -45,26 +43,26 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # To get links for homepage
           remotes::install_cran(c("tidyverse"))
           remotes::install_cran(c("devtools", "blogdown"))
           remotes::update_packages("blogdown")
-          blogdown::install_hugo()
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Install package
-        run: R CMD INSTALL .
-
       - name: Build blog
         run: |
-          withr::with_dir('./vignettes', blogdown::build_site())
+          withr::with_dir('./vignettes',{
+            blogdown:::build_rmds(blogdown:::list_rmds("content", TRUE))
+            blogdown::build_site(local = TRUE)
+          })
+          print(list.files('./vignettes/public', all.files = TRUE, recursive = TRUE))
+
         shell: Rscript {0}
 
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v1.1.11
         with:
           publish-dir: './vignettes/public'
           production-branch: master

@@ -21,5 +21,6 @@ Suggests:
     devtools,
     tidyverse,
     usethis
-Imports: 
+Imports:
+    purrr,
     kableExtra (>= 1.1.0)
