@@ -69,7 +69,7 @@ That means more time is spent on meetings or documentation (BVA).
 ```
 ## Qualities
 
-The six qualities of the Data Science teaching:
+The four qualities of the Data Science teaching:
 
 1.  It is not a speculative philosophy but an exposition of the governing forces
     in Data Science based on a causal analysis of past Data Science projects. It
