@@ -1,0 +1,24 @@
+---
+title: "Packages"
+author: "Harel Lustiger"
+description: "R Packages"
+slug: packages
+output:
+  blogdown::html_page:
+    number_sections: no
+    toc: no
+link-citations: yes 
+bibliography: [../../inst/REFERENCES.bib]
+biblio-style: [../../inst/harvard1.csl]
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+```{r, include = FALSE}
+source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
+```
+
+-   [![CRAN
+    status](https://www.r-pkg.org/badges/version/R6P)](https://CRAN.R-project.org/package=R6P)
+    `R6P`: Useful design patterns in R

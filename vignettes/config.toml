@@ -72,8 +72,13 @@ enableEmoji = true
     name = "Talks"
     url = "/talks/"
 
+
 [[menu.main]]
     weight = 3
+    name = "R Packages"
+    url = "/packages/"
+
+[[menu.main]]
+    weight = 4
     name = "About"
     url = "/about/"
-
