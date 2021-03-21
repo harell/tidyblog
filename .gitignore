@@ -44,3 +44,5 @@ vignettes/static/
 vignettes/public/
 vignettes/resources/
 !vignettes/themes/**/*
+*.lock~
+vignettes/content/packages_files/header-attrs/header-attrs.js

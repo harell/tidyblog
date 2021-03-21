@@ -19,9 +19,17 @@ editor_options:
 source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
 ```
 
-<img src="https://raw.githubusercontent.com/tidylab/R6P/master/pkgdown/logo.png" align="right" height="75"/>
-<img src="https://raw.githubusercontent.com/tidylab/microservices/master/pkgdown/logo.png" align="right" height="75"/>
-<img src="https://raw.githubusercontent.com/tidylab/decorators/master/pkgdown/logo.png" align="right" height="75"/>
+```{css, echo = FALSE}
+article ul li:nth-child(1){
+  list-style-image:url('https://raw.githubusercontent.com/tidylab/R6P/master/pkgdown/favicon/favicon-32x32.png');
+}
+article ul li:nth-child(2){
+  list-style-image:url('https://raw.githubusercontent.com/tidylab/microservices/master/pkgdown/favicon/favicon-32x32.png');
+}
+article ul li:nth-child(3){
+  list-style-image:url('https://raw.githubusercontent.com/tidylab/decorators/master/pkgdown/favicon/favicon-32x32.png');
+}
+```
 
 -   [![CRAN
     status](https://www.r-pkg.org/badges/version/R6P)](https://CRAN.R-project.org/package=R6P)

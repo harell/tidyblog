@@ -64,8 +64,8 @@ enableEmoji = true
 # menu.main --------------------------------------------------------------------
 [[menu.main]]
     weight = 1
-    name = "Tutorials"
-    url = "/tutorials/"
+    name = "Articles"
+    url = "/articles/"
 
 [[menu.main]]
     weight = 2

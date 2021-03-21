@@ -112,8 +112,23 @@ assign(".Rprofile", new.env(), envir = globalenv())
 
 
 # blogdown ----------------------------------------------------------------
+.Rprofile$blogdown$clean <- function(){
+    try(blogdown::stop_server())
+    files_to_delete <- list.files("./vignettes/content", ".html$", recursive = TRUE, full.names = TRUE)
+    unlink(files_to_delete, recursive = TRUE)
+    unlink(file.path(".", "vignettes", "static"), recursive = TRUE)
+    unlink(file.path(".", "vignettes", "public"), recursive = TRUE)
+}
+
+# .Rprofile$blogdown$build_site <- function(){
+#     try(blogdown::stop_server())
+#     .Rprofile$blogdown$clean()
+#     withr::with_dir(file.path(getwd(), 'vignettes'), blogdown::build_site())
+# }
+
 .Rprofile$blogdown$serve_site <- function(){
     try(blogdown::stop_server())
+    .Rprofile$blogdown$clean()
     withr::with_dir(file.path(getwd(), 'vignettes'), blogdown::serve_site())
 }
 
