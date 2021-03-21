@@ -19,6 +19,19 @@ editor_options:
 source(file.path(usethis::proj_get(), "vignettes",  "_common.R"))
 ```
 
+<img src="https://raw.githubusercontent.com/tidylab/R6P/master/pkgdown/logo.png" align="right" height="75"/>
+<img src="https://raw.githubusercontent.com/tidylab/microservices/master/pkgdown/logo.png" align="right" height="75"/>
+<img src="https://raw.githubusercontent.com/tidylab/decorators/master/pkgdown/logo.png" align="right" height="75"/>
+
 -   [![CRAN
     status](https://www.r-pkg.org/badges/version/R6P)](https://CRAN.R-project.org/package=R6P)
     `R6P`: Useful design patterns in R
+
+-   [![CRAN
+    status](https://www.r-pkg.org/badges/version/microservices)](https://CRAN.R-project.org/package=microservices)
+    `microservices`: Breakdown a Monolithic Application to a Suite of Services
+
+-   [![CRAN
+    status](https://www.r-pkg.org/badges/version/decorators)](https://CRAN.R-project.org/package=decorators)
+    `decorators`: Extend the behaviour of a function without explicitly
+    modifying it
