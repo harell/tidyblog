@@ -2,7 +2,7 @@
 title: "Predict Distibutions over Point Estimate"
 author: "Harel Lustiger"
 date: '2021-03-14'
-draft: yes
+draft: no
 categories:
 - Good Practice
 - Forecast

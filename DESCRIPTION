@@ -4,7 +4,7 @@ Title: Blogdown Site
 Description: Personal Blogdown Site.
 URL: https://harell.netlify.app/
 BugReports: https://github.com/harell/tidyblog/issues
-Version: 1.1.0
+Version: 1.1.1
 Date: 2021-02-15
 Authors@R: c(
     person("Harel", "Lustiger", email = "tidylab@gmail.com", role = c("aut", "cre"),

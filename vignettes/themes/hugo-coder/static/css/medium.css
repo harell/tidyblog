@@ -62,14 +62,15 @@ blockquote {
   padding: 0 0 0 50px;
 }
 
-/*
+
 code {
-  font-size: 18px;
+  font-size: 0.75em;
   background: rgba(0,0,0,.05);
   border-radius: 2px;
-  padding: 3px 5px;
+  /* padding: 3px 5px; */
+  padding:9.5px;
 }
-*/
+
 
 mark, .highlighted {
   background: #7DFFB3;
